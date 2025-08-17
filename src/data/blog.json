@@ -1,0 +1,193 @@
+{
+  "czNoteInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "Welcome to My Note! 📖",
+          "slug": "read-note"
+        }
+      }
+    ]
+  },
+  "czPortfolioInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "Welcome to My Portfolio! 🚀",
+          "slug": "read-portfolio"
+        }
+      }
+    ]
+  },
+  "allPosts": {
+    "edges": [
+      {
+        "node": {
+          "excerpt": "Generate & apply SELinux policies for Docker containers automatically.",
+          "featured": false,
+          "html": "/posts/AutoSEL.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "SELinux、Docker"
+          },
+          "portfolio_visible": true,
+          "slug": "AutoSEL",
+          "title": "AutoSEL"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Configure a KVM virtual machine to use xterm.js for terminal access on Proxmox.",
+          "featured": false,
+          "html": "/posts/xterm-js.md",
+          "note_tech_type": {
+            "name": "Proxmox"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "xterm-js",
+          "title": "Use xterm.js on Proxmox"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Set up a K8s cluster on a Proxmox virtual machine.",
+          "featured": false,
+          "html": "/posts/proxmox-install-k8s.md",
+          "note_tech_type": {
+            "name": "Proxmox、K8s"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "proxmox-install-k8s",
+          "title": "Build K8s on Proxmox"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Set up Jenkins in Docker with a custom image and Docker-in-Docker (dind) support.",
+          "featured": false,
+          "html": "/posts/docker-build-jenkins.md",
+          "note_tech_type": {
+            "name": "Docker、Jenkins"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "docker-build-jenkins",
+          "title": "Build Jenkins with Docker"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Build the K8s dashboard and use NodePort to proxy it through Nginx for reverse proxy.",
+          "featured": false,
+          "html": "/posts/k8s-dashboard-nginx.md",
+          "note_tech_type": {
+            "name": "K8s、Nginx"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "k8s-dashboard-nginx",
+          "title": "Build K8s dashboard"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Set up ArgoCD on K8s, exposing it via NodePort, and retrieving the admin password for access.",
+          "featured": false,
+          "html": "/posts/k8s-argocd.md",
+          "note_tech_type": {
+            "name": "K8s、ArgoCD"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "k8s-argocd",
+          "title": "Build K8s ArgoCD"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Set up Harbor on K8s using Helm, PersistentVolumes, and StorageClasses.",
+          "featured": false,
+          "html": "/posts/k8s-harbor.md",
+          "note_tech_type": {
+            "name": "K8s、Harbor"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "k8s-harbor",
+          "title": "Build Harbor on K8s"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Enable Root Account on Ubuntu.",
+          "featured": false,
+          "html": "/posts/root-login-ubuntu.md",
+          "note_tech_type": {
+            "name": "Ubuntu"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "root-login-ubuntu",
+          "title": "Enable Root Account on Ubuntu"
+        }
+      }
+    ]
+  },
+  "layoutSettings": {
+    "edges": [
+      {
+        "node": {
+          "cover_image": "/images/cover-image.png",
+          "description": "Portfolio & Note",
+          "meta_title":"CZ Blog",
+          "github": "https://github.com/ChongZhe001025",
+          "gmail": "mailto:czhuang001025@gmail.com",
+          "icon": "https://gatsby.ghost.io/content/images/size/w256h256/2022/05/favicon.png",
+          "lang": "en",
+          "linkedin": "https://www.linkedin.com/in/%E5%B4%87%E5%93%B2-%E9%BB%83-717a05281/",
+          "navigation": [
+            {
+              "label": "Home",
+              "url": "/"
+            },
+            {
+              "label": "Portfolio",
+              "url": "/portfolio/read-portfolio/"
+            },
+            {
+              "label": "Note",
+              "url": "/note/read-note/"
+            }
+          ],
+          "title": "Portfolio & Note"
+        }
+      }
+    ]
+  }
+}
