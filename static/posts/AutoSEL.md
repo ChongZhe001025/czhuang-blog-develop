@@ -2,7 +2,7 @@
 - By monitoring container events and combining container configuration data, AutoSEL fully automates the generation, update, and application of SELinux policies.
 - Users don’t need to manually load policy files. This reduces repetitive operations and improves responsiveness to configuration changes. Run it once to complete policy generation and updates. Privileged containers and resource mounts are strictly governed by policy.
 
-#### ![](../images/icons/github-black.png)  [AutoSEL](https://github.com/ChongZhe001025/AutoSEL/tree/latest)
+#### ![](../images/icons/github-black.png)  [AutoSEL](https://github.com/ChongZhe001025/AutoSEL)
 ---
 
 ## System Architecture
