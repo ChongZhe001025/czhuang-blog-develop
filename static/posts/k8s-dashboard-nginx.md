@@ -1,74 +1,80 @@
+This document has replaced personal information (such as real IP/domain) with placeholders, suitable for tutorials and sharing.
+
+---
+
 ## 1. Install Kubernetes Dashboard
 
-- **Kubernetes provides a YAML file to install the Dashboard**
-```sh
+- Use the official YAML to install
+```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
-- **Verify the deployment**
-```sh
+- Verify deployment status
+```bash
 kubectl -n kubernetes-dashboard get pods
 ```
 
-- **If all Pods are in the Running state, the installation is successful**
-```sh
-NAME                                        READY   STATUS    RESTARTS   AGE
-dashboard-metrics-scraper-7b64584c5c-hfzdx   1/1     Running   0          2m
-kubernetes-dashboard-789ff87696-7bvq9        1/1     Running   0          2m
+- Example output
+```text
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-xxxxx              1/1     Running   0          2m
+kubernetes-dashboard-xxxxx                   1/1     Running   0          2m
 ```
 
-## 2. Change Service Type to NodePort
+---
 
-- **Edit the Service**
-```sh
+## 2. Change Service to NodePort
+
+- Edit the Service
+```bash
 kubectl -n kubernetes-dashboard edit svc kubernetes-dashboard
 ```
 
-- **Locate this section**
-```yaml
-spec:
-  type: ClusterIP
-```
-
-- **Change it to**
+- Change `ClusterIP` to `NodePort`
 ```yaml
 spec:
   type: NodePort
   ports:
     - port: 443
       targetPort: 8443
-      nodePort: 32000  # Choose a port between 30000-32767
+      nodePort: 32000   # Choose a port between 30000-32767
 ```
 
-- **Verify the Service**
-```sh
+- Verify the Service
+```bash
 kubectl -n kubernetes-dashboard get svc kubernetes-dashboard
 ```
 
-- **Expected output**
-```sh
+- Example output
+```text
 NAME                   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
-kubernetes-dashboard   NodePort   10.108.183.34   <none>        443:32000/TCP   2m
+kubernetes-dashboard   NodePort   10.xxx.xxx.xxx   <none>        443:32000/TCP   2m
 ```
 
-## 3. Configure Nginx Reverse Proxy
+> Access the Dashboard via `https://<NODE_IP>:32000`.
 
-- **Create a new configuration file**
-```sh
-sudo nano /etc/nginx/sites-available/k8s-dashboard.your-web.com
+---
+
+## 3. Configure Nginx Reverse Proxy (optional)
+
+If you want to access the Dashboard via a custom domain, you can set up an Nginx reverse proxy.
+
+- Create a site config
+```bash
+sudo nano /etc/nginx/sites-available/k8s-dashboard.example.com
 ```
 
-- **Add the following configuration**
+- Example configuration
 ```nginx
 server {
     listen 443 ssl;
-    server_name dashboard.example.com;
+    server_name k8s-dashboard.example.com;
 
     ssl_certificate /etc/nginx/ssl/dashboard.crt;
     ssl_certificate_key /etc/nginx/ssl/dashboard.key;
 
     location / {
-        proxy_pass https://192.168.1.100:32000;  # Kubernetes Node IP
+        proxy_pass https://<NODE_IP>:32000;
         proxy_ssl_verify off;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -78,20 +84,22 @@ server {
 }
 ```
 
-- **Enable the Configuration & Restart Nginx**
-```sh
-sudo ln -s /etc/nginx/sites-available/k8s-dashboard.your-web.com /etc/nginx/sites-enabled/
+- Enable and restart Nginx
+```bash
+sudo ln -s /etc/nginx/sites-available/k8s-dashboard.example.com /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 ```
 
-- **Now, you can access the Dashboard at**
-```sh
-https://k8s-dashboard.your-web.com
+- After completion, access via
+```text
+https://k8s-dashboard.example.com
 ```
 
-## 4. Create Login Token
+---
 
-- **Create a ServiceAccount and ClusterRoleBinding**
+## 4. Create a Login Token
+
+### Create ServiceAccount and ClusterRoleBinding
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -113,19 +121,38 @@ subjects:
   namespace: kubernetes-dashboard
 ```
 
-- **Generate Service Account**
-```sh
+- Create the ServiceAccount
+```bash
 kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard
 ```
 
-- **Grant Cluster Admin permissions**
-```sh
+- Bind Cluster Admin role
+```bash
 kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin
 ```
 
-- **Create token**
-```sh
+- Generate a login token
+```bash
 kubectl -n kubernetes-dashboard create token dashboard-admin
 ```
 
-Copy this token, go to the Dashboard login page, select Token, and paste it to log in.
+Copy the generated token and choose "Token" on the Dashboard login page to sign in.
+
+---
+
+## 🔑 Best Practices
+1. Secure access
+   - Prefer **Ingress + HTTPS** (with cert-manager for automated certificate issuance).
+   - Avoid using `cluster-admin` long-term; create targeted RBAC rules instead.
+
+2. Authentication
+   - Integrate with OIDC, LDAP, or other identity providers for user logins.
+
+3. Access control
+   - Provide Dashboard views scoped to different namespaces so users only see relevant resources.
+
+---
+
+✅ After completion:
+- Access the Kubernetes Dashboard at `https://<NODE_IP>:32000` or `https://k8s-dashboard.example.com`.
+- Use the generated token to log in.

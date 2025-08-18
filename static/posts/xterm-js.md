@@ -1,29 +1,60 @@
-## 1. Shut Down the VM and Create a Serial Port
+This note shows how to enable a Linux serial console on a Proxmox VM and verify you can get a login prompt (usable via Proxmox Serial Console or a web terminal like xterm.js).
+
+---
+
+## Prerequisites
+- Proxmox VE with a Linux VM (Ubuntu example below)
+- VM ID: replace `<VMID>` with your VM ID
+- SSH or console access to the guest OS
+
+---
+
+## 1. Add a serial port in Proxmox
+Shut down the VM and add a socket-backed serial port:
 ```sh
-qm set target-vm-id -serial0 socket
+qm stop <VMID>
+qm set <VMID> -serial0 socket
 ```
 
-## 2. Start the VM and Check if ttyS Appears
+## 2. Start the VM and verify serial device
 ```sh
-sudo dmesg | grep ttyS
+qm start <VMID>
+dmesg | grep -i ttyS || sudo dmesg | grep -i ttyS
 ```
+You should see `ttyS0` in the kernel logs.
 
-## 3. Enter Edit Mode for GRUB Configuration
+## 3. Configure GRUB to expose a serial console (guest OS)
+Edit `/etc/default/grub`:
 ```sh
 sudo nano /etc/default/grub
 ```
-
-## 4. Modify GRUB Parameters
+Set/ensure these lines (Ubuntu):
 ```sh
-GRUB_CMDLINE_LINUX="quiet console=tty0 console=ttyS0,115200"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8"
 ```
-
-## 5. Update GRUB
+Update GRUB:
 ```sh
 sudo update-grub
 ```
 
-## 6. Reboot the VM
+## 4. Enable a serial getty (login prompt on ttyS0)
+```sh
+sudo systemctl enable --now serial-getty@ttyS0.service
+sudo systemctl status serial-getty@ttyS0.service
+```
+
+## 5. Reboot and test
 ```sh
 sudo reboot
 ```
+After reboot, open Proxmox UI and choose the Serial console, or use:
+```sh
+qm terminal <VMID>
+```
+You should see a login prompt on the serial console.
+
+---
+
+## Optional: Adjust baud rate
+Match kernel and getty speeds (default here is 115200). If you change it, update both `GRUB_CMDLINE_LINUX` and the getty service override.

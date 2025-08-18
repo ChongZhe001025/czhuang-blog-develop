@@ -1,12 +1,18 @@
-## 1. Create Namespace
+All sensitive information (actual IPs, domains, credentials) is replaced with placeholders, suitable for tutorials and public sharing.
 
-- **Ensure that the PersistentVolumeClaims (PVCs) are correctly bound to the Harbor namespace**
-```sh
+---
+
+## 1. Create Namespace
+```bash
 kubectl create namespace harbor
 ```
 
-## 2. Harbor Directory Permission Configuration
-```
+> Ensure PersistentVolumeClaims (PVCs) are bound to the `harbor` namespace.
+
+---
+
+## 2. Create Data Directories and Set Permissions
+```bash
 mkdir /mnt/data/harbor-database
 
 mkdir /mnt/data/harbor-redis
@@ -18,13 +24,13 @@ chown -R 10000:10000 /mnt/data/harbor-registry
 chmod -R 775 /mnt/data/harbor-registry
 
 mkdir /mnt/data/harbor-trivy
-
 mkdir /mnt/data/harbor-jobservice
 ```
 
-## 3. Create StorageClass
+---
 
-- **Build StorageClass.yaml**
+## 3. Create StorageClass
+**StorageClass.yaml**
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -34,14 +40,14 @@ provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-- **Apply it**
-```sh
+```bash
 kubectl apply -f StorageClass.yaml
 ```
 
-## 4. Create PersistentVolumes
+---
 
-- **Build pv-harbor.yaml**
+## 4. Create PersistentVolumes
+**pv-harbor.yaml**
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -114,14 +120,14 @@ spec:
     path: "/mnt/data/harbor-jobservice"
 ```
 
-- **Apply it**
-```sh
+```bash
 kubectl apply -f pv-harbor.yaml
 ```
 
-## 5. Create PersistentVolumeClaims
+---
 
-- **Build pvc-harbor.yaml**
+## 5. Create PersistentVolumeClaims
+**pvc-harbor.yaml**
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -194,52 +200,46 @@ spec:
   volumeName: pv-harbor-trivy
 ```
 
-- **Apply it**
-```sh
+```bash
 kubectl apply -f pvc-harbor.yaml
 ```
 
-## 6. Edit containerd config.tml
-```sh
+---
+
+## 6. Edit containerd Configuration
+```bash
 vi /etc/containerd/config.toml
 ```
 
-- **config.toml**
+**config.toml (snippet example)**
 ```toml
-[plugins."io.containerd.grpc.v1.cri".image_decryption]
-      key_model = "node"
+[plugins."io.containerd.grpc.v1.cri".registry]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+      endpoint = ["https://registry-1.docker.io"]
 
-    [plugins."io.containerd.grpc.v1.cri".registry]
-      [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-          endpoint = ["https://registry-1.docker.io"]
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."<HARBOR_NODE_IP>:30001"]
+      endpoint = ["http://<HARBOR_NODE_IP>:30001"]
 
-        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."10.1.1.61:30001"]
-          endpoint = ["http://10.1.1.61:30001"]
+  [plugins."io.containerd.grpc.v1.cri".registry.configs]
+    [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor.example.com".tls]
+      insecure_skip_verify = true
 
-        [plugins."io.containerd.grpc.v1.cri".registry.configs]
-          [plugins."io.containerd.grpc.v1.cri".registry.configs."k8s-harbor.sdpmlab.org".tls]
-            insecure_skip_verify = true
-
-          [plugins."io.containerd.grpc.v1.cri".registry.configs."k8s-harbor.sdpmlab.org".auth]
-            username = "admin"
-            password = "Harbor12345"
-
-    [plugins."io.containerd.grpc.v1.cri".x509_key_pair_streaming]
-      tls_cert_file = ""
-      tls_key_file = ""
+    [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor.example.com".auth]
+      username = "<HARBOR_USER>"
+      password = "<HARBOR_PASSWORD>"
 ```
 
-## 7. Download and Modify values.yaml
+---
 
-- **Add the Harbor Helm repository and fetch the default values file**
-```sh
+## 7. Edit values.yaml
+```bash
 helm repo add harbor https://helm.goharbor.io
 helm repo update
 helm show values harbor/harbor > values.yaml
 ```
 
-- **Modify values.yaml to use the created PVCs**
+**values.yaml example**
 ```yaml
 expose:
   type: nodePort
@@ -255,7 +255,7 @@ expose:
         port: 443
         nodePort: 30002
 
-externalURL: https://k8s-harbor.sdpmlab.org
+externalURL: https://harbor.example.com
 
 persistence:
   enabled: true
@@ -288,15 +288,22 @@ persistence:
     filesystem:
       rootdirectory: /storage
 ```
-## 8. Install Harbor with Helm
 
-- **Deploy Harbor using Helm**
-```sh
+---
+
+## 8. Install Harbor with Helm
+```bash
 helm install harbor harbor/harbor -f values.yaml -n harbor
 ```
 
-- **Verify the Deployment Status**
-```sh
+- **Verify deployment**
+```bash
 kubectl get pods -n harbor
 kubectl get svc -n harbor
 ```
+
+---
+
+✅ **After completion:**
+- Access Harbor Web UI via `https://harbor.example.com` or NodePort (`<NODE_IP>:30001`).
+- Default admin credentials are set in `values.yaml`. It is recommended to change them immediately after installation.
