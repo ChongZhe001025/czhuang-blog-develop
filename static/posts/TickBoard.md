@@ -1,9 +1,10 @@
+## Overview 
 A small task board project built with React (frontend), Gin (Go backend), and MongoDB. Everything runs in Docker. The API ships with Swagger, and production can be fronted by Nginx with HTTPS.
 
 This guide covers:
 - Local Development
 - HTTPS Production
-
+#### ![](../images/icons/github-black.png)  [TickBoard](https://github.com/ChongZhe001025/TickBoard)
 
 ## Architecture & Components
 

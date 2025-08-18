@@ -154,7 +154,3 @@ docker run --rm   -v /var/run/docker.sock:/var/run/docker.sock   -v "$TRIVY_CACH
 
 - **Q: Agent can't use Docker?**  
   A: Check if `/var/run/docker.sock` is mounted and the container user has permission to access the socket.
-
----
-
-🎉 Done! Your Jenkins Pipeline will now automatically run Trivy scans after builds, fail or pass based on your settings, and output traceable report files.
