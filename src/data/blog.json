@@ -48,7 +48,7 @@
           },
           "note_visible": false,
           "portfolio_tech_type": {
-            "name": "SELinux、Docker"
+            "name": "Go、SELinux、Docker"
           },
           "portfolio_visible": true,
           "slug": "AutoSEL",

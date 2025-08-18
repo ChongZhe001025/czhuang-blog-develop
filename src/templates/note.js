@@ -5,6 +5,7 @@ import data from "../data/blog.json";
 
 const Note = ({ pageContext }) => {
     const posts = data.allPosts.edges;
+    const { skip = 0, limit = posts.length } = pageContext || {};
 
     const noteData = data.czNoteInfo.edges[0].node;
 
@@ -18,6 +19,8 @@ const Note = ({ pageContext }) => {
         node.note_visible === true &&
         (selectedTech === "all" || node.note_tech_type.name.includes(selectedTech))
     );
+
+    const pagePosts = filteredPosts.slice(skip, skip + limit);
 
     return (
         <Layout>
@@ -45,8 +48,8 @@ const Note = ({ pageContext }) => {
                 </div>
 
                 <section className="post-feed">
-                    {filteredPosts.length > 0 ? (
-                        filteredPosts.map(({ node }) => (
+                    {pagePosts.length > 0 ? (
+                        pagePosts.map(({ node }) => (
                             <PostCard key={node.id} post={node} />
                         ))
                     ) : (

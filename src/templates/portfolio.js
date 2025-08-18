@@ -5,6 +5,7 @@ import data from "../data/blog.json";
 
 const Portfolio = ({ pageContext }) => {
     const posts = data.allPosts.edges;
+    const { skip = 0, limit = posts.length } = pageContext || {};
 
     const portfolioData = data.czPortfolioInfo.edges[0].node;
     
@@ -15,6 +16,8 @@ const Portfolio = ({ pageContext }) => {
         node.portfolio_visible === true &&
         (selectedTech === "all" || node.portfolio_tech_type.name.includes(selectedTech))
     );
+
+    const pagePosts = filteredPosts.slice(skip, skip + limit);
 
     return (
         <Layout>
@@ -40,8 +43,8 @@ const Portfolio = ({ pageContext }) => {
                     </select>
                 </div>
                 <section className="post-feed">
-                    {filteredPosts.length > 0 ? (
-                        filteredPosts.map(({ node }) => <PostCard key={node.id} post={node} />)
+                    {pagePosts.length > 0 ? (
+                        pagePosts.map(({ node }) => <PostCard key={node.id} post={node} />)
                     ) : (
                         <p>No posts available under this tech type.</p>
                     )}

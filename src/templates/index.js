@@ -6,12 +6,14 @@ import data from "../data/blog.json";
 
 const Index = ({ pageContext }) => {
     const posts = data.allPosts.edges;
+    const { skip = 0, limit = posts.length } = pageContext || {};
+    const pagePosts = posts.slice(skip, skip + limit);
 
     return (
         <Layout isHome={true}>
             <div className="container">
                 <section className="post-feed">
-                    {posts.map(({ node }) => (
+                    {pagePosts.map(({ node }) => (
                         <PostCard key={node.id} post={node} />
                     ))}
                 </section>
