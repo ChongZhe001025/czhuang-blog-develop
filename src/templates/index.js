@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
 
 import { Layout } from "../components";
 
@@ -14,7 +13,7 @@ const Index = () => {
 							<img className="about-photo" src="/images/profile.jpg" alt="Chongzhe Huang" />
 						</div>
 						<div className="about-meta">
-							<div className="about-hello">Hi, I’m CZ 👋</div>
+							<div className="about-hello">Hi, I’m Chongzhe 👋</div>
 							<div className="about-tags"> SRE / DevOps / Cloud‑Native </div>
 							{/* <div className="about-cta">
 								<Link className="btn btn-primary" to="/posts/">Read My Blog</Link>
