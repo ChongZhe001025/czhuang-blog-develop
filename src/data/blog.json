@@ -3,7 +3,7 @@
     "edges": [
       {
         "node": {
-          "name": "Welcome to My Note! 📖",
+          "name": "Welcome to My Note! 📝",
           "slug": "note"
         }
       }
@@ -50,6 +50,23 @@
       },
       {
         "node": {
+          "excerpt": "This is where I document my hands‑on work and thinking in Cloud‑Native / DevOps / SRE.",
+          "featured": false,
+          "html": "/posts/about-blog.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "this-blog",
+          "title": "About Blog 📖"
+        }
+      },
+      {
+        "node": {
           "excerpt": "Generate & apply SELinux policies for Docker containers automatically.",
           "featured": false,
           "html": "/posts/AutoSEL.md",
@@ -58,7 +75,7 @@
           },
           "note_visible": false,
           "portfolio_tech_type": {
-            "name": "Go、SELinux、Docker"
+            "name": "#Go #SELinux #Docker"
           },
           "portfolio_visible": true,
           "slug": "AutoSEL",
@@ -75,7 +92,7 @@
           },
           "note_visible": false,
           "portfolio_tech_type": {
-            "name": "React、Go、MongoDB、Docker"
+            "name": "#React #Go #MongoDB #Docker"
           },
           "portfolio_visible": true,
           "slug": "TickBoard",
@@ -88,7 +105,7 @@
           "featured": false,
           "html": "/posts/xterm-js.md",
           "note_tech_type": {
-            "name": "Proxmox"
+            "name": "#Proxmox"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -105,7 +122,7 @@
           "featured": false,
           "html": "/posts/proxmox-install-k8s.md",
           "note_tech_type": {
-            "name": "Proxmox、K8s"
+            "name": "#Proxmox #K8s"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -122,7 +139,7 @@
           "featured": false,
           "html": "/posts/docker-build-jenkins.md",
           "note_tech_type": {
-            "name": "Docker、Jenkins"
+            "name": "#Docker #Jenkins"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -156,7 +173,7 @@
           "featured": false,
           "html": "/posts/k8s-argocd.md",
           "note_tech_type": {
-            "name": "K8s、ArgoCD"
+            "name": "#K8s #ArgoCD"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -208,7 +225,7 @@
           "featured": false,
           "html": "/posts/git-push-workflow-guide.md",
           "note_tech_type": {
-            "name": "Git"
+            "name": "#Git"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -226,7 +243,7 @@
           "featured": false,
           "html": "/posts/jenkins-trivy-guide.md",
           "note_tech_type": {
-            "name": "Jenkins、Trivy"
+            "name": "#Jenkins #Trivy"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -244,7 +261,7 @@
           "featured": false,
           "html": "/posts/ubuntu-install-harbor.md",
           "note_tech_type": {
-            "name": "Ubuntu、Harbor"
+            "name": "#Ubuntu #Harbor"
           },
           "note_visible": true,
           "portfolio_tech_type": {

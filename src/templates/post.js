@@ -63,6 +63,8 @@ const Post = ({ location, pageContext }) => {
             const targetTop = target.getBoundingClientRect().top + window.scrollY;
             const scrollTop = Math.max(0, targetTop - fixedTopHeight - extraGap);
             window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+            // 立即高亮所點擊的章節，避免過渡期間顯示為上一個
+            setActiveHeadingId(id);
             setIsSidebarOpen(false); // 滾動後自動關閉側邊欄（在手機模式下）
         }
     };
@@ -114,17 +116,18 @@ const Post = ({ location, pageContext }) => {
             }
 
             // 計算目前章節（考慮固定頂部導覽高度）
-            const headerEl = document.querySelector('.site-head') || document.querySelector('.site-nav');
-            const fixedTop = headerEl ? headerEl.getBoundingClientRect().height : 0;
-            const gap = 8;
+        const headerEl = document.querySelector('.site-head') || document.querySelector('.site-nav');
+        const fixedTop = headerEl ? headerEl.getBoundingClientRect().height : 0;
+        const gap = 8;
+        const activationOffset = 16; // 容忍距離，避免剛好落在頂部邊界時亮起上一個
             if (headings && headings.length > 0) {
                 let currentId = headings[0].id;
                 for (let i = 0; i < headings.length; i++) {
                     const h = headings[i];
                     const el = headingRefs.current[h.id]?.current || document.getElementById(h.id);
                     if (!el) continue;
-                    const top = el.getBoundingClientRect().top - fixedTop - gap;
-                    if (top <= 0) {
+            const top = el.getBoundingClientRect().top - fixedTop - gap;
+            if (top <= activationOffset) {
                         currentId = h.id;
                     } else {
                         break;
@@ -239,6 +242,7 @@ const Post = ({ location, pageContext }) => {
                     max-width: 1200px;
                     margin: 0 auto;
                     padding: 20px;
+                    position: relative; /* 讓行動版側欄以此為定位範圍，只在文章畫面內出現 */
                 }
                 /* 讓所有 H2 在捲動至視窗頂部時，預留固定導覽高度 */
                 .content h2 { scroll-margin-top: calc(var(--site-head-offset, 0px) + 8px); }
@@ -248,6 +252,7 @@ const Post = ({ location, pageContext }) => {
                     display: none;
                     position: fixed;
                     top: 50%;
+                    left: 10px;
                     transform: translateY(-50%); /* 讓按鈕垂直置中 */
                     background: #ddd; /* 淺灰色背景 */
                     color: black; /* 文字顏色 */
@@ -272,20 +277,27 @@ const Post = ({ location, pageContext }) => {
                     transform: translateY(-50%) scale(1.05); /* 略微放大 */
                 }
 
-                /* 側邊欄（桌面模式） */
+                /* 側邊欄（桌機/平板）：固定於視窗，不受捲動影響，垂直置中且高度自動 */
                 .sidebar {
                     position: fixed;
-                    top: 50%;
-                    left: 20px;
-                    transform: translateY(-50%);
-                    width: 220px;
-                    height: auto;
+                    top: calc(var(--site-head-offset, 0px) + (100vh - var(--site-head-offset, 0px)) / 2);
+                    left: max(20px, calc((100vw - 1200px) / 2 + 20px));
+                    width: 240px;
+                    height: auto; /* 隨內容自動增高 */
+                    max-height: calc(100vh - var(--site-head-offset, 0px) - 40px); /* 不超出視窗 */
+                    transform: translateY(-50%); /* 垂直置中 */
                     padding: 15px;
                     background: rgba(255, 255, 255, 0.3);
                     backdrop-filter: blur(10px);
                     border-radius: 12px;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     transition: all 0.3s ease-in-out;
+                    z-index: 5;
+                }
+
+                /* 桌機/平板：為固定側欄預留空間，避免內容被覆蓋 */
+                @media (min-width: 769px) {
+                    .content { margin-left: 280px; }
                 }
 
                 /* 側邊欄內部樣式 */
@@ -327,34 +339,33 @@ const Post = ({ location, pageContext }) => {
                     font-weight: 600;
                 }
 
-                /* 平板和手機模式 */
-                @media (max-width: 1270px) {
+                /* 手機模式：側欄固定於視窗，使用漢堡切換 */
+                @media (max-width: 768px) {
                     .hamburger-menu {
                         display: block;
                     }
 
                     .sidebar {
-                        position: fixed;
-                        top: 0px;
-                        left: -250px;
-                        width: 250px;
-                        height: 100vh;
-                        background: #f8f8f8; /* 取消玻璃擬態 */
+            position: fixed;                                   /* 固定在視窗，隨捲動可見 */
+            top: calc(var(--site-head-offset, 0px) + 10px);    /* 位於 header 下方 */
+                        left: 0;
+                        width: 260px;
+                        height: auto;
+                        max-height: calc(100vh - var(--site-head-offset, 0px) - 20px); /* 不超出可視高度 */
+                        background: #f8f8f8;
                         padding: 20px;
-                        transform: translateX(0);
-                        transition: left 0.4s ease-in-out;
+                        transform: translateX(-110%);                      /* 預設收起，隱於左側 */
+                        transition: transform 0.35s ease-in-out;
                         box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.2);
-                        z-index: 20; /* 確保側邊欄的值比漢堡按鈕高 */
+                        z-index: 20;                                       /* 高於文章內容與按鈕 */
+                        overflow: auto;                                     /* 內容過長可捲動 */
                     }
 
                     .sidebar.open {
-                        left: 0;
+                        transform: translateX(0);
                     }
 
-                    .content {
-                        margin-left: 0;
-                        padding: 20px;
-                    }
+                    .content { margin-left: 0; padding: 20px; }
                 }
 
                 .scroll-to-top {

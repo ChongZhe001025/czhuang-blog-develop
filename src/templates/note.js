@@ -10,7 +10,7 @@ const Note = ({ pageContext }) => {
     const noteData = data.czNoteInfo.edges[0].node;
 
     const techTypes = [...new Set(
-        posts.flatMap(({ node }) => node.note_tech_type?.name?.split("、") || [])
+        posts.flatMap(({ node }) => node.note_tech_type?.name?.split(" ") || [])
     )].filter(Boolean);
 
     const [selectedTech, setSelectedTech] = useState("all");
@@ -20,7 +20,9 @@ const Note = ({ pageContext }) => {
         (selectedTech === "all" || node.note_tech_type.name.includes(selectedTech))
     );
 
-    const pagePosts = filteredPosts.slice(skip, skip + limit);
+    const pagePosts = selectedTech === "all"
+        ? filteredPosts.slice(skip, skip + limit)
+        : filteredPosts;
 
     return (
         <Layout>
@@ -38,7 +40,7 @@ const Note = ({ pageContext }) => {
                         onChange={(e) => setSelectedTech(e.target.value)}
                         className="filter-select"
                     >
-                        <option value="all">All Tech Types</option>
+                        <option value="all">Choose your tech interest</option>
                         {techTypes.map((tech) => (
                             <option key={tech} value={tech}>
                                 {tech}
@@ -57,7 +59,9 @@ const Note = ({ pageContext }) => {
                     )}
                 </section>
 
-                <Pagination pageContext={pageContext} />
+                {selectedTech === "all" && (
+                    <Pagination pageContext={pageContext} />
+                )}
             </div>
         </Layout>
     );

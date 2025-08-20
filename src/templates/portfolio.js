@@ -9,7 +9,7 @@ const Portfolio = ({ pageContext }) => {
 
     const portfolioData = data.czPortfolioInfo.edges[0].node;
     
-    const techTypes = [...new Set(posts.flatMap(({ node }) => node.portfolio_tech_type.name.split("、")))].filter(Boolean);
+    const techTypes = [...new Set(posts.flatMap(({ node }) => node.portfolio_tech_type.name.split(" ")))].filter(Boolean);
     const [selectedTech, setSelectedTech] = React.useState("all");
 
     const filteredPosts = posts.filter(({ node }) =>
@@ -17,7 +17,9 @@ const Portfolio = ({ pageContext }) => {
         (selectedTech === "all" || node.portfolio_tech_type.name.includes(selectedTech))
     );
 
-    const pagePosts = filteredPosts.slice(skip, skip + limit);
+    const pagePosts = selectedTech === "all"
+        ? filteredPosts.slice(skip, skip + limit)
+        : filteredPosts;
 
     return (
         <Layout>
@@ -34,7 +36,7 @@ const Portfolio = ({ pageContext }) => {
                         onChange={(e) => setSelectedTech(e.target.value)}
                         className="filter-select"
                     >
-                        <option value="all">All Tech Types</option>
+                        <option value="all"> Choose your tech interest </option>
                         {techTypes.map((tech) => (
                             <option key={tech} value={tech}>
                                 {tech}
@@ -50,7 +52,9 @@ const Portfolio = ({ pageContext }) => {
                     )}
                 </section>
 
-                <Pagination pageContext={pageContext} />
+                {selectedTech === "all" && (
+                    <Pagination pageContext={pageContext} />
+                )}
             </div>
         </Layout>
     );
