@@ -6,14 +6,17 @@ import { Layout } from "../components";
 const Index = () => {
     return (
         <Layout isHome={true}>
-            <div className="container">
+            <div className="container home-hero">
                 <section className="about-wrapper">
-                    <div className="about-text content">
-                        <p>"If we don’t invest time in improving ourselves now, we’ll have <br />to spend even more time coping with an unsatisfactory life in the future."</p>
-                        <p className="about-byline">— Chongzhe Huang</p>
-                    </div>
                     <div className="about-photo-wrap">
                         <img className="about-photo" src="/images/profile.jpg" alt="Chongzhe Huang" />
+                    </div>
+                    <div className="about-text content">
+                        <p>
+                            Hello, I’m a software engineer focused on cloud‑native, DevOps, and scalable web apps.
+                            I turn ideas into shipped products and share what I learn along the way.
+                        </p>
+                        <p className="about-byline">— Chongzhe Huang</p>
                     </div>
                 </section>
             </div>

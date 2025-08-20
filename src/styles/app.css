@@ -368,6 +368,11 @@ blockquote {
     margin: 0 0 1.5em 0;
 }
 
+/* Mobile base font-size downscale */
+@media (max-width: 768px) {
+    body { font-size: 1.4rem; }
+}
+
 ol,
 ul {
     padding-left: 1.3em;
@@ -844,6 +849,18 @@ h6 {
     padding: 4vw 0;
 }
 
+/* Home hero: center content vertically within the viewport */
+.home-hero {
+    min-height: calc(100vh - var(--site-head-offset, 0px) - 120px); /* 減去固定 header 與預估 footer 高度 */
+    display: flex;
+    align-items: center;   /* 垂直置中 */
+}
+@media (max-width: 768px) {
+    .home-hero {
+        min-height: calc(100vh - var(--site-head-offset, 0px) - 100px);
+    }
+}
+
 /* Home About section */
 .about-wrapper {
     display: flex;
@@ -874,7 +891,8 @@ h6 {
 
 @media (max-width: 768px) {
     .about-wrapper .about-text.content p:first-child {
-        font-size: 2.2rem;
+        font-size: 1.8rem; /* 縮小強調段落字級 */
+        line-height: 1.6em;
     }
 }
 
@@ -893,16 +911,27 @@ h6 {
 
 @media (max-width: 768px) {
     .about-wrapper {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-        gap: 1.5rem;
+        flex-direction: row;           /* 手機維持左右排列，避免上下堆疊拉長頁面 */
+        align-items: center;           /* 讓照片與文字垂直置中對齊 */
+        gap: 1rem;
+        flex-wrap: nowrap;
     }
     .about-photo-wrap {
-        align-self: center;
+        flex: 0 0 auto;
+        align-self: center;            /* 跟隨容器垂直置中 */
     }
     .about-photo {
-        width: 160px;
-        height: 160px;
+        width: 96px;                   /* 縮小頭像尺寸 */
+        height: 96px;
+        border-radius: 50%;            /* 行動端用圓形更緊湊 */
+    }
+    .about-text {
+        flex: 1 1 auto;                /* 文字佔滿剩餘空間 */
+    }
+    /* 手機行動版 About 一般段落字級縮小 */
+    .about-wrapper .about-text.content p {
+        font-size: 1.4rem;
+        line-height: 1.8rem;
     }
 }
 
