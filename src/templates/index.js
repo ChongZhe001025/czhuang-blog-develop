@@ -1,23 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Layout, PostCard, Pagination } from "../components";
-import data from "../data/blog.json";
+import { Layout } from "../components";
 
-const Index = ({ pageContext }) => {
-    const posts = data.allPosts.edges;
-    const { skip = 0, limit = posts.length } = pageContext || {};
-    const pagePosts = posts.slice(skip, skip + limit);
-
+const Index = () => {
     return (
         <Layout isHome={true}>
             <div className="container">
-                <section className="post-feed">
-                    {pagePosts.map(({ node }) => (
-                        <PostCard key={node.id} post={node} />
-                    ))}
+                <section className="about-wrapper">
+                    <div className="about-text content">
+                        <p>"If we don’t invest time in improving ourselves now, we’ll have <br />to spend even more time coping with an unsatisfactory life in the future."</p>
+                        <p className="about-byline">— Chongzhe Huang</p>
+                    </div>
+                    <div className="about-photo-wrap">
+                        <img className="about-photo" src="/images/profile.jpg" alt="Chongzhe Huang" />
+                    </div>
                 </section>
-                <Pagination pageContext={pageContext} />
             </div>
         </Layout>
     );

@@ -4,7 +4,7 @@
       {
         "node": {
           "name": "Welcome to My Note! 📖",
-          "slug": "read-note"
+          "slug": "note"
         }
       }
     ]
@@ -14,7 +14,17 @@
       {
         "node": {
           "name": "Welcome to My Portfolio! 🚀",
-          "slug": "read-portfolio"
+          "slug": "portfolio"
+        }
+      }
+    ]
+  },
+  "czAboutInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "Welcome to About Me & Blog! 💬",
+          "slug": "about"
         }
       }
     ]
@@ -129,7 +139,7 @@
           "featured": false,
           "html": "/posts/k8s-dashboard-nginx.md",
           "note_tech_type": {
-            "name": "K8s、Nginx"
+            "name": "#K8s #Nginx"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -163,7 +173,7 @@
           "featured": false,
           "html": "/posts/k8s-harbor.md",
           "note_tech_type": {
-            "name": "K8s、Harbor"
+            "name": "#K8s #Harbor"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -180,7 +190,7 @@
           "featured": false,
           "html": "/posts/ubuntu-root-login.md",
           "note_tech_type": {
-            "name": "Ubuntu"
+            "name": "#Ubuntu"
           },
           "note_visible": true,
           "portfolio_tech_type": {
@@ -252,8 +262,8 @@
       {
         "node": {
           "cover_image": "/images/cover-image.png",
-          "description": "Portfolio & Note",
-          "meta_title": "CZ Blog",
+          "description": "",
+          "meta_title": "CZ-HUANG's Blog",
           "github": "https://github.com/ChongZhe001025",
           "gmail": "mailto:czhuang001025@gmail.com",
           "icon": "https://gatsby.ghost.io/content/images/size/w256h256/2022/05/favicon.png",
@@ -266,11 +276,15 @@
             },
             {
               "label": "Portfolio",
-              "url": "/portfolio/read-portfolio/"
+              "url": "/portfolio/"
             },
             {
               "label": "Note",
-              "url": "/note/read-note/"
+              "url": "/note/"
+            },
+            {
+              "label": "About",
+              "url": "/about/"
             }
           ],
           "title": "Portfolio & Note"

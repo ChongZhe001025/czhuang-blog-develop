@@ -17,8 +17,12 @@ const Post = ({ location, pageContext }) => {
     const [headings, setHeadings] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 控制側邊欄開關
     const [showScrollTop, setShowScrollTop] = useState(false); // 新增：控制回到頂部按鈕的狀態
+    const [scrollBtnBottom, setScrollBtnBottom] = useState(30); // 新增：動態調整按鈕與底部距離，避免與 footer 重疊
+    const [scrollBtnRight, setScrollBtnRight] = useState(10); // 新增：對齊文章內容右側
+    const [activeHeadingId, setActiveHeadingId] = useState(null); // 新增：目前章節
     const headingRefs = useRef({});
     const sidebarRef = useRef(null); // 新增 Ref 來監聽側邊欄
+    const contentRef = useRef(null); // 文章內容容器，用於定位回到頂部按鈕
 
     useEffect(() => {
         if (post && post.html) {
@@ -51,7 +55,14 @@ const Post = ({ location, pageContext }) => {
     const scrollToHeading = (id) => {
         const target = headingRefs.current[id]?.current;
         if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            // 取得固定於頂部的導覽或整個 header 高度，避免被遮住
+            const headerEl = document.querySelector('.site-head') || document.querySelector('.site-nav');
+            const fixedTopHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;
+            const extraGap = 8; // 與導覽保持一點距離，避免貼齊
+
+            const targetTop = target.getBoundingClientRect().top + window.scrollY;
+            const scrollTop = Math.max(0, targetTop - fixedTopHeight - extraGap);
+            window.scrollTo({ top: scrollTop, behavior: 'smooth' });
             setIsSidebarOpen(false); // 滾動後自動關閉側邊欄（在手機模式下）
         }
     };
@@ -76,16 +87,65 @@ const Post = ({ location, pageContext }) => {
     }, [isSidebarOpen]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 200) {
-                setShowScrollTop(true); // 新增：當滾動超過 300px 顯示回到頂部按鈕
+        const updateScrollUI = () => {
+            // 顯示／隱藏「回到頂部」按鈕
+            setShowScrollTop(window.scrollY > 200);
+
+            // 動態調整避免與 footer 重疊
+            const footer = document.querySelector('.site-foot');
+            if (footer) {
+                const rect = footer.getBoundingClientRect();
+                // 若 footer 進入視窗，計算重疊高度，並加到預設 bottom 空隙
+                const overlap = Math.max(0, window.innerHeight - rect.top);
+                setScrollBtnBottom(30 + overlap);
             } else {
-                setShowScrollTop(false);
+                setScrollBtnBottom(30);
+            }
+
+            // 讓按鈕水平對齊文章內容的右側
+            const container = contentRef.current || document.querySelector('.content');
+            if (container) {
+                const cRect = container.getBoundingClientRect();
+                // 與內容右側保持 10px 內距，同時不得小於 10px
+                const rightGap = Math.max(10, window.innerWidth - cRect.right + 10);
+                setScrollBtnRight(rightGap);
+            } else {
+                setScrollBtnRight(10);
+            }
+
+            // 計算目前章節（考慮固定頂部導覽高度）
+            const headerEl = document.querySelector('.site-head') || document.querySelector('.site-nav');
+            const fixedTop = headerEl ? headerEl.getBoundingClientRect().height : 0;
+            const gap = 8;
+            if (headings && headings.length > 0) {
+                let currentId = headings[0].id;
+                for (let i = 0; i < headings.length; i++) {
+                    const h = headings[i];
+                    const el = headingRefs.current[h.id]?.current || document.getElementById(h.id);
+                    if (!el) continue;
+                    const top = el.getBoundingClientRect().top - fixedTop - gap;
+                    if (top <= 0) {
+                        currentId = h.id;
+                    } else {
+                        break;
+                    }
+                }
+                setActiveHeadingId(currentId);
+            } else {
+                setActiveHeadingId(null);
             }
         };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+
+        window.addEventListener("scroll", updateScrollUI);
+        window.addEventListener("resize", updateScrollUI);
+        // 初始執行一次，確保正確位置
+        updateScrollUI();
+
+        return () => {
+            window.removeEventListener("scroll", updateScrollUI);
+            window.removeEventListener("resize", updateScrollUI);
+        };
+    }, [headings]);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" }); // 新增：平滑滾動回到頂部
@@ -123,7 +183,11 @@ const Post = ({ location, pageContext }) => {
                         <ul>
                             {headings.map((heading) => (
                                 <li key={heading.id}>
-                                    <button onClick={() => scrollToHeading(heading.id)}>
+                                    <button
+                                        onClick={() => scrollToHeading(heading.id)}
+                                        className={activeHeadingId === heading.id ? 'active' : ''}
+                                        aria-current={activeHeadingId === heading.id ? 'true' : undefined}
+                                    >
                                         {heading.text}
                                     </button>
                                 </li>
@@ -133,7 +197,7 @@ const Post = ({ location, pageContext }) => {
                 )}
 
                 {/* 主要內容區域 */}
-                <article className="content">
+                <article className="content" ref={contentRef}>
                     <section className="post-full-content">
                         <h1 className="content-title">{post.title}</h1>
                         <section className="content-body load-external-scripts">
@@ -154,11 +218,17 @@ const Post = ({ location, pageContext }) => {
                             </ReactMarkdown>
                         </section>
                     </section>
+                    {showScrollTop && (
+                        <button
+                            className="scroll-to-top"
+                            onClick={scrollToTop}
+                            style={{ bottom: `${scrollBtnBottom}px`, right: `${scrollBtnRight}px` }}
+                        >
+                            ▲
+                        </button>
+                    )}
                 </article>
             </div>
-            {showScrollTop && (
-                <button className="scroll-to-top" onClick={scrollToTop}>▲</button> // 新增：回到頂部按鈕
-            )}
 
             {/* 樣式 */}
             <style jsx>{`
@@ -170,6 +240,8 @@ const Post = ({ location, pageContext }) => {
                     margin: 0 auto;
                     padding: 20px;
                 }
+                /* 讓所有 H2 在捲動至視窗頂部時，預留固定導覽高度 */
+                .content h2 { scroll-margin-top: calc(var(--site-head-offset, 0px) + 8px); }
 
                 /* 漢堡按鈕 */
                 .hamburger-menu {
@@ -188,6 +260,11 @@ const Post = ({ location, pageContext }) => {
                     z-index: 10;
                     transition: background 0.3s ease, transform 0.2s ease;
                     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); /* 強化陰影 */
+                }
+
+                /* 文章容器：提供絕對定位的參考 */
+                .content {
+                    position: relative;
                 }
 
                 .hamburger-menu:hover {
@@ -243,6 +320,13 @@ const Post = ({ location, pageContext }) => {
                     transform: translateX(5px);
                 }
 
+                /* 目前章節高亮 */
+                .sidebar button.active {
+                    background: rgba(0, 0, 0, 0.08);
+                    color: #000;
+                    font-weight: 600;
+                }
+
                 /* 平板和手機模式 */
                 @media (max-width: 1270px) {
                     .hamburger-menu {
@@ -274,9 +358,10 @@ const Post = ({ location, pageContext }) => {
                 }
 
                 .scroll-to-top {
-                    position: fixed;
+                    position: fixed; /* 固定在視窗上 */
                     bottom: 30px;
                     right: 10px;
+                    z-index: 25; /* 避免被側邊欄或其他元素遮住 */
                     background: #ddd; /* 淺灰色背景 */
                     color: black;
                     border: none;

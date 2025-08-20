@@ -14,56 +14,81 @@ exports.createPages = async ({ actions }) => {
     // Extract query results
     const portfolio = data.czPortfolioInfo.edges;
     const note = data.czNoteInfo.edges;
+    const about = data.czAboutInfo.edges;
     const posts = data.allPosts.edges;
 
     // Load templates
     const indexTemplate = path.resolve(`./src/templates/index.js`);
     const portfolioTemplate = path.resolve(`./src/templates/portfolio.js`);
     const noteTemplate = path.resolve(`./src/templates/note.js`);
+    const aboutTemplate = path.resolve(`./src/templates/about.js`);
     const postTemplate = path.resolve(`./src/templates/post.js`);
 
-    // Create tag pages
+    // Create portfolio page
     portfolio.forEach(({ node }) => {
-        const totalPosts = node.postCount !== null ? node.postCount : 0;
+        // permalink: `/portfolio/`
+        const url = `/portfolio`;
 
-        // This part here defines, that our tag pages will use
-        // a `/tag/:slug/` permalink.
-        const url = `/portfolio/${node.slug}`;
 
-        const items = Array.from({ length: totalPosts });
+        // Derive the list of visible portfolio posts from data
+        const portfolioItems = posts.filter(
+            ({ node }) => node.portfolio_visible === true
+        );
 
         // Create pagination
         paginate({
             createPage,
-            items: items,
+            items: portfolioItems,
             itemsPerPage: postsPerPage,
             component: portfolioTemplate,
             pathPrefix: ({ pageNumber }) =>
-                pageNumber === 0 ? url : `${url}/page`,
+                pageNumber === 0 ? `${url}/` : `${url}/page`,
             context: {
                 slug: node.slug,
             },
         });
     });
 
-    // Create note pages
+    // Create note page
     note.forEach(({ node }) => {
-        const totalPosts = node.postCount !== null ? node.postCount : 0;
+        // permalink: `/note/`
+        const url = `/note`;
 
-        // This part here defines, that our note pages will use
-        // a `/note/:slug/` permalink.
-        const url = `/note/${node.slug}`;
 
-        const items = Array.from({ length: totalPosts });
+        // Derive the list of visible note posts from data
+        const noteItems = posts.filter(({ node }) => node.note_visible === true);
 
         // Create pagination
         paginate({
             createPage,
-            items: items,
+            items: noteItems,
             itemsPerPage: postsPerPage,
             component: noteTemplate,
             pathPrefix: ({ pageNumber }) =>
-                pageNumber === 0 ? url : `${url}/page`,
+                pageNumber === 0 ? `${url}/` : `${url}/page`,
+            context: {
+                slug: node.slug,
+            },
+        });
+    });
+
+    // Create about page
+    about.forEach(({ node }) => {
+        // permalink: `/about/`
+        const url = `/about`;
+
+
+        // Derive the list of visible note posts from data
+        const aboutItems = posts.filter(({ node }) => node.note_visible === false && node.portfolio_visible === false);
+
+        // Create pagination
+        paginate({
+            createPage,
+            items: aboutItems,
+            itemsPerPage: postsPerPage,
+            component: aboutTemplate,
+            pathPrefix: ({ pageNumber }) =>
+                pageNumber === 0 ? `${url}/` : `${url}/page`,
             context: {
                 slug: node.slug,
             },

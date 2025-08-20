@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-import { Link } from "gatsby";
+// import { Link } from "gatsby";
 import { Navigation } from ".";
 import data from "../data/blog.json";
 
@@ -14,6 +14,19 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
     const linkedinUrl = site.linkedin;
     const gmailUrl = site.gmail;
 
+    // Measure header height for spacer (avoid content being hidden under fixed header)
+    const headerRef = React.useRef(null);
+    const [headerHeight, setHeaderHeight] = React.useState(0);
+
+    React.useEffect(() => {
+        const update = () => {
+            if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
+        };
+        update();
+        window.addEventListener("resize", update);
+        return () => window.removeEventListener("resize", update);
+    }, []);
+
     return (
         <>
             <Helmet>
@@ -21,10 +34,13 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                 <style type="text/css">{`${site.codeinjection_styles || ""}`}</style>
                 <body className={bodyClass} />
             </Helmet>
+            {/* 將固定頂部高度提供為 CSS 變數，供各頁使用（如 scroll-margin-top） */}
+            <style>{`:root{--site-head-offset:${headerHeight}px}`}</style>
 
             <div className="viewport">
                 <div className="viewport-top">
                     <header
+                        ref={headerRef}
                         className="site-head"
                         style={{
                             ...(site.cover_image && {
@@ -37,6 +53,19 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                                 <div className="site-mast-left">
                                 </div>
                                 <div className="site-mast-right">
+                                    
+                                </div>
+                            </div>
+                            {isHome ? (
+                                <div className="site-banner">
+                                    <h1 className="site-banner-title">{site.meta_title}</h1>
+                                </div>
+                            ) : null}
+                            <nav className="site-nav">
+                                <div className="site-nav-left">
+                                    <Navigation data={site.navigation} navClass="site-nav-item" />
+                                </div>
+                                <div className="site-nav-right">
                                     {githubUrl && (
                                         <a href={githubUrl} className="site-nav-item" target="_blank" rel="noopener noreferrer">
                                             <img
@@ -62,19 +91,6 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                                             alt="Gmail Icon" 
                                         />
                                     </a>
-                                </div>
-                            </div>
-                            {isHome ? (
-                                <div className="site-banner">
-                                    <h1 className="site-banner-title">{site.meta_title}</h1>
-                                    <p className="site-banner-desc">{site.description}</p>
-                                </div>
-                            ) : null}
-                            <nav className="site-nav">
-                                <div className="site-nav-left">
-                                    <Navigation data={site.navigation} navClass="site-nav-item" />
-                                </div>
-                                <div className="site-nav-right">
                                     {/* <Link className="site-nav-button" to="/about">
                                         About
                                     </Link> */}
@@ -83,6 +99,8 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                         </div>
                     </header>
 
+                    {/* Spacer to offset fixed header */}
+                    <div style={{ height: headerHeight }} aria-hidden="true" />
                     <main className="site-main">
                         {children}
                     </main>
@@ -92,13 +110,13 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                     <footer className="site-foot">
                         <div className="site-foot-nav container">
                             <div className="site-foot-nav-left">
-                                {site.title} - by Chongzhe Huang
+                                Chongzhe Huang 2025 © all rights reserved
                             </div>
-                            <div className="site-foot-nav-right">
-                                <Link to="/"> 🏠</Link>
-                                <Link to="/portfolio/read-portfolio/"> 🚀</Link>
-                                <Link to="/note/read-note/"> 📖</Link>
-                            </div>
+                            {/* <div className="site-foot-nav-right">
+                                <Link to="/"> Home </Link>
+                                <Link to="/portfolio/"> Portfolio </Link>
+                                <Link to="/note/"> Notes </Link>
+                            </div> */}
                         </div>
                     </footer>
                 </div>

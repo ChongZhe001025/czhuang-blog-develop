@@ -243,6 +243,7 @@ html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
     cursor: pointer;
+    appearance: button;
     -webkit-appearance: button;
 }
 button[disabled],
@@ -271,7 +272,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 input[type="search"] {
     box-sizing: content-box;
-
+    appearance: textfield;
     -webkit-appearance: textfield;
 }
 input[type="search"]::-webkit-search-cancel-button,
@@ -320,6 +321,7 @@ body {
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" on;
     -moz-font-feature-settings: "liga" on;
 }
 
@@ -596,7 +598,7 @@ h6 {
         font-size: 3.4rem;
     }
     .content {
-        font-size: 1.8rem;
+    font-size: 1.6rem; /* 與前面手機設定一致，避免覆蓋造成放大 */
     }
 }
 
@@ -679,6 +681,12 @@ h6 {
     background: var(--color-base);
     background-position: center;
     background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    
 }
 
 .site-nav-item {
@@ -776,6 +784,11 @@ h6 {
         font-size: 3rem;
     }
 }
+@media (max-width: 500px) {
+    .site-banner-title {
+        font-size: 2.6rem;
+    }
+}
 
 .site-banner-desc {
     margin: 0;
@@ -829,6 +842,68 @@ h6 {
 
 .site-main {
     padding: 4vw 0;
+}
+
+/* Home About section */
+.about-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.about-text {
+    flex: 1 1 60%;
+}
+
+.about-byline {
+    margin-top: 0.75rem;
+    text-align: right;
+    color: #4b5563;
+    font-weight: lighter;
+    font-size: 1.5rem;
+    font-family: "Segoe Script", "Lucida Handwriting", "Dancing Script", "Kalam", cursive;
+    letter-spacing: 0.2px;
+}
+
+/* Emphasize main intro text in About section */
+.about-wrapper .about-text.content p:first-child {
+    font-size: 2.4rem;
+    line-height: 1.75em;
+}
+
+@media (max-width: 768px) {
+    .about-wrapper .about-text.content p:first-child {
+        font-size: 2.2rem;
+    }
+}
+
+.about-photo-wrap {
+    flex: 0 0 240px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.about-photo {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .about-wrapper {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    .about-photo-wrap {
+        align-self: center;
+    }
+    .about-photo {
+        width: 160px;
+        height: 160px;
+    }
 }
 
 /* Index
@@ -1128,6 +1203,7 @@ h6 {
     line-height: 1.5em;
     font-weight: 400;
 
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
@@ -1331,4 +1407,25 @@ h6 {
 .post-card-wrapper:hover {
     border-color: #007acc;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------------------------------------- */
+/* RWD Typography Scaling                                    */
+/* 平板（769–1024px）與手機（≤500px）字級縮小                    */
+/* ---------------------------------------------------------- */
+
+/* 平板：769px ~ 1024px，適度縮小標題與內文 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .content-title { font-size: 4rem; }
+    .content-body h1 { font-size: 3.0rem; }
+    .content-body h2 { font-size: 2.8rem; }
+    .content-body h3 { font-size: 2.5rem; }
+    .content-body h4 { font-size: 2.2rem; }
+    .post-card-title { font-size: 1.6rem; }
+    .post-card-excerpt { font-size: 1.5rem; }
+}
+
+/* 手機：補強一些沒有 500px 斷點的字級 */
+@media (max-width: 500px) {
+    .content-title { font-size: 3.0rem; }
 }
