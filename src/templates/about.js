@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Seo } from "../components/SEO";
 import { Layout, PostCard, Pagination } from "../components";
 import data from "../data/blog.json";
 
@@ -18,13 +19,13 @@ const About = ({ pageContext }) => {
 
     return (
         <Layout>
+                <Seo title="About | CZ-HUANG Blog" description="About the Blog Author Chongzhe Huang: Introduction and Experience" />
             <div className="container">
                 <header className="page-header">
                     <div className="page-header-content">
                         <h1>{aboutData.name}</h1>
                     </div>
                 </header>
-
                 <section className="post-feed">
                     {pagePosts.length > 0 ? (
                         pagePosts.map(({ node }) => (
@@ -34,7 +35,6 @@ const About = ({ pageContext }) => {
                         <p>No posts available under this category.</p>
                     )}
                 </section>
-
                 <Pagination pageContext={pageContext} />
             </div>
         </Layout>

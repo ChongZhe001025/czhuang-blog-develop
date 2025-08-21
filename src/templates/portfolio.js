@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { Seo } from "../components/SEO";
 import { Layout, PostCard, Pagination } from "../components";
 import data from "../data/blog.json";
 
@@ -23,6 +24,7 @@ const Portfolio = ({ pageContext }) => {
 
     return (
         <Layout>
+            <Seo title="Portfolio | CZ-HUANG Blog" description="CZ-Huang Blog Portfolio categories and content index" />
             <div className="container">
                 <header className="page-header">
                     <div className="page-header-content">

@@ -7,6 +7,27 @@ import data from "../data/blog.json";
 
 import "../styles/app.css";
 
+// 手機版 site-nav-left 在 site-nav-right 下方
+const navOrderMobileStyle = `
+@media (max-width: 600px) {
+    .site-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .site-nav-right {
+        order: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .site-nav-left {
+        order: 2;
+    }
+}
+`;
+
 const DefaultLayout = ({ children, bodyClass, isHome }) => {
     const site = data.layoutSettings.edges[0].node;
 
@@ -33,6 +54,8 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                 <html lang={site.lang} />
                 <style type="text/css">{`${site.codeinjection_styles || ""}`}</style>
                 <body className={bodyClass} />
+                {/* 手機版 site-nav-left 在 site-nav-right 上方 */}
+                <style type="text/css">{navOrderMobileStyle}</style>
             </Helmet>
             {/* 將固定頂部高度提供為 CSS 變數，供各頁使用（如 scroll-margin-top） */}
             <style>{`:root{--site-head-offset:${headerHeight}px}`}</style>

@@ -1,4 +1,4 @@
-# CZ Blog
+# CZ-Huang Blog
 
 A personal blog and portfolio site built with Gatsby.
 

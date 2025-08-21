@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
+import { Seo } from "../components/SEO";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -169,11 +169,12 @@ const Post = ({ location, pageContext }) => {
 
     return (
         <Layout>
-            <Helmet>
-                <title>{post.title}</title>
-                <style type="text/css">{post.codeinjection_styles || ""}</style>
-            </Helmet>
-
+            <Seo
+                title={post.title ? `${post.title} - CZ-Huang Blog` : 'Article - CZ-Huang Blog'}
+                description={post.description || post.excerpt || 'CZ-Huang Blog Article Content'}
+                image={post.cover || undefined}
+                pathname={location && location.pathname}
+            />
             {/* 漢堡選單按鈕（手機和平板時顯示） */}
             <button className="hamburger-menu" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             »

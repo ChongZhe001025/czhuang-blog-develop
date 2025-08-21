@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Seo } from "../components/SEO";
 import { Layout, PostCard, Pagination } from "../components";
 import data from "../data/blog.json";
 
@@ -26,13 +27,13 @@ const Note = ({ pageContext }) => {
 
     return (
         <Layout>
+                <Seo title="Tech Note | CZ-HUANG Blog" description="CZ-Huang Blog Technical Notes Categories and Content Index" />
             <div className="container">
                 <header className="page-header">
                     <div className="page-header-content">
                         <h1>{noteData.name}</h1>
                     </div>
                 </header>
-
                 <div className="filter-container">
                     <select
                         id="tech-select"

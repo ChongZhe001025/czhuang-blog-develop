@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import { Layout } from "../components";
+import { Seo } from "../components/SEO";
 
 const NotFoundPage = () => (
     <Layout>
+    <Seo title="404: Not found" description="Page Not found - CZ-Huang Blog" />
         <div className="container">
             <article className="content" style={{ textAlign: `center` }}>
                 <h1 className="content-title">Error 404</h1>

@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 
 const Index = () => {
 	return (
-	<Layout isHome={true} bodyClass="home-page">
+		<Layout isHome={true} bodyClass="home-page">
+			   <Seo title="CZ-HUANG Blog" description="Hi, I’m Chongzhe Huang 👋. This is my personal blog, where I document my hands‑on work and thinking in Cloud‑Native / DevOps / SRE." />
 			<div className="container home-hero">
 				<section className="about-wrapper">
 					<div className="about-photo-wrap">

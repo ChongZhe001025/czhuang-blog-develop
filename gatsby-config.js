@@ -7,8 +7,12 @@ const remarkGfm = require("remark-gfm");
 
 const config = {
     siteMetadata: {
-        siteUrl: process.env.SITEURL,
-        title: 'CZ Blog', 
+        siteUrl: process.env.SITEURL || 'https://blog.czhuang.dev/',
+        title: 'CZ-Huang Blog',
+        description: 'Hi, I’m Chongzhe Huang 👋. This is my personal blog, where I document my hands‑on work and thinking in Cloud‑Native / DevOps / SRE.',
+        author: 'ChongZhe',
+        image: '/logo.png',
+        twitterUsername: '@your_twitter',
     },
     trailingSlash: 'always',
     plugins: [
@@ -16,8 +20,8 @@ const config = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-              name: 'CZ Blog - Portfolio & Note',
-              short_name: 'CZ Blog',
+              name: 'CZ-Huang Blog - Portfolio & Note',
+              short_name: 'CZ-Huang Blog',
               start_url: '/',
               background_color: `#e9e9e9`,
               theme_color: `#15171A`,
@@ -61,6 +65,18 @@ const config = {
         `gatsby-transformer-sharp`,
         `gatsby-plugin-catch-links`,
         `gatsby-plugin-react-helmet`,
+        {
+            resolve: `gatsby-plugin-sitemap`,
+            options: {
+                output: `/sitemap.xml`,
+            },
+        },
+        {
+            resolve: `gatsby-plugin-robots-txt`,
+            options: {
+                policy: [{ userAgent: '*', allow: '/' }],
+            },
+        },
         `gatsby-plugin-offline`,
     ]
 };
