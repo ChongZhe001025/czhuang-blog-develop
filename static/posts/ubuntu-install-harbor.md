@@ -1,157 +1,176 @@
-All sensitive information (domain, IP, secrets, etc.) is replaced with placeholders for public sharing and educational purposes.
+# Harbor Installation & HTTPS Setup (with Let's Encrypt)
+
+> ⚠️ All sensitive information (domain, IP, secrets, etc.) is replaced
+> with placeholders for public sharing and educational purposes.
+
+------------------------------------------------------------------------
 
 ## 1. Install Docker Engine
-- Update packages:
-```bash
+
+``` bash
 sudo apt-get update
-```
-- Install required packages:
-```bash
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 ```
-- Add Docker official GPG key:
-```bash
+
+Add Docker GPG key and repository:
+
+``` bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-```
-- Set up the stable repository:
-```bash
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
-- Install Docker Engine:
-```bash
+
+Install Docker:
+
+``` bash
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
-- Verify installation:
-```bash
+
+Verify:
+
+``` bash
 sudo systemctl status docker
 ```
 
----
+------------------------------------------------------------------------
 
 ## 2. Install Docker Compose
-- Download:
-```bash
+
+``` bash
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-```
-- Make it executable:
-```bash
 sudo chmod +x /usr/local/bin/docker-compose
-```
-- Verify:
-```bash
 docker-compose --version
 ```
 
----
+------------------------------------------------------------------------
 
 ## 3. Install Harbor
-- Download Harbor:
-```bash
+
+Download and extract:
+
+``` bash
 wget https://github.com/goharbor/harbor/releases/download/v2.10.1/harbor-offline-installer-v2.10.1.tgz
-```
-- Extract:
-```bash
 tar xzvf harbor-offline-installer-v2.10.1.tgz
-```
-- Enter the directory and copy the config file:
-```bash
 cd harbor
 cp harbor.yml.tmpl harbor.yml
-sudo nano harbor.yml
 ```
 
-### Harbor config example
-```yaml
-hostname: <your-server-ip-or-domain>
+------------------------------------------------------------------------
+
+## 4. Obtain SSL Certificates (Let's Encrypt)
+
+### Option A: HTTP-01 (simple, requires port 80)
+
+``` bash
+sudo snap install --classic certbot
+sudo ln -sf /snap/bin/certbot /usr/bin/certbot
+
+# Ensure port 80 is free
+sudo certbot certonly --standalone   -d <your-domain>   -m <your-email> --agree-tos --no-eff-email   --key-type ecdsa --elliptic-curve secp384r1
+```
+
+### Option B: DNS-01 (no need to open port 80, e.g., Cloudflare)
+
+``` bash
+sudo snap install certbot-dns-cloudflare
+sudo bash -c 'cat >/etc/letsencrypt/cloudflare.ini <<EOF
+dns_cloudflare_api_token = <CLOUDFLARE_DNS_API_TOKEN>
+EOF'
+sudo chmod 600 /etc/letsencrypt/cloudflare.ini
+
+sudo certbot certonly   --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini   -d <your-domain>   -m <your-email> --agree-tos --no-eff-email   --key-type ecdsa --elliptic-curve secp384r1
+```
+
+Certificates will be saved in:
+
+    /etc/letsencrypt/live/<your-domain>/fullchain.pem
+    /etc/letsencrypt/live/<your-domain>/privkey.pem
+
+------------------------------------------------------------------------
+
+## 5. Configure Harbor with HTTPS
+
+Edit `harbor.yml`:
+
+``` yaml
+hostname: <your-domain>
+external_url: https://<your-domain>
+
 http:
-  port: 80
+  port: 8080   # optional for internal/debug
 
-# https:
-#   port: 443
-#   certificate: /etc/ssl/certs/certificate.crt
-#   private_key: /etc/ssl/certs/private.key
+https:
+  port: 443
+  certificate: /etc/letsencrypt/live/<your-domain>/fullchain.pem
+  private_key: /etc/letsencrypt/live/<your-domain>/privkey.pem
 
-external_url: https://your-harbor-domain.com
-```
+data_volume: /data
+harbor_admin_password: <StrongPassword>
 
-- Configure storage and initialize:
-```bash
-sudo ./prepare
-```
-
-### Generate self-signed certificate (for testing)
-```bash
-cd /etc/ssl/certs
-openssl genrsa -out private.key 2048
-openssl req -new -x509 -key private.key -out certificate.crt -days 365
-```
-
-### Enable Trivy security scan
-Add to `harbor.yml`:
-```yaml
 trivy:
   enabled: true
   skipUpdate: false
   insecure: false
+
+jobservice:
+  max_job_workers: 10
 ```
 
-- Install and start Harbor:
-```bash
+Apply changes:
+
+``` bash
+cd harbor
+sudo ./prepare
 sudo ./install.sh --with-trivy
-```
-- Verify services:
-```bash
-sudo docker-compose ps
-```
 
----
-
-## 4. Configure HTTPS with Nginx
-- Create site config:
-```bash
-sudo nano /etc/nginx/sites-available/harbor.conf
+# If install.sh fails, manually start Harbor containers
+docker compose -f /home/ubuntu/harbor/docker-compose.yml up -d
 ```
 
-### Nginx config example
-```nginx
-server {
-    listen 80;
-    server_name your-harbor-domain.com;
+------------------------------------------------------------------------
 
-    return 301 https://$host$request_uri;
-}
+## 6. Auto-Renew Certificates
 
-server {
-    listen 443 ssl;
-    server_name your-harbor-domain.com;
+Add a deploy hook so Harbor reloads when certs renew:
 
-    ssl_certificate /etc/ssl/certs/your-cert.pem;
-    ssl_certificate_key /etc/ssl/certs/your-cert.key;
-
-    location / {
-        proxy_pass http://localhost;
-        client_max_body_size 20g;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Port $server_port;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-}
+``` bash
+sudo bash -c 'cat >/etc/letsencrypt/renewal-hooks/deploy/harbor-reload.sh <<EOF
+#!/usr/bin/env bash
+set -e
+docker compose -f /opt/harbor/docker-compose.yml restart nginx || docker restart nginx
+EOF'
+sudo chmod +x /etc/letsencrypt/renewal-hooks/deploy/harbor-reload.sh
 ```
 
-- Enable the site:
-```bash
-sudo ln -s /etc/nginx/sites-available/harbor.conf /etc/nginx/sites-enabled/
-```
-- Restart Nginx:
-```bash
-sudo systemctl restart nginx
+Test renewal:
+
+``` bash
+sudo certbot renew --dry-run
 ```
 
----
+------------------------------------------------------------------------
 
-✅ **After completion:**
-- Access Harbor UI at `https://your-harbor-domain.com`
-- Default account: `admin`, password is set in `harbor.yml` as `harbor_admin_password`.
+## 7. Verify & Test
+
+Check HTTPS:
+
+``` bash
+curl -I https://<your-domain>
+```
+
+Login and push/pull images:
+
+``` bash
+docker login <your-domain>
+docker pull alpine:3.20
+docker tag alpine:3.20 <your-domain>/demo/alpine:3.20
+docker push <your-domain>/demo/alpine:3.20
+docker pull <your-domain>/demo/alpine:3.20
+```
+
+------------------------------------------------------------------------
+
+✅ **Access Harbor UI:**\
+- URL: `https://<your-domain>`\
+- Default user: `admin`\
+- Password: set in `harbor.yml`
