@@ -1,12 +1,12 @@
-# 📝 Windows 環境架設 EKS 筆記
+# 📝 Windows EKS Setup Notes
 
-## 1. 安裝必要工具
+## 1. Install Prerequisites
 
 ### 1.1 AWS CLI
-1. 下載並安裝 AWS CLI for Windows  
-   [AWS CLI MSI 安裝檔](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
+1. Download and install AWS CLI for Windows:  
+   https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-2. 確認安裝成功：
+2. Verify installation:
 ```powershell
 aws --version
 ```
@@ -14,14 +14,14 @@ aws --version
 ---
 
 ### 1.2 kubectl
-1. 下載最新穩定版：
+1. Download the latest stable release:
 ```powershell
-curl.exe -LO "https://dl.k8s.io/release/$(curl.exe -s https://dl.k8s.io/release/stable.txt)/bin/windows/amd64/kubectl.exe"
+curl.exe -LO "https://dl.k8s.io/release/$(curl.exe -L -s https://dl.k8s.io/release/stable.txt)/bin/windows/amd64/kubectl.exe"
 ```
 
-2. 把 `kubectl.exe` 移動到 `C:\Windows\System32` 或其他 PATH 目錄。  
+2. Move `kubectl.exe` into a directory on your `PATH` (for example `C:\Windows\System32` or another tools folder on PATH).
 
-3. 測試版本：
+3. Check the client version:
 ```powershell
 kubectl version --client
 ```
@@ -29,46 +29,47 @@ kubectl version --client
 ---
 
 ### 1.3 Terraform
-1. 前往 [Terraform Releases](https://developer.hashicorp.com/terraform/downloads) 下載指定版本，例如 `1.9.5`。  
+1. Download the desired version from Terraform Releases (e.g., `1.9.5`):  
+   https://developer.hashicorp.com/terraform/downloads
 
-2. 解壓縮並將 `terraform.exe` 放到 PATH（例如 `C:\Windows\System32`）。  
+2. Unzip and place `terraform.exe` on your `PATH` (for example `C:\Windows\System32`).
 
-3. 驗證安裝：
+3. Verify installation:
 ```powershell
 terraform -v
 ```
 
 ---
 
-## 2. 設定 AWS 憑證
-使用具備 **AdministratorAccess** 或至少擁有 **EKS/IAM/VPC 權限**的 IAM 使用者：  
+## 2. Configure AWS Credentials
+Use an IAM user with **AdministratorAccess** or permissions covering **EKS/IAM/VPC**.
 
 ```powershell
 aws configure
 ```
 
-輸入以下資訊：  
-- AWS Access Key ID  
-- AWS Secret Access Key  
-- Default region → `ap-southeast-2`  
-- Default output format → `json`  
+Provide the following:
+- AWS Access Key ID
+- AWS Secret Access Key
+- Default region → `ap-southeast-2`
+- Default output format → `json`
 
 ---
 
-## 3. 建立 EKS Cluster
+## 3. Create the EKS Cluster
 
-假設專案結構：
+Assumed project structure:
 ```
 EKS-side-project/
-  └── infra/   # Terraform 定義檔
+  └── infra/   # Terraform definitions
 ```
 
-1. 進入專案資料夾：
+1. Change into the project folder:
 ```powershell
 cd infra
 ```
 
-2. 初始化與部署：
+2. Initialize and deploy:
 ```powershell
 terraform init
 terraform plan
@@ -77,8 +78,8 @@ terraform apply -auto-approve
 
 ---
 
-## 4. 更新 kubeconfig
-Terraform 建立好叢集後，更新本地 kubeconfig：  
+## 4. Update kubeconfig
+After Terraform finishes provisioning, update your local kubeconfig:
 
 ```powershell
 aws eks update-kubeconfig --region ap-southeast-2 --name sideproj-eks
@@ -86,31 +87,29 @@ aws eks update-kubeconfig --region ap-southeast-2 --name sideproj-eks
 
 ---
 
-## 5. 驗證與部署 Demo
+## 5. Validate and Deploy a Demo
 
-1. 驗證節點：
+1. Verify nodes:
 ```powershell
 kubectl get nodes
 ```
 
-2. 建立 namespace：
+2. Create a namespace:
 ```powershell
 kubectl create ns demo
 ```
 
-3. 部署 Nginx：
+3. Deploy NGINX:
 ```powershell
 kubectl -n demo create deploy hello --image=nginx --replicas=2
 ```
 
-4. 暴露服務：
+4. Expose the deployment:
 ```powershell
 kubectl -n demo expose deploy hello --port=80 --type=LoadBalancer
 ```
 
-5. 監看服務：
+5. Watch the service:
 ```powershell
 kubectl -n demo get svc -w
 ```
-
-

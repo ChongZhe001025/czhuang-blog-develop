@@ -101,6 +101,23 @@
       },
       {
         "node": {
+          "excerpt": "TickBoard runs on a DevOps workflow powered by GitOps, and Terraform-provisioned AWS EKS.",
+          "featured": false,
+          "html": "/posts/sideproj-eks.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "#Terraform #AWS #EKS"
+          },
+          "portfolio_visible": true,
+          "slug": "sideproj-eks",
+          "title": "DevOps with GitOps, and AWS EKS via Terraform."
+        }
+      },
+      {
+        "node": {
           "excerpt": "Enable a Linux serial console on a Proxmox VM and get a login prompt via  xterm.js.",
           "featured": false,
           "html": "/posts/xterm-js.md",
@@ -217,8 +234,7 @@
           "slug": "ubuntu-root-login",
           "title": "Enable Root Account and SSH Login"
         }
-      }
-      ,
+      },
       {
         "node": {
           "excerpt": "Best practices for pushing code: init, branches, safe pushes, troubleshooting.",
@@ -235,8 +251,7 @@
           "slug": "git-push-workflow-guide",
           "title": "Git Push Workflow"
         }
-      }
-      ,
+      },
       {
         "node": {
           "excerpt": "Jenkins pipeline example that builds images and runs Trivy image/filesystem scans with reports and fail thresholds.",
@@ -253,8 +268,7 @@
           "slug": "jenkins-trivy-guide",
           "title": "Jenkins + Trivy Scans"
         }
-      }
-      ,
+      },
       {
         "node": {
           "excerpt": "Install Harbor on Ubuntu with Docker, Compose, HTTPS (Nginx), and the Trivy scanner.",
@@ -270,6 +284,23 @@
           "portfolio_visible": false,
           "slug": "ubuntu-install-harbor",
           "title": "Harbor on Ubuntu"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Step-by-step notes for setting up AWS EKS on Windows with AWS CLI, kubectl, and Terraform.",
+          "featured": false,
+          "html": "/posts/windows-eks-setup.md",
+          "note_tech_type": {
+            "name": "#Windows #EKS"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "windows-eks-setup",
+          "title": "EKS Quickstart (Windows)"
         }
       }
     ]
