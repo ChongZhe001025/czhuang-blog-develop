@@ -7,6 +7,9 @@
 - CI/CD: GitHub Actions builds/pushes images to Harbor and validates GitOps manifests.
 - IaC: Terraform provisions EKS, VPC, GitHub OIDC for GitHub Actions, Argo CD, and AWS Load Balancer Controller.
 
+#### ![](../images/icons/github-black.png)  [TickBoard runs on GitOps、EKS](https://github.com/orgs/TickBoard/repositories)
+---
+
 ## Features
 
 - Authentication: Register, Login, Logout with JWT (Authorization header or HttpOnly cookie).
@@ -18,18 +21,15 @@
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  U[User Browser] -->|HTTPS| I[ALB Ingress]
-  I -->|/api| A[gin-api Service :8082]
-  I -->|/| F[frontend Service :3000]
-  A --> M[MongoDB Service :27017]
+```
+User Browser
+     │
+   HTTPS
+     ▼
+ ALB Ingress
+   ├── /api → gin-api Service :8082 → MongoDB :27017
+   └── /    → frontend Service :3000
 
-  subgraph Kubernetes: tickboard namespace
-    F ---|ClusterIP| I
-    A ---|ClusterIP| I
-    M
-  end
 ```
 
 ## Tech Stack
