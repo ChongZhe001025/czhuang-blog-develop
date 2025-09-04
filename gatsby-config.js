@@ -14,7 +14,8 @@ const config = {
         image: '/logo.png',
         twitterUsername: '@your_twitter',
     },
-    trailingSlash: 'always',
+    // Avoid potential 404 page-data write issues; keep author-defined slashes
+    trailingSlash: 'ignore',
     plugins: [
         `gatsby-plugin-sharp`,
         {

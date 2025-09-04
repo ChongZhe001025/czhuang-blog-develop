@@ -127,3 +127,15 @@ exports.createPages = async ({ actions }) => {
         },
     });
 };
+
+// Force userland punycode to avoid Node's deprecated built-in (DEP0040)
+exports.onCreateWebpackConfig = ({ actions }) => {
+    actions.setWebpackConfig({
+        resolve: {
+            alias: {
+                // Ensure any `require('punycode')` resolves to the npm package
+                'punycode$': require.resolve('punycode/')
+            }
+        }
+    });
+};

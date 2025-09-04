@@ -1,7 +1,3 @@
-# TickBoard
-
-TickBoard is a lightweight, full‑stack task board built with React (TypeScript) and Go (Gin) on MongoDB. The project showcases an end‑to‑end, cloud‑native workflow: containerized services, CI image builds and pushes to Harbor, GitOps deployment via Kustomize + Argo CD, and infrastructure provisioning with Terraform for AWS EKS.
-
 ## Overview
 
 - Frontend: React + TypeScript served as static assets on port 3000 (container).

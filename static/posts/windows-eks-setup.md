@@ -1,8 +1,6 @@
-# 📝 Windows EKS Setup Notes
-
 ## 1. Install Prerequisites
 
-### 1.1 AWS CLI
+### AWS CLI
 1. Download and install AWS CLI for Windows:  
    https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
@@ -13,7 +11,7 @@ aws --version
 
 ---
 
-### 1.2 kubectl
+### kubectl
 1. Download the latest stable release:
 ```powershell
 curl.exe -LO "https://dl.k8s.io/release/$(curl.exe -L -s https://dl.k8s.io/release/stable.txt)/bin/windows/amd64/kubectl.exe"
@@ -28,7 +26,7 @@ kubectl version --client
 
 ---
 
-### 1.3 Terraform
+### Terraform
 1. Download the desired version from Terraform Releases (e.g., `1.9.5`):  
    https://developer.hashicorp.com/terraform/downloads
 
