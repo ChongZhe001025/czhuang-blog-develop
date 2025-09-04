@@ -118,19 +118,19 @@
       },
       {
         "node": {
-          "excerpt": "Enable a Linux serial console on a Proxmox VM and get a login prompt via  xterm.js.",
+          "excerpt": "Safely remove old EKS security groups, auto-cleaning references first.",
           "featured": false,
-          "html": "/posts/xterm-js.md",
+          "html": "/posts/destroy-eks-security-group.md",
           "note_tech_type": {
-            "name": "#Proxmox"
+            "name": "#AWS #EKS #Shell"
           },
           "note_visible": true,
           "portfolio_tech_type": {
             "name": ""
           },
           "portfolio_visible": false,
-          "slug": "xterm-js",
-          "title": "Enable Linux Serial Console on Proxmox VM for xterm.js"
+          "slug": "destroy-eks-security-group",
+          "title": "EKS Residual Security Group Cleanup"
         }
       },
       {
@@ -237,40 +237,6 @@
       },
       {
         "node": {
-          "excerpt": "Best practices for pushing code: init, branches, safe pushes, troubleshooting.",
-          "featured": false,
-          "html": "/posts/git-push-workflow-guide.md",
-          "note_tech_type": {
-            "name": "#Git"
-          },
-          "note_visible": true,
-          "portfolio_tech_type": {
-            "name": ""
-          },
-          "portfolio_visible": false,
-          "slug": "git-push-workflow-guide",
-          "title": "Git Push Workflow"
-        }
-      },
-      {
-        "node": {
-          "excerpt": "Jenkins pipeline example that builds images and runs Trivy image/filesystem scans with reports and fail thresholds.",
-          "featured": false,
-          "html": "/posts/jenkins-trivy-guide.md",
-          "note_tech_type": {
-            "name": "#Jenkins #Trivy"
-          },
-          "note_visible": true,
-          "portfolio_tech_type": {
-            "name": ""
-          },
-          "portfolio_visible": false,
-          "slug": "jenkins-trivy-guide",
-          "title": "Jenkins + Trivy Scans"
-        }
-      },
-      {
-        "node": {
           "excerpt": "Install Harbor on Ubuntu with Docker, Compose, HTTPS (Nginx), and the Trivy scanner.",
           "featured": false,
           "html": "/posts/ubuntu-install-harbor.md",
@@ -301,6 +267,57 @@
           "portfolio_visible": false,
           "slug": "windows-eks-setup",
           "title": "EKS Quickstart (Windows)"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Best practices for pushing code: init, branches, safe pushes, troubleshooting.",
+          "featured": false,
+          "html": "/posts/git-push-workflow-guide.md",
+          "note_tech_type": {
+            "name": "#Git"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "git-push-workflow-guide",
+          "title": "Git Push Workflow"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Enable a Linux serial console on a Proxmox VM and get a login prompt via  xterm.js.",
+          "featured": false,
+          "html": "/posts/xterm-js.md",
+          "note_tech_type": {
+            "name": "#Proxmox"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "xterm-js",
+          "title": "Enable Linux Serial Console on Proxmox VM for xterm.js"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Jenkins pipeline example that builds images and runs Trivy image/filesystem scans with reports and fail thresholds.",
+          "featured": false,
+          "html": "/posts/jenkins-trivy-guide.md",
+          "note_tech_type": {
+            "name": "#Jenkins #Trivy"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "jenkins-trivy-guide",
+          "title": "Jenkins + Trivy Scans"
         }
       }
     ]
