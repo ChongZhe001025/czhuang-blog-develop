@@ -1,10 +1,4 @@
-# 📘 TickBoard Project Overview
-
-> A full‑stack **task management / portfolio demo** built with React, Go Gin, MongoDB, GitOps (Argo CD), and Terraform‑provisioned AWS EKS.
-
----
-
-## 🌐 Overview
+##  Overview
 
 - **Frontend**: React + TypeScript served as static assets on port **3000** (container).  
 - **Backend API**: Go Gin on port **8082** with JWT authentication and Swagger docs.  
@@ -17,7 +11,7 @@
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Authentication**: Register, Login, Logout with JWT (Authorization header or HttpOnly cookie).  
 - **Task Management**: CRUD for tasks with user‑scoped dashboard aggregation.  
@@ -28,7 +22,7 @@
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 User Browser
@@ -42,7 +36,7 @@ User Browser
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: React 19, TypeScript, React Router, TanStack Query, React Hook Form, Zod, Axios  
 - **Backend**: Go 1.23, Gin, MongoDB Driver, golang-jwt, bcrypt, CORS, Swaggo (gin-swagger)  
@@ -51,7 +45,7 @@ User Browser
 
 ---
 
-## 📂 Repository Layout
+##  Repository Layout
 
 - **Application** (`Application/`)  
   - API (Gin): `Application/gin-api/`  
@@ -65,7 +59,7 @@ User Browser
 
 ---
 
-## 📡 API Summary
+##  API Summary
 
 - **Health**: `GET /health`, `GET /api/health`  
 - **Swagger**: `GET /swagger/*any`, `GET /api/swagger/*any`  
@@ -90,7 +84,7 @@ User Browser
 
 ---
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Backend (`Application/gin-api/.env`)
 ```ini
@@ -117,7 +111,7 @@ REACT_APP_GIN_API_BASE=/
 
 ---
 
-## 🚀 Deployment (GitOps)
+##  Deployment (GitOps)
 
 **Prerequisites**:  
 - Kubernetes cluster (EKS recommended) + Ingress controller (ALB Controller).  
@@ -148,7 +142,7 @@ kubectl apply -f Deploy/gitops/apps/workloads-appset.yaml
 
 ---
 
-## 🔄 CI/CD
+##  CI/CD
 
 ### Application Images (Harbor Push)
 - Builds both images on PR/branches.  
@@ -169,7 +163,7 @@ kubectl apply -f Deploy/gitops/apps/workloads-appset.yaml
 
 ---
 
-## 🔒 Production Notes
+##  Production Notes
 
 - **CORS**: Restrict to trusted origins.  
 - **MongoDB**: Replace demo `emptyDir` with StatefulSet + PVC or managed DB.  
@@ -178,7 +172,7 @@ kubectl apply -f Deploy/gitops/apps/workloads-appset.yaml
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 - Harden CORS allowlist & cookie settings.  
 - Add unit/integration tests & frontend E2E tests.  
