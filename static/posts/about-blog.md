@@ -25,9 +25,9 @@ This is where I document my hands‑on work and thinking in Cloud‑Native / Dev
 
 ## Featured Work
 
-- AutoSEL (Go + SELinux + Docker): automatically generate and apply container policies to reduce manual effort and risk.
-- TickBoard (React + Go + MongoDB): a task board, fully containerized with a Swagger‑documented API.
-- Tutorial/deploy series: Jenkins on Docker, K8s Dashboard, Argo CD, Harbor, and practical guides for Ubuntu and Proxmox.
+- AutoSEL: automatically generate and apply container policies to reduce manual effort and risk.
+- TickBoard: a task board, fully containerized with a Swagger‑documented API.
+- TickBoard runs on a DevOps workflow powered by GitOps, and Terraform-provisioned AWS EKS.
 
 ---
 
