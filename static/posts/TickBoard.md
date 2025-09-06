@@ -21,7 +21,7 @@ Relevant files:
 - `docker-compose.yml`: defines the four services and ports
 - `frontend/Dockerfile`: builds React and serves at 3000
 - `gin-api/Dockerfile`: builds Gin API listening on 8082
-- `nginx/tickboard.conf`: production Nginx + Let’s Encrypt example, server_name demo: `tickboard.czhuang.dev`
+- `nginx/tickboard.conf`: production Nginx + Let’s Encrypt example, server_name demo: `tickboard.example.com`
 
 
 ## Environment Variables
@@ -89,7 +89,7 @@ Notes: The `frontend/Dockerfile` runs a production build served by `serve`. If y
 Example below uses Ubuntu; adjust for your distro as needed.
 
 1) DNS:
-  - Point your domain (e.g., `tickboard.czhuang.dev`) A record to your server’s IP.
+  - Point your domain (e.g., `tickboard.example.com`) A record to your server’s IP.
 
 2) Start containers on the server:
 
@@ -109,7 +109,7 @@ sudo ln -s /etc/nginx/sites-available/tickboard /etc/nginx/sites-enabled/tickboa
 sudo nginx -t && sudo systemctl reload nginx
 
 # Obtain and install cert (interactive)
-sudo certbot --nginx -d tickboard.czhuang.dev
+sudo certbot --nginx -d tickboard.example.com
 ```
 
 If you manage certs manually, ensure the paths in Nginx point to:
@@ -149,4 +149,4 @@ If you manage certs manually, ensure the paths in Nginx point to:
 - Frontend: http://localhost:3000
 - API health: http://localhost:8082/health
 - Swagger: http://localhost:8082/swagger/index.html
-- Mongo Express: http://localhost:8081/db (BasicAuth: `root` / `pass`)
+- Mongo Express: http://localhost:8081/db 
