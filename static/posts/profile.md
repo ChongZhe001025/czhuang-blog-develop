@@ -1,12 +1,9 @@
-# About Me 👨‍💻
 DevOps/Cloud-Native/SRE — focused on IaC and platform reliability.
 
 I’m a DevOps/Cloud-Native/SRE engineer focused on IaC and platform reliability.  
-I turn ideas into shipped products and share what I learn—while actively advancing my skills in AWS.  
-I transform complex, fragile workflows into reliable, automated systems so teams can ship with confidence without manual toil.
-
-I specialize in automation and platform building.  
-By standardizing deployment paths and providing self-service platforms, I help teams focus on product development instead of infrastructure maintenance.
+- Turn ideas into shipped products and share what I learn.  
+- Transform complex, fragile workflows into reliable, automated systems so teams can ship with confidence without manual toil.
+- Specialize in automation and platform building.  .
 
 ---
 
