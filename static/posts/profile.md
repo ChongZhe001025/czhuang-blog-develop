@@ -1,5 +1,3 @@
-DevOps/Cloud-Native/SRE — focused on IaC and platform reliability.
-
 I’m a DevOps/Cloud-Native/SRE engineer focused on IaC and platform reliability.  
 - Turn ideas into shipped products and share what I learn.  
 - Transform complex, fragile workflows into reliable, automated systems so teams can ship with confidence without manual toil.
