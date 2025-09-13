@@ -152,19 +152,19 @@
       },
       {
         "node": {
-          "excerpt": "Deploy a production-ready Jenkins on Docker with DinD/host Docker integration, agent setup.",
+          "excerpt": "Expose the Proxmox securely using Cloudflare Tunnel, without floating IPs or port forwarding.",
           "featured": false,
-          "html": "/posts/docker-build-jenkins.md",
+          "html": "/posts/proxmox-cloudflare-tunnel.md",
           "note_tech_type": {
-            "name": "#Docker #Jenkins"
+            "name": "#Proxmox #Cloudflare"
           },
           "note_visible": true,
           "portfolio_tech_type": {
             "name": ""
           },
           "portfolio_visible": false,
-          "slug": "docker-build-jenkins",
-          "title": "Jenkins Deployment Guide on Docker"
+          "slug": "proxmox-cloudflare-tunnel",
+          "title": "Cloudflare Tunnel Setup for Proxmox"
         }
       },
       {
@@ -220,6 +220,23 @@
       },
       {
         "node": {
+          "excerpt": "Step-by-step notes for setting up AWS EKS on Windows with AWS CLI, kubectl, and Terraform.",
+          "featured": false,
+          "html": "/posts/windows-eks-setup.md",
+          "note_tech_type": {
+            "name": "#Windows #EKS"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "windows-eks-setup",
+          "title": "EKS Quickstart (Windows)"
+        }
+      },
+      {
+        "node": {
           "excerpt": "Set the root password and enable SSH login for root, with security hardening recommendations.",
           "featured": false,
           "html": "/posts/ubuntu-root-login.md",
@@ -254,19 +271,36 @@
       },
       {
         "node": {
-          "excerpt": "Step-by-step notes for setting up AWS EKS on Windows with AWS CLI, kubectl, and Terraform.",
+          "excerpt": "Install GitLab CE on Ubuntu VM with HTTPS enabled via Let's Encrypt and Cloudflare DNS.",
           "featured": false,
-          "html": "/posts/windows-eks-setup.md",
+          "html": "/posts/ubuntu-install-gitlab.md",
           "note_tech_type": {
-            "name": "#Windows #EKS"
+            "name": "#Ubuntu #GitLab"
           },
           "note_visible": true,
           "portfolio_tech_type": {
             "name": ""
           },
           "portfolio_visible": false,
-          "slug": "windows-eks-setup",
-          "title": "EKS Quickstart (Windows)"
+          "slug": "ubuntu-install-gitlab",
+          "title": "GitLab on Ubuntu VM + Let's Encrypt"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Deploy a production-ready Jenkins on Docker with DinD/host Docker integration, agent setup.",
+          "featured": false,
+          "html": "/posts/docker-build-jenkins.md",
+          "note_tech_type": {
+            "name": "#Docker #Jenkins"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "docker-build-jenkins",
+          "title": "Jenkins Deployment Guide on Docker"
         }
       },
       {
@@ -288,7 +322,7 @@
       },
       {
         "node": {
-          "excerpt": "Enable a Linux serial console on a Proxmox VM and get a login prompt via  xterm.js.",
+          "excerpt": "Enable a Linux serial console on a Proxmox VM and get a login prompt via xterm.js.",
           "featured": false,
           "html": "/posts/xterm-js.md",
           "note_tech_type": {

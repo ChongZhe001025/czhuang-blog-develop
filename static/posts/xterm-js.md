@@ -30,21 +30,14 @@ sudo nano /etc/default/grub
 ```
 Set/ensure these lines (Ubuntu):
 ```sh
-GRUB_CMDLINE_LINUX_DEFAULT="quiet"
-GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0,115200n8"
+GRUB_CMDLINE_LINUX="quiet console=tty0 console=ttyS0,115200"
 ```
 Update GRUB:
 ```sh
 sudo update-grub
 ```
 
-## 4. Enable a serial getty (login prompt on ttyS0)
-```sh
-sudo systemctl enable --now serial-getty@ttyS0.service
-sudo systemctl status serial-getty@ttyS0.service
-```
-
-## 5. Reboot and test
+## 4. Reboot and test
 ```sh
 sudo reboot
 ```
@@ -54,7 +47,3 @@ qm terminal <VMID>
 ```
 You should see a login prompt on the serial console.
 
----
-
-## Optional: Adjust baud rate
-Match kernel and getty speeds (default here is 115200). If you change it, update both `GRUB_CMDLINE_LINUX` and the getty service override.
