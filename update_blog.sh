@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ### Config（必要時自行調整）
-REPO_URL="https://github.com/ChongZhe001025/czhuang-blog.git"
+REPO_URL="git@github.com:ChongZhe001025/czhuang-blog.git"
 BRANCH="main"
 
 ### 進階：是否加上 Node deprecation 參數（2 擇 1；預設都不加）
