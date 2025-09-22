@@ -9,7 +9,7 @@ All sensitive information (domain, IP, secrets, etc.) is replaced with placehold
 
 ---
 
-> For Jenkins and Agent Docker deployment and custom image build, please refer to the separate guide: "Docker build jenkins".
+For Jenkins and Agent Docker deployment and custom image build, please refer to the separate guide: "Docker build jenkins".
 
 ---
 
@@ -19,7 +19,7 @@ This example uses the Bitnami version:
 docker pull bitnami/trivy:latest
 ```
 
-> You can also use the official image `aquasec/trivy:latest`, commands are similar.
+You can also use the official image `aquasec/trivy:latest`, commands are similar.
 
 Common volume mounts:
 - Trivy cache: `-v /path/to/trivy-cache:/root/.cache/`
@@ -31,7 +31,7 @@ Common volume mounts:
 
 The following example uses a **Declarative Pipeline** to build a Docker image and perform both **image** and **filesystem** scans with Trivy.
 
-> Make sure you have a Jenkins node labeled `docker-agent` (i.e., the Inbound Agent described previously).
+Make sure you have a Jenkins node labeled `docker-agent` (i.e., the Inbound Agent described previously).
 
 ```groovy
 // Jenkinsfile
@@ -99,7 +99,7 @@ pipeline {
 }
 ```
 
-> `--exit-code 1` will fail the pipeline if **HIGH/CRITICAL** vulnerabilities are found. Adjust severity or use `--ignore-unfixed` as needed.
+`--exit-code 1` will fail the pipeline if **HIGH/CRITICAL** vulnerabilities are found. Adjust severity or use `--ignore-unfixed` as needed.
 
 ---
 
@@ -112,45 +112,12 @@ pipeline {
 - `--exit-code <n>`: Return code on findings (controls Jenkins pass/fail).
 - `--scanners vuln,misconfig,secret,license`: Scanner types (default: vuln/misconfig).
 
-### Generate SARIF for Platform Integration (GitHub/Security tools)
+### Generate SARIF for Platform Integration
 ```bash
-docker run --rm   -v /var/run/docker.sock:/var/run/docker.sock   -v "$TRIVY_CACHE":/root/.cache/   bitnami/trivy:latest image     --format sarif -o trivy-reports/image.sarif "$IMAGE"
+docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$TRIVY_CACHE":/root/.cache/ \
+  bitnami/trivy:latest image \
+    --format sarif -o trivy-reports/image.sarif "$IMAGE"
 ```
 
----
-
-## Best Practices & Security Notes
-
-1. **Avoid running DinD inside the Agent**:
-   - Mount the host's `docker.sock` directly as shown above. DinD requires privileged mode, which is riskier and more resource-intensive.
-
-2. **Principle of Least Privilege**:
-   - Run the agent as a non-root user if possible, and ensure proper permissions for `docker.sock` (e.g., add user to the appropriate group).
-
-3. **Caching & Speed**:
-   - Mount the Trivy cache directory to speed up scans (no need to re-download the database for the same version).
-
-4. **Scan Strategy**:
-   - Trigger **Filesystem scan** (dependency & IaC check) on PR/MR; add **Image scan** for main branch merges or releases.
-
-5. **Report Retention**:
-   - Use `archiveArtifacts` or publish to object storage/reporting systems to keep historical records and track security trends.
-
-6. **Reduce False Positives**:
-   - Use `.trivyignore` or `--ignorefile` to manage known/acceptable risks, and review regularly.
-
-7. **Image Optimization**:
-   - Use minimal base images (`alpine`, `distroless`), and rebuild images regularly to get the latest patches.
-
----
-
-## FAQ
-
-- **Q: Pipeline always fails due to vulnerabilities?**  
-  A: Adjust `--severity` or add `--ignore-unfixed`. Review the report to determine if the risks are acceptable.
-
-- **Q: Scans are slow?**  
-  A: Ensure Trivy cache is mounted and network can download the database. You can also pre-pull the Trivy image in CI.
-
-- **Q: Agent can't use Docker?**  
-  A: Check if `/var/run/docker.sock` is mounted and the container user has permission to access the socket.

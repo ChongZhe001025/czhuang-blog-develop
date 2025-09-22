@@ -1,8 +1,8 @@
-> Goal: Safely delete old eks–related **non-default** security groups, automatically removing references from other SGs first.
+Safely delete old eks–related **non-default** security groups, automatically removing references from other SGs first.
 
 ---
 
-## 🚀 TL;DR
+## TL;DR
 
 1. **Default SG cannot be deleted** (only rules can be cleared).  
 2. Ensure **no ENI is attached** to the target SG.  
@@ -14,7 +14,7 @@
 
 ---
 
-## 🔧 Requirements
+## Requirements
 
 - **awscli** installed and authenticated with the correct profile/region  
 - **jq** installed  
@@ -27,7 +27,7 @@ export PROFILE=root
 
 ---
 
-## 📝 Cleanup Script
+## Cleanup Script
 
 Save as `sg-force-delete.sh`.  
 Supports **dry-run mode**: set `DRY_RUN=true` to preview changes without executing them.  
@@ -88,7 +88,7 @@ for TARGET_SG in "$@"; do
   SG_JSON=$(aws ec2 describe-security-groups     --group-ids "$TARGET_SG"     --region "$REGION" --profile "$PROFILE" --output json 2>/dev/null || true)
 
   if [[ -z "$SG_JSON" || "$SG_JSON" == "null" || $(echo "$SG_JSON" | jq '.SecurityGroups | length') -eq 0 ]]; then
-    echo "⚠️ SG $TARGET_SG not found (already deleted, wrong region/account). Skipping."
+    echo "SG $TARGET_SG not found (already deleted, wrong region/account). Skipping."
     continue
   fi
 
@@ -96,7 +96,7 @@ for TARGET_SG in "$@"; do
   VPC_ID=$(echo "$SG_JSON" | jq -r '.SecurityGroups[0].VpcId')
 
   if [[ "$SG_NAME" == "default" ]]; then
-    echo "⏭️ $TARGET_SG is a default SG. Cannot delete. Skipping."
+    echo "⏭$TARGET_SG is a default SG. Cannot delete. Skipping."
     continue
   fi
 
@@ -106,7 +106,7 @@ for TARGET_SG in "$@"; do
   ENI_CNT=$(aws ec2 describe-network-interfaces     --filters "Name=group-id,Values=$TARGET_SG"     --region "$REGION" --profile "$PROFILE" --output json | jq '.NetworkInterfaces | length')
   echo "ENI attachments: $ENI_CNT"
   if [[ "$ENI_CNT" -gt 0 ]]; then
-    echo "❌ $TARGET_SG is still attached to ENIs. Please detach first."
+    echo "$TARGET_SG is still attached to ENIs. Please detach first."
     continue
   fi
 
@@ -123,7 +123,7 @@ for TARGET_SG in "$@"; do
 
   # Revoke ingress
   if [[ ${#IN_SG_IDS[@]} -gt 0 ]]; then
-    echo "🔧 Revoking Ingress from: ${IN_SG_IDS[*]}"
+    echo "Revoking Ingress from: ${IN_SG_IDS[*]}"
     for REF_SG in "${IN_SG_IDS[@]}"; do
       REF_JSON=$(aws ec2 describe-security-groups --group-ids "$REF_SG"         --region "$REGION" --profile "$PROFILE" --output json)
       PERMS=$(build_ingress_perms "$REF_JSON" "$TARGET_SG")
@@ -132,17 +132,17 @@ for TARGET_SG in "$@"; do
           echo "  (dry-run) Would revoke ingress from $REF_SG"
         else
           aws ec2 revoke-security-group-ingress             --group-id "$REF_SG"             --ip-permissions "$PERMS"             --region "$REGION" --profile "$PROFILE"
-          echo "  ✅ Revoked ingress from $REF_SG"
+          echo " Revoked ingress from $REF_SG"
         fi
       fi
     done
   else
-    echo "✔️ No ingress references"
+    echo "No ingress references"
   fi
 
   # Revoke egress
   if [[ ${#OUT_SG_IDS[@]} -gt 0 ]]; then
-    echo "🔧 Revoking Egress from: ${OUT_SG_IDS[*]}"
+    echo " Revoking Egress from: ${OUT_SG_IDS[*]}"
     for REF_SG in "${OUT_SG_IDS[@]}"; do
       REF_JSON=$(aws ec2 describe-security-groups --group-ids "$REF_SG"         --region "$REGION" --profile "$PROFILE" --output json)
       PERMS=$(build_egress_perms "$REF_JSON" "$TARGET_SG")
@@ -151,7 +151,7 @@ for TARGET_SG in "$@"; do
           echo "  (dry-run) Would revoke egress from $REF_SG"
         else
           aws ec2 revoke-security-group-egress             --group-id "$REF_SG"             --ip-permissions "$PERMS"             --region "$REGION" --profile "$PROFILE"
-          echo "  ✅ Revoked egress from $REF_SG"
+          echo "  Revoked egress from $REF_SG"
         fi
       fi
     done
@@ -161,18 +161,18 @@ for TARGET_SG in "$@"; do
 
   # Attempt deletion
   if [[ "$DRY_RUN" == "true" ]]; then
-    echo "🗑️ (dry-run) Would delete $TARGET_SG"
+    echo "(dry-run) Would delete $TARGET_SG"
   else
-    echo "🗑️ Attempting to delete $TARGET_SG ..."
+    echo "Attempting to delete $TARGET_SG ..."
     aws ec2 delete-security-group       --group-id "$TARGET_SG"       --region "$REGION" --profile "$PROFILE"
-    echo "🎉 Deleted: $TARGET_SG"
+    echo "Deleted: $TARGET_SG"
   fi
 done
 ```
 
 ---
 
-## ▶️ Usage
+## Usage
 
 ```bash
 chmod +x sg-force-delete.sh
@@ -186,7 +186,7 @@ DRY_RUN=true ./sg-force-delete.sh sg-aaa sg-bbb
 
 ---
 
-## ✅ Pre-checks Before Deleting
+## Pre-checks Before Deleting
 
 ```bash
 # Check ENI attachment (0 = safe)
@@ -198,7 +198,7 @@ aws ec2 describe-security-groups   --group-ids <sg-id>   --region $REGION --prof
 
 ---
 
-## ⚠️ Common Errors & Fixes
+## Common Errors & Fixes
 
 - **`DependencyViolation`**  
   → Re-run script; if persistent, check for references in **ELB/NLB, VPC Endpoints, RDS, EFS**.  

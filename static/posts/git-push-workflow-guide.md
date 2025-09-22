@@ -13,7 +13,7 @@ If you haven't added a remote yet:
 git remote add origin <your-repo-url>
 ```
 
-> **Tip:** Check your remote URL:
+Tip: Check your remote URL:
 ```sh
 git remote -v
 ```
@@ -36,7 +36,7 @@ git add .
 git commit -m "Describe your changes"
 ```
 
-> **Tip:** Use descriptive commit messages for better history tracking.
+Tip: Use descriptive commit messages for better history tracking.
 
 ## 5. Push to Remote Repository
 
@@ -68,7 +68,7 @@ git pull origin main --rebase  # Rebase local changes on top of remote
 git push origin main  # Push after syncing
 ```
 
-> **Tip:** Use `git status` frequently to check your working directory and branch state.
+Tip: Use `git status` frequently to check your working directory and branch state.
 
 ---
 

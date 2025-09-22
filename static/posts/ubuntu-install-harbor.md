@@ -1,7 +1,4 @@
-# Harbor Installation & HTTPS Setup (with Let's Encrypt)
-
-> ⚠️ All sensitive information (domain, IP, secrets, etc.) is replaced
-> with placeholders for public sharing and educational purposes.
+All sensitive information (domain, IP, secrets, etc.) is replaced with placeholders for public sharing and educational purposes.
 
 ------------------------------------------------------------------------
 

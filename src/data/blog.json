@@ -266,7 +266,7 @@
           },
           "portfolio_visible": false,
           "slug": "ubuntu-install-harbor",
-          "title": "Harbor on Ubuntu"
+          "title": "Harbor Installation & HTTPS Setup (with Let's Encrypt)"
         }
       },
       {

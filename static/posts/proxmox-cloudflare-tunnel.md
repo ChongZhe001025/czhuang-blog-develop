@@ -1,6 +1,3 @@
-#  Cloudflare Tunnel Setup for Proxmox
-
-##  Goal
 Expose the Proxmox Web UI (internal `https://localhost:8006`) to the public through **Cloudflare Tunnel**,  
 without needing floating IPs or port forwarding.
 
