@@ -57,7 +57,10 @@ The repository's Pages source should be set to **GitHub Actions**. The workflow 
 ### Add a Writing article
 
 1. Add its Markdown file to `content/writing/articles/`.
-2. Add the title, summary, topic, priority, rank, slug, and `contentFile` path to `src/data/writingArticles.json`.
-3. Add Traditional Chinese title and summary strings to `src/i18n/LanguageContext.js`. Add body translations to `src/i18n/articleTranslations.js` when a Chinese article version is ready.
+2. Add its Traditional Chinese body to `content/writing/articles/zh-Hant/<slug>.zh-Hant.md`; keep executable examples consistent and translate labels in diagrams.
+3. Add the title, summary, topic, category (`technical` or `reflection`), priority, rank, slug, `contentFile`, and `contentFileZh` paths to `src/data/writingArticles.json`.
+4. Add Traditional Chinese title and summary strings to `src/i18n/LanguageContext.js`.
+
+Legacy Markdown pages under `static/posts/` use a same-named translation under `static/posts/zh-Hant/`. Keep fenced executable examples identical; translate prose and human-readable diagram labels. `src/i18n/articleTranslations.js` is a fallback for older pages without a companion file.
 
 The Gatsby page routes are generated from `writingArticles.json`; no route needs to be added by hand.

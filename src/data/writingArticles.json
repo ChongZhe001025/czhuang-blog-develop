@@ -6,7 +6,9 @@
     "title": "Building an End-to-End GitOps Pipeline with GitHub Actions, Harbor and Argo CD",
     "summary": "A practical delivery path from GitHub Actions runners and image builds through Harbor scanning, Image Updater, and Argo CD.",
     "slug": "gitops-pipeline-github-actions-harbor-argocd",
-    "contentFile": "content/writing/articles/gitops-pipeline-github-actions-harbor-argocd.md"
+    "contentFile": "content/writing/articles/gitops-pipeline-github-actions-harbor-argocd.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/gitops-pipeline-github-actions-harbor-argocd.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 2,
@@ -15,7 +17,9 @@
     "title": "Debugging Argo CD OutOfSync: CRDs, Hooks and Finalizers",
     "summary": "Troubleshoot CRD ordering, Argo CD hooks, finalizers, and differences between live resources and desired state.",
     "slug": "debugging-argocd-outofsync-crds-hooks-finalizers",
-    "contentFile": "content/writing/articles/debugging-argocd-outofsync-crds-hooks-finalizers.md"
+    "contentFile": "content/writing/articles/debugging-argocd-outofsync-crds-hooks-finalizers.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/debugging-argocd-outofsync-crds-hooks-finalizers.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 3,
@@ -24,7 +28,9 @@
     "title": "Designing Safe Kubernetes Automation with FluxSeer",
     "summary": "A technical note on FluxSeer runtime validation, risk rules, execution boundaries, and 12 recorded test scenarios.",
     "slug": "designing-safe-kubernetes-automation-fluxseer",
-    "contentFile": "content/writing/articles/designing-safe-kubernetes-automation-fluxseer.md"
+    "contentFile": "content/writing/articles/designing-safe-kubernetes-automation-fluxseer.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/designing-safe-kubernetes-automation-fluxseer.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 4,
@@ -33,7 +39,9 @@
     "title": "EKS Residual Security Group Cleanup",
     "summary": "Safely remove residual EKS security groups after checking dependencies and references, with a dry-run option.",
     "slug": "destroy-eks-security-group",
-    "contentFile": "content/writing/articles/destroy-eks-security-group.md"
+    "contentFile": "content/writing/articles/destroy-eks-security-group.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/destroy-eks-security-group.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 5,
@@ -42,7 +50,9 @@
     "title": "Troubleshooting Longhorn Degraded Volumes and Pod Crashes",
     "summary": "Trace Longhorn managers, volumes, pods, nodes, and GitOps state to investigate degraded volumes and pod crashes.",
     "slug": "troubleshooting-longhorn-degraded-volumes-pod-crashes",
-    "contentFile": "content/writing/articles/troubleshooting-longhorn-degraded-volumes-pod-crashes.md"
+    "contentFile": "content/writing/articles/troubleshooting-longhorn-degraded-volumes-pod-crashes.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/troubleshooting-longhorn-degraded-volumes-pod-crashes.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 6,
@@ -51,7 +61,9 @@
     "title": "Debugging Self-Hosted GitHub Actions Runners on Kubernetes",
     "summary": "Debug ARC runner scheduling, active runner state, workflow labels, and why queued jobs are not received.",
     "slug": "debugging-self-hosted-github-actions-runners-kubernetes",
-    "contentFile": "content/writing/articles/debugging-self-hosted-github-actions-runners-kubernetes.md"
+    "contentFile": "content/writing/articles/debugging-self-hosted-github-actions-runners-kubernetes.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/debugging-self-hosted-github-actions-runners-kubernetes.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 7,
@@ -60,7 +72,9 @@
     "title": "Jenkins + Trivy Scans",
     "summary": "Run Trivy image and filesystem scans in Jenkins, publish reports, and enforce severity thresholds.",
     "slug": "jenkins-trivy-guide",
-    "contentFile": "content/writing/articles/jenkins-trivy-guide.md"
+    "contentFile": "content/writing/articles/jenkins-trivy-guide.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/jenkins-trivy-guide.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 8,
@@ -69,7 +83,9 @@
     "title": "Harbor Registry Troubleshooting: Authentication, Scanning and Image Tags",
     "summary": "Investigate Harbor authentication, image pushes, scan timeouts, build cache behavior, and tag traceability.",
     "slug": "harbor-registry-troubleshooting-auth-scanning-tags",
-    "contentFile": "content/writing/articles/harbor-registry-troubleshooting-auth-scanning-tags.md"
+    "contentFile": "content/writing/articles/harbor-registry-troubleshooting-auth-scanning-tags.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/harbor-registry-troubleshooting-auth-scanning-tags.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 9,
@@ -78,7 +94,9 @@
     "title": "Managing a Proxmox HomeLab with Terraform",
     "summary": "Manage a Proxmox lab with Terraform, separating environments and handling provider, state, and plan issues.",
     "slug": "managing-proxmox-homelab-with-terraform",
-    "contentFile": "content/writing/articles/managing-proxmox-homelab-with-terraform.md"
+    "contentFile": "content/writing/articles/managing-proxmox-homelab-with-terraform.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/managing-proxmox-homelab-with-terraform.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 10,
@@ -87,7 +105,9 @@
     "title": "The Hidden Complexity of Timezones in Recurring Transactions",
     "summary": "Handle recurring transaction dates across UTC boundaries with clear Date and Timestamp semantics and regression checks.",
     "slug": "hidden-complexity-timezones-recurring-transactions",
-    "contentFile": "content/writing/articles/hidden-complexity-timezones-recurring-transactions.md"
+    "contentFile": "content/writing/articles/hidden-complexity-timezones-recurring-transactions.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/hidden-complexity-timezones-recurring-transactions.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 11,
@@ -96,7 +116,9 @@
     "title": "Integrating Authentication Across FinTrack and IdentityHub",
     "summary": "Connect FinTrack and IdentityHub around shared sign-in, token lifecycle, service contracts, 401 troubleshooting, and security review.",
     "slug": "integrating-fintrack-identityhub-authentication",
-    "contentFile": "content/writing/articles/integrating-fintrack-identityhub-authentication.md"
+    "contentFile": "content/writing/articles/integrating-fintrack-identityhub-authentication.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/integrating-fintrack-identityhub-authentication.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 12,
@@ -105,7 +127,9 @@
     "title": "Migrating Legacy FinTrack Data with Verification",
     "summary": "Plan and verify a legacy FinTrack data migration from schema inventory and JSON import through post-migration checks.",
     "slug": "migrating-legacy-fintrack-data-with-verification",
-    "contentFile": "content/writing/articles/migrating-legacy-fintrack-data-with-verification.md"
+    "contentFile": "content/writing/articles/migrating-legacy-fintrack-data-with-verification.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/migrating-legacy-fintrack-data-with-verification.zh-Hant.md",
+    "category": "technical"
   },
   {
     "rank": 13,
@@ -114,6 +138,8 @@
     "title": "Building FluentGO's Question-Bank and Scoring Workflow",
     "summary": "Trace FluentGO’s question-bank workflow from data import and parsing through backend scoring and learning-flow integration.",
     "slug": "fluentgo-question-bank-and-scoring-workflow",
-    "contentFile": "content/writing/articles/fluentgo-question-bank-and-scoring-workflow.md"
+    "contentFile": "content/writing/articles/fluentgo-question-bank-and-scoring-workflow.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/fluentgo-question-bank-and-scoring-workflow.zh-Hant.md",
+    "category": "technical"
   }
 ]

@@ -14,6 +14,10 @@ const getTechTags = (article) =>
 
 // Editorial metadata controls ordering only; priority labels are not rendered.
 const priorityOrder = { P0: 0, P1: 1 };
+const articleCategories = [
+    { value: "technical", label: "Technical practice" },
+    { value: "reflection", label: "Software reflections" },
+];
 
 const Note = () => {
     const { t } = useLanguage();
@@ -21,10 +25,12 @@ const Note = () => {
         (priorityOrder[a.priority] - priorityOrder[b.priority]) || a.rank - b.rank
     );
     const techTypes = [...new Set(selectedArticles.flatMap(getTechTags))];
+    const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedTech, setSelectedTech] = useState("all");
 
     const filteredArticles = selectedArticles.filter((article) =>
-        selectedTech === "all" || getTechTags(article).includes(selectedTech)
+        (selectedCategory === "all" || article.category === selectedCategory)
+        && (selectedTech === "all" || getTechTags(article).includes(selectedTech))
     );
     const pageArticles = filteredArticles;
 
@@ -43,8 +49,22 @@ const Note = () => {
 
                 <section className="work-group" aria-labelledby="writing-list-heading">
                     <div className="work-group-heading">
-                        <h2 id="writing-list-heading">{t("Technical articles")}</h2>
+                        <h2 id="writing-list-heading">{t("All articles")}</h2>
                         <div className="writing-group-tools">
+                            <label className="visually-hidden" htmlFor="writing-category-filter">
+                                {t("Filter articles by category")}
+                            </label>
+                            <select
+                                id="writing-category-filter"
+                                className="writing-topic-filter"
+                                value={selectedCategory}
+                                onChange={(event) => setSelectedCategory(event.target.value)}
+                            >
+                                <option value="all">{t("All categories")}</option>
+                                {articleCategories.map((category) => (
+                                    <option key={category.value} value={category.value}>{t(category.label)}</option>
+                                ))}
+                            </select>
                             <label className="visually-hidden" htmlFor="writing-topic-filter">
                                 {t("Filter articles by topic")}
                             </label>
@@ -73,7 +93,7 @@ const Note = () => {
                                     <div className="work-list-number">{String(articleNumber).padStart(2, "0")}</div>
                                     <div className="work-list-body">
                                         <div className="work-list-meta">
-                                            <span>{t("Technical note")}</span>
+                                            <span>{t(article.category === "reflection" ? "Software reflections" : "Technical practice")}</span>
                                         </div>
                                         <h3>
                                             {articleUrl
@@ -95,7 +115,16 @@ const Note = () => {
                                 </article>
                             );
                         }) : (
-                            <p className="writing-empty-state">{t("No articles found for this topic.")}</p>
+                            <div className="writing-empty-state">
+                                {selectedCategory === "reflection" && (
+                                    <>
+                                        <h3>{t("Software reflections")}</h3>
+                                        <p>{t("A space for personal reflections on software, engineering practice, and the principles behind the work.")}</p>
+                                        <p>{t("No articles in this category yet.")}</p>
+                                    </>
+                                )}
+                                {selectedCategory !== "reflection" && <p>{t("No articles found for this topic.")}</p>}
+                            </div>
                         )}
                     </div>
                 </section>

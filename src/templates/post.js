@@ -39,7 +39,7 @@ const getHeadings = (markdown) => {
 
 const Post = ({ location, pageContext }) => {
     const { language, t } = useLanguage();
-    const { slug, markdown: pageMarkdown, writingArticle: pageArticle } = pageContext;
+    const { slug, markdown: pageMarkdown, markdownZh: pageMarkdownZh, writingArticle: pageArticle } = pageContext;
     const postEdge = postData.allPosts.edges.find((edge) => edge.node.slug === slug);
     const article = writingArticles.find((item) => item.slug === slug) || pageArticle;
     const post = useMemo(() => postEdge
@@ -65,7 +65,7 @@ const Post = ({ location, pageContext }) => {
         markdownPromise
             .then((markdown) => {
                 const localizedMarkdown = language === "zh"
-                    ? translateArticleMarkdown(slug, markdown)
+                    ? pageMarkdownZh || translateArticleMarkdown(slug, markdown)
                     : markdown;
                 if (!cancelled) {
                     setContent(localizedMarkdown);
@@ -77,7 +77,7 @@ const Post = ({ location, pageContext }) => {
             });
 
         return () => { cancelled = true; };
-    }, [language, pageMarkdown, post, slug]);
+    }, [language, pageMarkdown, pageMarkdownZh, post, slug]);
 
     if (!post) {
         return (
@@ -159,6 +159,7 @@ Post.propTypes = {
     pageContext: PropTypes.shape({
         slug: PropTypes.string.isRequired,
         markdown: PropTypes.string,
+        markdownZh: PropTypes.string,
         writingArticle: PropTypes.object,
     }).isRequired,
 };

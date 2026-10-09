@@ -66,6 +66,9 @@ exports.createPages = async ({ actions }) => {
     writingArticles.filter((article) => article.contentFile).forEach((article) => {
         const markdownPath = path.join(__dirname, article.contentFile);
         const markdown = fs.readFileSync(markdownPath, "utf8").replace(/^# .+\r?\n+/, "");
+        const markdownZh = article.contentFileZh
+            ? fs.readFileSync(path.join(__dirname, article.contentFileZh), "utf8").replace(/^# .+\r?\n+/, "")
+            : null;
         writingSlugsWithContent.add(article.slug);
 
         createPage({
@@ -74,6 +77,7 @@ exports.createPages = async ({ actions }) => {
             context: {
                 slug: article.slug,
                 markdown,
+                markdownZh,
                 writingArticle: {
                     title: article.title,
                     summary: article.summary,
@@ -103,6 +107,21 @@ exports.createPages = async ({ actions }) => {
         // a `/:slug/` permalink.
         node.url = `/${node.slug}/`;
 
+        // Load Markdown-backed legacy notes at build time and pair them with an
+        // optional Traditional Chinese companion under static/posts/zh-Hant/.
+        let markdown;
+        let markdownZh;
+        if (node.html && node.html.startsWith("/posts/")) {
+            const markdownPath = path.join(__dirname, "static", node.html.slice(1));
+            if (fs.existsSync(markdownPath)) {
+                markdown = fs.readFileSync(markdownPath, "utf8");
+                const localizedPath = path.join(path.dirname(markdownPath), "zh-Hant", path.basename(markdownPath));
+                if (fs.existsSync(localizedPath)) {
+                    markdownZh = fs.readFileSync(localizedPath, "utf8");
+                }
+            }
+        }
+
         createPage({
             path: node.url,
             component: postTemplate,
@@ -110,6 +129,8 @@ exports.createPages = async ({ actions }) => {
                 // Data passed to context is available
                 // in page queries as GraphQL variables.
                 slug: node.slug,
+                markdown,
+                markdownZh,
             },
         });
     });
