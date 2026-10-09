@@ -1,8 +1,11 @@
 const path = require(`path`);
-const { postsPerPage } = require(`./src/utils/siteConfig`);
-const { paginate } = require(`gatsby-awesome-pagination`);
+const fs = require(`fs`);
 
-const data = require("./src/data/blog.json");
+const siteData = require("./src/data/site.json");
+const postData = require("./src/data/posts.json");
+const writingArticles = require("./src/data/writingArticles.json");
+const workItems = require("./src/data/work.js");
+const portfolioCases = require("./src/data/portfolio.js");
 
 /**
  * Here is the place where Gatsby creates the URLs for all the
@@ -12,91 +15,90 @@ exports.createPages = async ({ actions }) => {
     const { createPage } = actions;
 
     // Extract query results
-    const portfolio = data.czPortfolioInfo.edges;
-    const note = data.czNoteInfo.edges;
-    const about = data.czAboutInfo.edges;
-    const posts = data.allPosts.edges;
+    const about = siteData.czAboutInfo.edges;
+    const posts = postData.allPosts.edges;
 
     // Load templates
-    const indexTemplate = path.resolve(`./src/templates/index.js`);
     const portfolioTemplate = path.resolve(`./src/templates/portfolio.js`);
     const noteTemplate = path.resolve(`./src/templates/note.js`);
     const aboutTemplate = path.resolve(`./src/templates/about.js`);
     const postTemplate = path.resolve(`./src/templates/post.js`);
+    const indexTemplate = path.resolve(`./src/templates/index.js`);
+    const workCaseTemplate = path.resolve(`./src/templates/work-case-study.js`);
 
-    // Create portfolio page
-    portfolio.forEach(({ node }) => {
-        // permalink: `/portfolio/`
-        const url = `/portfolio`;
+    createPage({
+        path: "/",
+        component: indexTemplate,
+    });
 
+    workItems.forEach((work) => {
+        if (work.detailUrl) return;
 
-        // Derive the list of visible portfolio posts from data
-        const portfolioItems = posts.filter(
-            ({ node }) => node.portfolio_visible === true
-        );
+        createPage({
+            path: `/work/${work.slug}/`,
+            component: workCaseTemplate,
+            context: { work },
+        });
+    });
 
-        // Create pagination
-        paginate({
-            createPage,
-            items: portfolioItems,
-            itemsPerPage: postsPerPage,
-            component: portfolioTemplate,
-            pathPrefix: ({ pageNumber }) =>
-                pageNumber === 0 ? `${url}/` : `${url}/page`,
+    // Keep the portfolio independent from the Work experience case studies.
+    createPage({
+        path: "/portfolio/",
+        component: portfolioTemplate,
+    });
+
+    portfolioCases.forEach((project) => {
+        createPage({
+            path: `/portfolio/${project.slug}/`,
+            component: workCaseTemplate,
+            context: { work: project },
+        });
+    });
+
+    // Writing is curated from the selected P0/P1 article list.
+    createPage({
+        path: "/note/",
+        component: noteTemplate,
+    });
+
+    // Generate article pages from their canonical Markdown in content/writing/articles.
+    const writingSlugsWithContent = new Set();
+    writingArticles.filter((article) => article.contentFile).forEach((article) => {
+        const markdownPath = path.join(__dirname, article.contentFile);
+        const markdown = fs.readFileSync(markdownPath, "utf8").replace(/^# .+\r?\n+/, "");
+        writingSlugsWithContent.add(article.slug);
+
+        createPage({
+            path: `/${article.slug}/`,
+            component: postTemplate,
             context: {
-                slug: node.slug,
+                slug: article.slug,
+                markdown,
+                writingArticle: {
+                    title: article.title,
+                    summary: article.summary,
+                },
             },
         });
     });
 
-    // Create note page
-    note.forEach(({ node }) => {
-        // permalink: `/note/`
-        const url = `/note`;
-
-
-        // Derive the list of visible note posts from data
-        const noteItems = posts.filter(({ node }) => node.note_visible === true);
-
-        // Create pagination
-        paginate({
-            createPage,
-            items: noteItems,
-            itemsPerPage: postsPerPage,
-            component: noteTemplate,
-            pathPrefix: ({ pageNumber }) =>
-                pageNumber === 0 ? `${url}/` : `${url}/page`,
-            context: {
-                slug: node.slug,
-            },
-        });
-    });
-
-    // Create about page
-    about.forEach(({ node }) => {
-        // permalink: `/about/`
-        const url = `/about`;
-
-
-        // Derive the list of visible note posts from data
-        const aboutItems = posts.filter(({ node }) => node.note_visible === false && node.portfolio_visible === false);
-
-        // Create pagination
-        paginate({
-            createPage,
-            items: aboutItems,
-            itemsPerPage: postsPerPage,
+    // About is a single author page, not a paginated article category.
+    if (about.length > 0) {
+        createPage({
+            path: "/about/",
             component: aboutTemplate,
-            pathPrefix: ({ pageNumber }) =>
-                pageNumber === 0 ? `${url}/` : `${url}/page`,
-            context: {
-                slug: node.slug,
-            },
+            context: { slug: about[0].node.slug },
         });
-    });
+    }
 
     // Create post pages
     posts.forEach(({ node }) => {
+        // Curated Writing pages use their canonical Markdown in content/writing/articles.
+        if (writingSlugsWithContent.has(node.slug)) return;
+
+        // P2 articles are removed from the public Writing section and its routes.
+        if (node.writing_priority === "P2") return;
+
         // This part here defines, that our posts will use
         // a `/:slug/` permalink.
         node.url = `/${node.slug}/`;
@@ -112,20 +114,6 @@ exports.createPages = async ({ actions }) => {
         });
     });
 
-    // Create pagination
-    paginate({
-        createPage,
-        items: posts,
-        itemsPerPage: postsPerPage,
-        component: indexTemplate,
-        pathPrefix: ({ pageNumber }) => {
-            if (pageNumber === 0) {
-                return `/`;
-            } else {
-                return `/page`;
-            }
-        },
-    });
 };
 
 // Force userland punycode to avoid Node's deprecated built-in (DEP0040)

@@ -8,9 +8,9 @@ const remarkGfm = require("remark-gfm");
 const config = {
     siteMetadata: {
         siteUrl: process.env.SITEURL || 'https://blog.czhuang.dev/',
-        title: 'CZ-Huang Blog',
-        description: 'Hi, I’m Chongzhe Huang 👋. This is my personal blog, where I document my hands‑on work and thinking in Cloud‑Native / DevOps / SRE.',
-        author: 'ChongZhe',
+        title: 'Chongzhe Huang | Platform Engineering & SRE',
+        description: 'I build secure, reliable cloud platforms and delivery workflows that help engineering teams ship with confidence.',
+        author: 'Chongzhe Huang',
         image: '/logo.png',
         twitterUsername: '@your_twitter',
     },
@@ -21,8 +21,8 @@ const config = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-              name: 'CZ-Huang Blog - Portfolio & Note',
-              short_name: 'CZ-Huang Blog',
+              name: 'Chongzhe Huang | Platform Engineering & SRE',
+              short_name: 'Chongzhe Huang',
               start_url: '/',
               background_color: `#e9e9e9`,
               theme_color: `#15171A`,

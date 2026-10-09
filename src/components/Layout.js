@@ -1,13 +1,14 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-// import { Link } from "gatsby";
+import { Link } from "gatsby";
 import { Navigation } from ".";
-import data from "../data/blog.json";
+import siteData from "../data/site.json";
+import { useLanguage } from "../i18n/LanguageContext";
 
 import "../styles/app.css";
 
-// 手機版 site-nav-left 在 site-nav-right 下方
+// 手機版將主要導覽與社群連結分成兩列
 const navOrderMobileStyle = `
 @media (max-width: 600px) {
     .site-nav {
@@ -16,20 +17,23 @@ const navOrderMobileStyle = `
         align-items: stretch;
     }
     .site-nav-right {
-        order: 1;
+        order: 2;
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: center;
-        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+        padding-top: 0.7rem;
+        border-top: 1px solid rgba(255,255,255,0.16);
     }
     .site-nav-left {
-        order: 2;
+        order: 1;
     }
 }
 `;
 
-const DefaultLayout = ({ children, bodyClass, isHome }) => {
-    const site = data.layoutSettings.edges[0].node;
+const DefaultLayout = ({ children, bodyClass }) => {
+    const site = siteData.layoutSettings.edges[0].node;
+    const { language, setLanguage, t } = useLanguage();
 
     const githubUrl = site.github;
     const linkedinUrl = site.linkedin;
@@ -51,10 +55,10 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
     return (
         <>
             <Helmet>
-                <html lang={site.lang} />
+                <html lang={language === "zh" ? "zh-Hant" : site.lang || "en"} />
                 <style type="text/css">{`${site.codeinjection_styles || ""}`}</style>
                 <body className={bodyClass} />
-                {/* 手機版 site-nav-left 在 site-nav-right 上方 */}
+                {/* 手機版主要導覽在社群連結上方 */}
                 <style type="text/css">{navOrderMobileStyle}</style>
             </Helmet>
             {/* 將固定頂部高度提供為 CSS 變數，供各頁使用（如 scroll-margin-top） */}
@@ -65,55 +69,62 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                     <header
                         ref={headerRef}
                         className="site-head"
-                        style={{
-                            ...(site.cover_image && {
-                                backgroundImage: `url(${site.cover_image})`,
-                            }),
-                        }}
                     >
                         <div className="container">
-                            <div className="site-mast">
-                                <div className="site-mast-left">
-                                </div>
-                                <div className="site-mast-right">
-                                    
-                                </div>
-                            </div>
-                            {isHome ? (
-                                <div className="site-banner">
-                                    <h1 className="site-banner-title">{site.meta_title}</h1>
-                                </div>
-                            ) : null}
                             <nav className="site-nav">
                                 <div className="site-nav-left">
+                                    <Link className="site-wordmark" to="/">
+                                        Chongzhe Huang
+                                    </Link>
                                     <Navigation data={site.navigation} navClass="site-nav-item" />
                                 </div>
                                 <div className="site-nav-right">
                                     {githubUrl && (
-                                        <a href={githubUrl} className="site-nav-item" target="_blank" rel="noopener noreferrer">
+                                        <a href={githubUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
                                             <img
                                                 className="site-nav-icon-github"
                                                 src="/images/icons/github.png"
-                                                alt="github"
+                                                alt=""
                                             />
+                                            <span>GitHub</span>
                                         </a>
                                     )}
                                     {linkedinUrl && (
-                                        <a href={linkedinUrl} className="site-nav-item" target="_blank" rel="noopener noreferrer">
+                                        <a href={linkedinUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
                                             <img 
                                                 className="site-nav-icon-linkedin" 
                                                 src="/images/icons/linkedin.png"
-                                                alt="linkedin" 
+                                                alt=""
                                             />
+                                            <span>LinkedIn</span>
                                         </a>
                                     )}
-                                    <a className="site-nav-item" href={gmailUrl} target="_blank" rel="noopener noreferrer">
-                                        <img 
-                                            className="site-nav-icon-gmail" 
+                                    <a className="site-social-link" href={gmailUrl} aria-label={`${t("Email")} Chongzhe Huang`}>
+                                        <img
+                                            className="site-nav-icon-gmail"
                                             src="/images/icons/gmail.png"
-                                            alt="Gmail Icon" 
+                                            alt=""
                                         />
+                                        <span>{t("Email")}</span>
                                     </a>
+                                    <div className="site-language-switch" role="group" aria-label={t("Switch language")}>
+                                        <button
+                                            type="button"
+                                            className="site-language-button"
+                                            aria-pressed={language === "en"}
+                                            onClick={() => setLanguage("en")}
+                                        >
+                                            EN
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="site-language-button"
+                                            aria-pressed={language === "zh"}
+                                            onClick={() => setLanguage("zh")}
+                                        >
+                                            中文
+                                        </button>
+                                    </div>
                                     {/* <Link className="site-nav-button" to="/about">
                                         About
                                     </Link> */}
@@ -132,14 +143,12 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
                 <div className="viewport-bottom">
                     <footer className="site-foot">
                         <div className="site-foot-nav container">
-                            <div className="site-foot-nav-left">
-                                Chongzhe Huang 2025 © all rights reserved
+                            <div className="site-foot-nav-left">© 2026 Chongzhe Huang</div>
+                            <div className="site-foot-nav-right">
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+                                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                                <a href={gmailUrl}>{t("Email")}</a>
                             </div>
-                            {/* <div className="site-foot-nav-right">
-                                <Link to="/"> Home </Link>
-                                <Link to="/portfolio/"> Portfolio </Link>
-                                <Link to="/note/"> Notes </Link>
-                            </div> */}
                         </div>
                     </footer>
                 </div>
@@ -151,7 +160,6 @@ const DefaultLayout = ({ children, bodyClass, isHome }) => {
 DefaultLayout.propTypes = {
     children: PropTypes.node.isRequired,
     bodyClass: PropTypes.string,
-    isHome: PropTypes.bool,
 };
 
 export default DefaultLayout;

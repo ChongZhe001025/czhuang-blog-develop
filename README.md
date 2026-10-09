@@ -1,4 +1,4 @@
-# CZ-Huang Blog
+# Chongzhe Huang — SRE & Platform Engineering
 
 A personal blog and portfolio site built with Gatsby.
 
@@ -38,9 +38,26 @@ The repository's Pages source should be set to **GitHub Actions**. The workflow 
 
 ## Directory Structure
 
-- `src/components/` - React components
-- `src/templates/` - Page templates (blog, note, portfolio)
-- `src/pages/` - Static pages
-- `src/data/` - Blog data (JSON)
-- `static/posts/` - Markdown blog posts
-- `static/images/` - Static images
+- `content/writing/articles/` - Markdown source for the 13 articles in Writing
+- `content/writing/archive/` - Older unpublished notes, kept out of the site
+- `content/portfolio/drafts/` - Draft copy and material for the portfolio organization profile
+- `static/posts/` - Legacy Markdown pages still served by their existing routes
+- `static/images/` - Profile, case-study, and site images
+- `src/data/site.json` - Site metadata, navigation, and social links
+- `src/data/posts.json` - Legacy post metadata used by existing pages
+- `src/data/writingArticles.json` - Writing titles, summaries, topics, ordering, and Markdown paths
+- `src/data/work.js` / `src/data/portfolio.js` - Work case studies and personal projects
+- `src/data/archive/backup.json` - Unused historical data snapshot
+- `src/i18n/` - Traditional Chinese UI, article, and case-study translations
+- `src/components/` - Shared React components
+- `src/templates/` - Writing, Work, Portfolio, and About page templates
+- `src/pages/` - Standalone pages
+- `src/styles/` - Global styles
+
+### Add a Writing article
+
+1. Add its Markdown file to `content/writing/articles/`.
+2. Add the title, summary, topic, priority, rank, slug, and `contentFile` path to `src/data/writingArticles.json`.
+3. Add Traditional Chinese title and summary strings to `src/i18n/LanguageContext.js`. Add body translations to `src/i18n/articleTranslations.js` when a Chinese article version is ready.
+
+The Gatsby page routes are generated from `writingArticles.json`; no route needs to be added by hand.

@@ -1,0 +1,150 @@
+{
+  "allPosts": {
+    "edges": [
+      {
+        "node": {
+          "excerpt": "I build secure, repeatable infrastructure and delivery workflows that help engineering teams collaborate and ship with confidence.",
+          "featured": false,
+          "html": "/posts/profile.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "my-profile",
+          "title": "About Me 👨‍💻"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "A collection of engineering case studies, practical notes, and lessons from building cloud and platform infrastructure.",
+          "featured": false,
+          "html": "/posts/about-blog.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "this-blog",
+          "title": "About Blog 📖"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Designed an access and environment isolation model for external developers. The case documents partial IAM implementation; runtime rollout and end-to-end validation remain unverified.",
+          "featured": false,
+          "html": "/posts/vendor-collaboration-environment.md",
+          "note_tech_type": {
+            "name": ""
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "#GCP #PlatformEngineering #CI/CD #Security"
+          },
+          "portfolio_visible": false,
+          "slug": "vendor-collaboration-environment",
+          "title": "Secure Vendor Development Environment Design"
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Generate & apply SELinux policies for Docker containers automatically.",
+          "featured": false,
+          "html": "/posts/AutoSEL.md",
+          "note_tech_type": {
+            "name": "#Go #SELinux #Docker"
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "#Go #SELinux #Docker"
+          },
+          "portfolio_visible": false,
+          "slug": "AutoSEL",
+          "title": "AutoSEL",
+          "writing_priority": "P1",
+          "writing_order": 16
+        }
+      },
+      {
+        "node": {
+          "excerpt": "React + Gin + MongoDB task board. Dockerized services with Swagger API and optional HTTPS via Nginx.",
+          "featured": false,
+          "html": "/posts/TickBoard.md",
+          "note_tech_type": {
+            "name": "#React #Go #MongoDB #Docker"
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "#React #Go #MongoDB #Docker"
+          },
+          "portfolio_visible": false,
+          "slug": "TickBoard",
+          "title": "TickBoard",
+          "writing_priority": "P1",
+          "writing_order": 17
+        }
+      },
+      {
+        "node": {
+          "excerpt": "TickBoard runs on a DevOps workflow powered by GitOps, and Terraform-provisioned AWS EKS.",
+          "featured": false,
+          "html": "/posts/sideproj-eks.md",
+          "note_tech_type": {
+            "name": "#Terraform #AWS #EKS"
+          },
+          "note_visible": false,
+          "portfolio_tech_type": {
+            "name": "#Terraform #AWS #EKS"
+          },
+          "portfolio_visible": false,
+          "slug": "sideproj-eks",
+          "title": "TickBoard on GitOps and EKS",
+          "writing_priority": "P1",
+          "writing_order": 15
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Safely remove old EKS security groups, auto-cleaning references first.",
+          "featured": false,
+          "note_tech_type": {
+            "name": "#AWS #EKS #Shell"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "destroy-eks-security-group",
+          "title": "EKS Residual Security Group Cleanup",
+          "writing_priority": "P0",
+          "writing_order": 4
+        }
+      },
+      {
+        "node": {
+          "excerpt": "Jenkins pipeline example that builds images and runs Trivy image/filesystem scans with reports and fail thresholds.",
+          "featured": false,
+          "note_tech_type": {
+            "name": "#Jenkins #Trivy"
+          },
+          "note_visible": true,
+          "portfolio_tech_type": {
+            "name": ""
+          },
+          "portfolio_visible": false,
+          "slug": "jenkins-trivy-guide",
+          "title": "Jenkins + Trivy Scans",
+          "writing_priority": "P0",
+          "writing_order": 7
+        }
+      }
+    ]
+  }
+}

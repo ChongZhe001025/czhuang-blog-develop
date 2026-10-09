@@ -1,0 +1,63 @@
+{
+  "czNoteInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "Technical Writing",
+          "slug": "note"
+        }
+      }
+    ]
+  },
+  "czPortfolioInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "Portfolio",
+          "slug": "portfolio"
+        }
+      }
+    ]
+  },
+  "czAboutInfo": {
+    "edges": [
+      {
+        "node": {
+          "name": "About",
+          "slug": "about"
+        }
+      }
+    ]
+  },
+  "layoutSettings": {
+    "edges": [
+      {
+        "node": {
+          "cover_image": "/images/cover-image.png",
+          "description": "",
+          "meta_title": "Chongzhe Huang | Platform Engineering & SRE",
+          "github": "https://github.com/ChongZhe001025",
+          "gmail": "mailto:czhuang001025@gmail.com",
+          "icon": "https://gatsby.ghost.io/content/images/size/w256h256/2022/05/favicon.png",
+          "lang": "en",
+          "linkedin": "https://www.linkedin.com/in/chongzhe-huang-717a05281/",
+          "navigation": [
+            {
+              "label": "Work",
+              "url": "/work/"
+            },
+            {
+              "label": "Portfolio",
+              "url": "/portfolio/"
+            },
+            {
+              "label": "Writing",
+              "url": "/note/"
+            }
+          ],
+          "title": "Experience, Projects & Writing"
+        }
+      }
+    ]
+  }
+}

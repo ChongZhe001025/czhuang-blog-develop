@@ -2,20 +2,22 @@ import * as React from "react";
 import { Link } from "gatsby";
 import { Layout } from "../components";
 import { Seo } from "../components/SEO";
+import { useLanguage } from "../i18n/LanguageContext";
 
-const NotFoundPage = () => (
-    <Layout>
-    <Seo title="404: Not found" description="Page Not found - CZ-Huang Blog" />
+const NotFoundPage = () => {
+    const { t } = useLanguage();
+
+    return <Layout>
+    <Seo title="404: Not found" description={t("Page not found - Chongzhe Huang")} />
         <div className="container">
             <article className="content" style={{ textAlign: `center` }}>
                 <h1 className="content-title">Error 404</h1>
                 <section className="content-body">
-                    Page not found, <Link to="/">return home</Link> to start
-                    over
+                    {t("Page not found,")} <Link to="/">{t("return home")}</Link>{t(" to start over")}
                 </section>
             </article>
         </div>
-    </Layout>
-);
+    </Layout>;
+};
 
 export default NotFoundPage;

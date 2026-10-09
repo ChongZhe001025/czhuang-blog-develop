@@ -1,72 +1,60 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
-import { Layout, PostCard, Pagination } from "../components";
-import data from "../data/blog.json";
+import { Layout } from "../components";
+import portfolioItems from "../data/portfolio";
+import { useLanguage } from "../i18n/LanguageContext";
 
-const Portfolio = ({ pageContext }) => {
-    const posts = data.allPosts.edges;
-    const { skip = 0, limit = posts.length } = pageContext || {};
+const Portfolio = () => {
+    const { t } = useLanguage();
 
-    const portfolioData = data.czPortfolioInfo.edges[0].node;
-    
-    const techTypes = [...new Set(posts.flatMap(({ node }) => node.portfolio_tech_type.name.split(" ")))].filter(Boolean);
-    const [selectedTech, setSelectedTech] = React.useState("all");
+    return <Layout>
+        <Seo
+            title={`${t("Portfolio")} | Chongzhe Huang`}
+            description={t("I use FluxSeer to publish open-source projects and personal software experiments across platform reliability, cloud-native systems, automation, and web development.")}
+        />
+        <div className="container work-page">
+            <header className="work-page-header">
+                <p className="portfolio-eyebrow">{t("FluxSeer · Independent projects")}</p>
+                <h1>{t("Portfolio")}</h1>
+                <p>{t("I use FluxSeer to publish open-source projects and personal software experiments across platform reliability, cloud-native systems, automation, and web development.")}</p>
+            </header>
 
-    const filteredPosts = posts.filter(({ node }) =>
-        node.portfolio_visible === true &&
-        (selectedTech === "all" || node.portfolio_tech_type.name.includes(selectedTech))
-    );
-
-    const pagePosts = selectedTech === "all"
-        ? filteredPosts.slice(skip, skip + limit)
-        : filteredPosts;
-
-    return (
-        <Layout>
-            <Seo title="Portfolio | CZ-HUANG Blog" description="CZ-Huang Blog Portfolio categories and content index" />
-            <div className="container">
-                <header className="page-header">
-                    <div className="page-header-content">
-                        <h1>{portfolioData.name}</h1>
+            <section className="work-group portfolio-group" aria-labelledby="portfolio-projects-heading">
+                <div className="work-group-heading">
+                    <h2 id="portfolio-projects-heading">{t("Open-source projects & experiments")}</h2>
+                    <div className="portfolio-group-actions">
+                        <span>{String(portfolioItems.length).padStart(2, "0")}</span>
+                        <a className="portfolio-text-link" href="https://github.com/FluxSeer" target="_blank" rel="noopener noreferrer">
+                            {t("Visit the FluxSeer organization")} <span aria-hidden="true">↗</span>
+                        </a>
                     </div>
-                </header>
-                <div className="filter-container">
-                    <select
-                        id="tech-select"
-                        value={selectedTech}
-                        onChange={(e) => setSelectedTech(e.target.value)}
-                        className="filter-select"
-                    >
-                        <option value="all"> Choose your tech interest </option>
-                        {techTypes.map((tech) => (
-                            <option key={tech} value={tech}>
-                                {tech}
-                            </option>
-                        ))}
-                    </select>
                 </div>
-                <section className="post-feed">
-                    {pagePosts.length > 0 ? (
-                        pagePosts.map(({ node }) => <PostCard key={node.id} post={node} />)
-                    ) : (
-                        <p>No posts available under this tech type.</p>
-                    )}
-                </section>
-
-                {selectedTech === "all" && (
-                    <Pagination pageContext={pageContext} />
-                )}
-            </div>
-        </Layout>
-    );
-};
-
-Portfolio.propTypes = {
-    location: PropTypes.shape({
-        pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    pageContext: PropTypes.object,
+                <div className="work-list">
+                    {portfolioItems.map((item) => {
+                        const detailUrl = `/portfolio/${item.slug}/`;
+                        return (
+                            <article className="work-list-item" key={item.slug}>
+                                <div className="work-list-number">{item.id}</div>
+                                <div className="work-list-body">
+                                    <div className="work-list-meta">
+                                        <span>{t(item.discipline)}</span>
+                                        <span className="work-status">{t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}</span>
+                                    </div>
+                                    <h3><Link to={detailUrl}>{t(item.title)}</Link></h3>
+                                    <p>{t(item.summary)}</p>
+                                    <div className="work-tech-list">{item.technologies.join(" · ")}</div>
+                                </div>
+                                <Link className="work-list-arrow" to={detailUrl} aria-label={`${t("Read")} ${t(item.title)}`}>
+                                    <span aria-hidden="true">↗</span>
+                                </Link>
+                            </article>
+                        );
+                    })}
+                </div>
+            </section>
+        </div>
+    </Layout>;
 };
 
 export default Portfolio;

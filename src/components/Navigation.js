@@ -1,10 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
-import data from "../data/blog.json";
+import siteData from "../data/site.json";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const Navigation = ({ navClass }) => {
-    const navItems = data.layoutSettings.edges[0].node.navigation;
+    const navItems = siteData.layoutSettings.edges[0].node.navigation;
+    const { t } = useLanguage();
 
     return (
         <>
@@ -18,13 +20,13 @@ const Navigation = ({ navClass }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {navItem.label}
+                            {t(navItem.label)}
                         </a>
                     );
                 } else {
                     return (
                         <Link className={navClass} to={navItem.url} key={i}>
-                            {navItem.label}
+                            {t(navItem.label)}
                         </Link>
                     );
                 }
