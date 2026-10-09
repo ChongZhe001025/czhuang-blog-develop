@@ -1,7 +1,7 @@
 module.exports = {
     siteUrl:
         process.env.NODE_ENV === `production`
-            ? process.env.SITE_URL || `http://localhost:8000`
+            ? process.env.SITE_URL || `https://blog.czhuang.dev`
             : `http://localhost:8000`, // Site domain. Do not include a trailing slash!
 
     postsPerPage: 9, // Number of posts shown on paginated pages (changes this requires sometimes to delete the cache)

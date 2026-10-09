@@ -32,7 +32,9 @@ A personal blog and portfolio site built with Gatsby.
 
 ## Deployment
 
-- Use `update_blog.ps1` (Windows) or `update_blog.sh` (Linux) to build and deploy the site to GitHub.
+Push a change to `main` or run the **Deploy Gatsby site to GitHub Pages** workflow from the Actions tab. GitHub Actions builds the Gatsby site and publishes the generated `public/` directory to GitHub Pages at [https://blog.czhuang.dev](https://blog.czhuang.dev).
+
+The repository's Pages source should be set to **GitHub Actions**. The workflow sets `SITE_URL` to the custom domain so canonical links and sitemap URLs use the public site address.
 
 ## Directory Structure
 
