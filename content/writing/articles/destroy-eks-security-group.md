@@ -21,8 +21,8 @@ Safely delete old eks–related **non-default** security groups, automatically r
 - Export environment variables:  
 
 ```bash
-export REGION=ap-southeast-2
-export PROFILE=root
+export REGION="your-aws-region"
+export PROFILE="your-aws-profile"
 ```
 
 ---
@@ -37,8 +37,8 @@ Supports **dry-run mode**: set `DRY_RUN=true` to preview changes without executi
 set -euo pipefail
 
 # Usage:
-#   REGION=ap-southeast-2 PROFILE=root ./sg-force-delete.sh sg-aaa sg-bbb ...
-#   DRY_RUN=true REGION=ap-southeast-2 PROFILE=root ./sg-force-delete.sh sg-aaa sg-bbb ...
+#   REGION=your-aws-region PROFILE=your-aws-profile ./sg-force-delete.sh sg-aaa sg-bbb ...
+#   DRY_RUN=true REGION=your-aws-region PROFILE=your-aws-profile ./sg-force-delete.sh sg-aaa sg-bbb ...
 
 REGION="${REGION:-ap-southeast-2}"
 PROFILE="${PROFILE:-default}"
@@ -85,7 +85,12 @@ for TARGET_SG in "$@"; do
   echo "Target SG: $TARGET_SG   (Region=$REGION Profile=$PROFILE)"
   echo "----------------------------------------------------"
 
-  SG_JSON=$(aws ec2 describe-security-groups     --group-ids "$TARGET_SG"     --region "$REGION" --profile "$PROFILE" --output json 2>/dev/null || true)
+  if ! SG_JSON=$(aws ec2 describe-security-groups \
+      --group-ids "$TARGET_SG" \
+      --region "$REGION" --profile "$PROFILE" --output json); then
+    echo "Failed to describe $TARGET_SG; check permissions, account and region." >&2
+    exit 1
+  fi
 
   if [[ -z "$SG_JSON" || "$SG_JSON" == "null" || $(echo "$SG_JSON" | jq '.SecurityGroups | length') -eq 0 ]]; then
     echo "SG $TARGET_SG not found (already deleted, wrong region/account). Skipping."
@@ -196,6 +201,10 @@ aws ec2 describe-network-interfaces   --filters "Name=group-id,Values=<sg-id>"  
 aws ec2 describe-security-groups   --group-ids <sg-id>   --region $REGION --profile $PROFILE   --output table
 ```
 
+Before a live run, confirm the caller account with `aws sts get-caller-identity`, the region and VPC, and the group's name and EKS tags. `DRY_RUN=true` validates only the planned actions; it does not prove AWS will accept the revocations or deletion. After a live run, query the SG again and confirm it is absent. If deletion returns `DependencyViolation`, preserve the complete AWS error and continue discovering service attachments instead of retrying indefinitely.
+
+Do not convert every `describe-security-groups` failure into “not found.” An expired session, access denial or wrong region is a different condition from an already deleted group. This script stops on any failed AWS query; if AWS returns `InvalidGroup.NotFound`, first confirm the caller account and region before recording the target as already absent.
+
 ---
 
 ## Common Errors & Fixes
@@ -211,3 +220,7 @@ aws ec2 describe-security-groups   --group-ids <sg-id>   --region $REGION --prof
 
 - **Accidental deletion risk**  
   → Always check **GroupName, creation time, and Tags (`aws:eks:cluster-name`)** to confirm it’s an old resource.  
+
+## Evidence and operational limits
+
+The cleanup logic skips default groups and groups with attached ENIs, removes inbound/outbound SG references, then requests deletion. A successful dry run validates only the planned actions. Keep the AWS CLI response from `delete-security-group` and a follow-up `describe-security-groups` result as completion evidence. The available Codex conversation archive did not contain a separate EKS security group incident proving an actual delete, so this procedure should not be presented as a confirmed live cleanup.

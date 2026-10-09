@@ -1,4 +1,4 @@
-## Overview 
+## Overview
 A small task board project built with React (frontend), Gin (Go backend), and MongoDB. Everything runs in Docker. The API ships with Swagger, and production can be fronted by Nginx with HTTPS.
 
 This guide covers:
@@ -30,9 +30,9 @@ Backend (`gin-api/.env`, auto-loaded by Docker Compose):
 
 ```
 PORT=8082
-MONGO_URI=mongodb://root:pass@mongo:27017
+MONGO_URI=mongodb://<username>:<password>@mongo:27017
 DB_NAME=TickBoard
-JWT_SECRET=supersecret_change_me
+JWT_SECRET=<set-a-strong-secret>
 ```
 
 Frontend (`frontend/.env`):
@@ -67,7 +67,7 @@ docker compose up -d --build
 - Frontend: http://localhost:3000
 - API Health: http://localhost:8082/health
 - Swagger UI: http://localhost:8082/swagger/index.html
-- Mongo Express: http://localhost:8081/db  (BasicAuth: `root` / `pass`)
+- Mongo Express: http://localhost:8081/db  (use credentials configured for your environment)
 
 4) Handy commands:
 
@@ -149,4 +149,4 @@ If you manage certs manually, ensure the paths in Nginx point to:
 - Frontend: http://localhost:3000
 - API health: http://localhost:8082/health
 - Swagger: http://localhost:8082/swagger/index.html
-- Mongo Express: http://localhost:8081/db 
+- Mongo Express: http://localhost:8081/db
