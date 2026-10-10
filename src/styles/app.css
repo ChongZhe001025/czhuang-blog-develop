@@ -1561,6 +1561,13 @@ body.home-page .site-main {
 	margin: 0;
 }
 
+.site-primary-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.15rem;
+}
+
 .site-wordmark {
 	display: inline-flex;
 	align-items: baseline;
@@ -1595,6 +1602,12 @@ body.home-page .site-main {
 	margin-left: 1.3rem;
 	padding-left: 1.8rem;
 	border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.site-social-links {
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
 }
 
 .site-social-link {
@@ -2910,57 +2923,119 @@ body.home-page .site-main {
 
 @media (max-width: 700px) {
 	.site-head {
-		padding: 0.5rem 0;
+		padding: 0.25rem 0;
 	}
 
 	.site-nav {
-		align-items: stretch;
-		flex-direction: column;
-		gap: 0.2rem;
-		padding: 0.4rem 0 0.6rem;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-areas:
+			"brand language"
+			"divider divider"
+			"primary socials";
+		align-items: center;
+		column-gap: 0.8rem;
+		row-gap: 0.35rem;
+		padding: 0.45rem 0 0.55rem;
 	}
 
-	.site-nav-left {
+	.site-nav::after {
+		grid-area: divider;
+		width: 100%;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.18);
+		content: "";
+	}
+
+	.site-nav-left,
+	.site-nav-right {
+		display: contents;
+	}
+
+	.site-primary-links {
+		grid-area: primary;
 		gap: 0.15rem;
-	}
-
-	.site-nav-item,
-	.site-social-link {
-		min-height: 4.2rem;
+		margin-left: 0;
 	}
 
 	.site-wordmark {
-		margin-right: 0.5rem;
-		font-size: 1.55rem;
+		grid-area: brand;
+		margin-right: 0;
+		font-size: 1.5rem;
+	}
+
+	.site-social-links {
+		grid-area: socials;
+		justify-self: end;
 	}
 
 	.site-nav-item {
-		padding: 0.45rem 0.6rem;
-		font-size: 1.35rem;
+		display: inline-flex;
+		min-height: 3.6rem;
+		align-items: center;
+		padding: 0.45rem 0.65rem;
+		border-radius: 0.55rem;
+		font-size: 1.25rem;
+		transition: background-color 160ms ease, color 160ms ease;
+	}
+
+	.site-nav-item:hover,
+	.site-nav-item:focus-visible {
+		background: rgba(255, 255, 255, 0.09);
+		color: #fff;
 	}
 
 	.site-nav-icon-github,
 	.site-nav-icon-linkedin,
 	.site-nav-icon-gmail {
-		width: 2rem;
-		height: 2rem;
+		width: 1.7rem;
+		height: 1.7rem;
 	}
 
 	.site-nav-right {
-		align-self: flex-start;
-		gap: 1.2rem;
-		margin-left: 0;
-		padding: 0.8rem 0 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.18);
-		border-left: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.site-social-links {
+		gap: 0.35rem;
 	}
 
 	.site-social-link {
-		font-size: 1.3rem;
+		justify-content: center;
+		min-width: 3.5rem;
+		min-height: 3.5rem;
+		border-radius: 0.55rem;
+		font-size: 1.15rem;
+		transition: background-color 160ms ease, color 160ms ease;
+	}
+
+	.site-social-link span {
+		display: none;
+	}
+
+	.site-social-link:hover,
+	.site-social-link:focus-visible {
+		background: rgba(255, 255, 255, 0.09);
+		color: #fff;
+	}
+
+	.site-language-switch {
+		grid-area: language;
+		justify-self: end;
+		gap: 0.15rem;
+		margin-left: 0;
+		padding: 0.2rem;
+		border-radius: 0.65rem;
 	}
 
 	.site-language-button {
-		min-height: 3.8rem;
+		min-width: 3.8rem;
+		min-height: 3.2rem;
+		padding: 0.35rem 0.65rem;
+		border-radius: 0.45rem;
+		font-size: 1.15rem;
 	}
 
 	.experience-entry-heading {
@@ -3209,22 +3284,14 @@ body.home-page .site-main {
 		padding-left: 1.8rem;
 	}
 
-	.site-nav-left {
-		gap: 0;
-	}
-
 	.site-wordmark {
-		font-size: 1.45rem;
+		font-size: 1.4rem;
 	}
 
 	.site-nav-item {
-		padding-right: 0.48rem;
-		padding-left: 0.48rem;
-		font-size: 1.25rem;
-	}
-
-	.site-social-link span {
-		display: none;
+		padding-right: 0.5rem;
+		padding-left: 0.5rem;
+		font-size: 1.12rem;
 	}
 
 	.portfolio-stack ul {

@@ -8,29 +8,6 @@ import { useLanguage } from "../i18n/LanguageContext";
 
 import "../styles/app.css";
 
-// 手機版將主要導覽與社群連結分成兩列
-const navOrderMobileStyle = `
-@media (max-width: 600px) {
-    .site-nav {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .site-nav-right {
-        order: 2;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 0.5rem;
-        padding-top: 0.7rem;
-        border-top: 1px solid rgba(255,255,255,0.16);
-    }
-    .site-nav-left {
-        order: 1;
-    }
-}
-`;
-
 const DefaultLayout = ({ children, bodyClass }) => {
     const site = siteData.layoutSettings.edges[0].node;
     const { language, setLanguage, t } = useLanguage();
@@ -58,8 +35,6 @@ const DefaultLayout = ({ children, bodyClass }) => {
                 <html lang={language === "zh" ? "zh-Hant" : site.lang || "en"} />
                 <style type="text/css">{`${site.codeinjection_styles || ""}`}</style>
                 <body className={bodyClass} />
-                {/* 手機版主要導覽在社群連結上方 */}
-                <style type="text/css">{navOrderMobileStyle}</style>
             </Helmet>
             {/* 將固定頂部高度提供為 CSS 變數，供各頁使用（如 scroll-margin-top） */}
             <style>{`:root{--site-head-offset:${headerHeight}px}`}</style>
@@ -76,37 +51,41 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                     <Link className="site-wordmark" to="/">
                                         Chongzhe Huang
                                     </Link>
-                                    <Navigation data={site.navigation} navClass="site-nav-item" />
+                                    <div className="site-primary-links">
+                                        <Navigation data={site.navigation} navClass="site-nav-item" />
+                                    </div>
                                 </div>
                                 <div className="site-nav-right">
-                                    {githubUrl && (
-                                        <a href={githubUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                                    <div className="site-social-links">
+                                        {githubUrl && (
+                                            <a href={githubUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                                                <img
+                                                    className="site-nav-icon-github"
+                                                    src="/images/icons/github.png"
+                                                    alt=""
+                                                />
+                                                <span>GitHub</span>
+                                            </a>
+                                        )}
+                                        {linkedinUrl && (
+                                            <a href={linkedinUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                                                <img
+                                                    className="site-nav-icon-linkedin"
+                                                    src="/images/icons/linkedin.png"
+                                                    alt=""
+                                                />
+                                                <span>LinkedIn</span>
+                                            </a>
+                                        )}
+                                        <a className="site-social-link" href={gmailUrl} aria-label={`${t("Email")} Chongzhe Huang`}>
                                             <img
-                                                className="site-nav-icon-github"
-                                                src="/images/icons/github.png"
+                                                className="site-nav-icon-gmail"
+                                                src="/images/icons/gmail.png"
                                                 alt=""
                                             />
-                                            <span>GitHub</span>
+                                            <span>{t("Email")}</span>
                                         </a>
-                                    )}
-                                    {linkedinUrl && (
-                                        <a href={linkedinUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-                                            <img 
-                                                className="site-nav-icon-linkedin" 
-                                                src="/images/icons/linkedin.png"
-                                                alt=""
-                                            />
-                                            <span>LinkedIn</span>
-                                        </a>
-                                    )}
-                                    <a className="site-social-link" href={gmailUrl} aria-label={`${t("Email")} Chongzhe Huang`}>
-                                        <img
-                                            className="site-nav-icon-gmail"
-                                            src="/images/icons/gmail.png"
-                                            alt=""
-                                        />
-                                        <span>{t("Email")}</span>
-                                    </a>
+                                    </div>
                                     <div className="site-language-switch" role="group" aria-label={t("Switch language")}>
                                         <button
                                             type="button"
