@@ -26,10 +26,6 @@ const WorkCaseStudy = ({ pageContext }) => {
                     <h1>{t(work.title)}</h1>
                     {work.subtitle && <p className="work-case-deck">{t(work.subtitle)}</p>}
                     <p className="work-case-summary">{t(work.summary)}</p>
-                    <div className="work-case-status">
-                        <span>{t(work.status)}</span>
-                        {work.statusDetail && <span>{t(work.statusDetail)}</span>}
-                    </div>
                     <div className="work-case-technologies">
                         {work.technologies.map((technology) => <span key={technology}>{technology}</span>)}
                     </div>

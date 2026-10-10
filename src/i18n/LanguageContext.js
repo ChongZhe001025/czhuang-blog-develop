@@ -150,7 +150,7 @@ const zhHant = {
     "AWS EC2 Deployment & AMI Automation": "AWS EC2 部署與 AMI 自動化",
     "A two-stage EC2 and AMI workflow that discovers launch settings from an active Auto Scaling Group, hands image-build parameters between scripts, and screens old images before cleanup.": "分成 EC2 建置與 AMI 擷取兩階段的自動化流程，從啟用中的 Auto Scaling Group 取得啟動設定，在腳本間交接映像參數，並於清理前檢查舊映像引用。",
     "Multi-Country GCP Infrastructure Architecture": "多國 GCP 基礎設施架構",
-    "A multi-country GCP target architecture that separates regional ownership, shared dependencies, and environment-specific infrastructure.": "規劃多國 GCP 目標架構，劃分區域責任、共用依賴與各環境專屬基礎設施。",
+    "A multi-country GCP design that separates global control functions from country runtime, paired with staged Terraform rollouts in selected non-production regions.": "設計多國 GCP 架構，將全域控制功能與各國執行環境分離，並在選定的非正式區域分階段部署 Terraform 基礎設施。",
     "Datastream CDC Reliability & Data Consistency Investigation": "Datastream CDC 可靠性與資料一致性調查",
     "A CDC reliability investigation comparing stream health, backfill signals, source access, and destination data to reason about end-to-end completeness.": "比對串流健康狀態、回填訊號、來源存取權限與目的端資料，調查 CDC 端到端資料完整性。",
     "Secure Vendor Development Environment Design": "安全的外部協作者開發環境設計",

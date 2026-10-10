@@ -95,7 +95,6 @@ const Home = () => {
                                 <p className="portfolio-case-meta">{t("CASE STUDY")} {work.id} <span>·</span> {t(work.category).toUpperCase()}</p>
                                 <h3><Link to={`/work/${work.slug}/`}>{t(work.title)}</Link></h3>
                                 <p className="portfolio-work-summary">{t(work.summary)}</p>
-                                <p className="portfolio-work-status">{t(work.status)} · {t(work.statusDetail)}</p>
                                 <Link className="portfolio-text-link" to={`/work/${work.slug}/`}>{t("Read case study")} <span aria-hidden="true">↗</span></Link>
                             </article>
                         ))}

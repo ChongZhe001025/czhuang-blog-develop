@@ -1900,13 +1900,6 @@ body.home-page .site-main {
 	line-height: 1.6;
 }
 
-.portfolio-work-status {
-	margin: auto 0 1rem;
-	color: #52565d;
-	font-size: 1.2rem;
-	line-height: 1.5;
-}
-
 .portfolio-case-meta {
 	margin-bottom: 1.4rem;
 	color: #6b7280;
@@ -2445,27 +2438,6 @@ body.home-page .site-main {
 	color: #52565d;
 	font-size: 1.8rem;
 	line-height: 1.65;
-}
-
-.work-case-status {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.8rem;
-	margin-top: 1.7rem;
-}
-
-.work-case-status span {
-	padding: 0.45rem 0.8rem;
-	border: 1px solid #e5e5e4;
-	border-radius: 0.5rem;
-	color: #52565d;
-	font-size: 1.2rem;
-}
-
-.work-case-status span:first-child {
-	border-color: #c7d7ff;
-	background: #f3f6ff;
-	color: #1d4ed8;
 }
 
 .work-case-technologies {
