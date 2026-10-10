@@ -120,6 +120,13 @@ const WorkCaseStudy = ({ pageContext }) => {
                         <ul>{content.implementation.map((item) => <li key={item}>{item}</li>)}</ul>
                     </section>
 
+                    {content.operationalLessons && (
+                        <section className="work-case-section">
+                            <h2>{t("Operational findings")}</h2>
+                            <ul>{content.operationalLessons.map((item) => <li key={item}>{item}</li>)}</ul>
+                        </section>
+                    )}
+
                     <section className="work-case-section">
                         <h2>{t("Validation & impact")}</h2>
                         <ul>{content.validation.map((item) => <li key={item}>{item}</li>)}</ul>
