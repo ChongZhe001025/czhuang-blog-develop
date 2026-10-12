@@ -101,7 +101,7 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                             aria-pressed={language === "zh"}
                                             onClick={() => setLanguage("zh")}
                                         >
-                                            中文
+                                            繁中
                                         </button>
                                     </div>
                                     {/* <Link className="site-nav-button" to="/about">
