@@ -6,7 +6,7 @@
 - 本機開發
 - HTTPS 正式環境
 
-#### ![](../images/icons/github-black.png)  [TickBoard](https://github.com/ChongZhe001025/TickBoard)
+#### ![](../images/icons/github-black.png)  [TickBoard](https://github.com/FluxSeer/TickBoard)
 
 ## 架構與元件
 

@@ -4,7 +4,7 @@ A small task board project built with React (frontend), Gin (Go backend), and Mo
 This guide covers:
 - Local Development
 - HTTPS Production
-#### ![](../images/icons/github-black.png)  [TickBoard](https://github.com/ChongZhe001025/TickBoard)
+#### ![](../images/icons/github-black.png)  [TickBoard](https://github.com/FluxSeer/TickBoard)
 
 ## Architecture & Components
 

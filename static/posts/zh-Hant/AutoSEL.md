@@ -3,7 +3,7 @@
 - AutoSEL 監控容器事件並結合容器設定，自動產生、更新及套用 SELinux 政策。
 - 使用者不必手動載入政策檔，可減少重複操作並更快因應設定變更。啟動後即可產生及更新政策；特權容器與資源掛載也會受到政策嚴格控管。
 
-#### ![](../images/icons/github-black.png)  [AutoSEL](https://github.com/ChongZhe001025/AutoSEL)
+#### ![](../images/icons/github-black.png)  [AutoSEL](https://github.com/FluxSeer/AutoSEL)
 ---
 
 ## 系統架構

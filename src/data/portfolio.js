@@ -54,7 +54,7 @@ module.exports = [
         summary: "AutoSEL monitors Docker container events and configuration, then generates, updates, and applies SELinux policies for container-specific security controls.",
         collectionPath: "/portfolio/",
         collectionLabel: "Portfolio",
-        repositoryUrl: "https://github.com/ChongZhe001025/AutoSEL",
+        repositoryUrl: "https://github.com/FluxSeer/AutoSEL",
         challenge: "Managing SELinux policies for changing container workloads involves inspecting container settings, generating appropriate rules, and keeping enforcement aligned as containers change. AutoSEL explores how to automate this lifecycle as a master's thesis project.",
         architecture: [
             "Monitor Docker container events and inspect container configuration when workloads start or change.",
@@ -93,7 +93,7 @@ module.exports = [
         summary: "React + Gin + MongoDB task board. Dockerized services with Swagger API and optional HTTPS via Nginx.",
         collectionPath: "/portfolio/",
         collectionLabel: "Portfolio",
-        repositoryUrl: "https://github.com/ChongZhe001025/TickBoard",
+        repositoryUrl: "https://github.com/FluxSeer/TickBoard",
         challenge: "A small application becomes a useful platform exercise when its delivery path, runtime boundaries, and operational behavior are documented alongside the code. TickBoard provides a concrete full-stack workload for practicing containerization, API design, infrastructure provisioning, and GitOps delivery.",
         architecture: [
             "Use a React frontend and Go / Gin API as independently deployable services.",
