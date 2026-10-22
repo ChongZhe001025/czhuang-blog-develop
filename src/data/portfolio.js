@@ -79,5 +79,45 @@ module.exports = [
             "The available project notes do not report large-scale performance results or production deployment validation."
         ],
         portfolioValue: "This master's thesis combines Linux security, Docker lifecycle events, SELinux policy generation, and container enforcement in an automation workflow."
+    },
+    {
+        id: "03",
+        slug: "tickboard",
+        title: "TickBoard",
+        subtitle: "A full-stack task board delivered through Docker and GitOps.",
+        category: "Open-source project",
+        discipline: "Full-stack · Cloud-native · GitOps",
+        technologies: ["React", "Go / Gin", "MongoDB", "Docker", "Terraform", "Kubernetes", "Argo CD"],
+        status: "Published project",
+        statusDetail: "Deployment documented",
+        summary: "React + Gin + MongoDB task board. Dockerized services with Swagger API and optional HTTPS via Nginx.",
+        collectionPath: "/portfolio/",
+        collectionLabel: "Portfolio",
+        repositoryUrl: "https://github.com/ChongZhe001025/TickBoard",
+        challenge: "A small application becomes a useful platform exercise when its delivery path, runtime boundaries, and operational behavior are documented alongside the code. TickBoard provides a concrete full-stack workload for practicing containerization, API design, infrastructure provisioning, and GitOps delivery.",
+        architecture: [
+            "Use a React frontend and Go / Gin API as independently deployable services.",
+            "Persist application data in MongoDB and expose a Swagger-documented API for inspection and integration.",
+            "Package the stack with Docker Compose for local development and describe the Terraform, Kubernetes, and Argo CD path for cluster delivery.",
+            "Place Nginx at the edge for HTTPS and route frontend, API, and database administration paths explicitly."
+        ],
+        diagramCaption: "Application delivery path",
+        diagram: ["React frontend", "Gin API", "MongoDB", "Container stack", "Kubernetes / GitOps delivery"],
+        implementation: [
+            "Built task, user, registration, and authentication flows across the React and Gin services.",
+            "Added JWT-based authentication, Swagger documentation, health checks, and Dockerized local development.",
+            "Documented Terraform infrastructure, Kubernetes manifests, Kustomize overlays, and Argo CD application synchronization.",
+            "Recorded operational boundaries and called out development-only storage and secret handling decisions."
+        ],
+        validation: [
+            "The repository documents local startup, API health, Swagger, and production reverse-proxy checks.",
+            "The project is presented as a demonstrable application and deployment exercise; production availability and service-level outcomes are not claimed."
+        ],
+        limitations: [
+            "The documented MongoDB deployment uses emptyDir for development and should be replaced with durable storage for production.",
+            "Secrets, image publishing, ingress, and cluster acceptance still require environment-specific configuration and verification.",
+            "The repository is a small project, so the portfolio value comes from the end-to-end delivery path rather than application complexity."
+        ],
+        portfolioValue: "This project shows how application code, container packaging, infrastructure as code, Kubernetes delivery, and operational documentation fit together in one small system."
     }
 ];

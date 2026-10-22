@@ -9,7 +9,7 @@ const config = {
     siteMetadata: {
         siteUrl: process.env.SITEURL || 'https://blog.czhuang.dev/',
         title: 'Chongzhe Huang | Platform Engineering & SRE',
-        description: 'I build secure, reliable cloud platforms and delivery workflows that help engineering teams ship with confidence.',
+        description: 'SRE and platform engineering work across cloud infrastructure, Kubernetes, GitOps, automation, and container security.',
         author: 'Chongzhe Huang',
         image: '/logo.png',
         twitterUsername: '@your_twitter',

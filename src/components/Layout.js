@@ -13,6 +13,7 @@ const DefaultLayout = ({ children, bodyClass }) => {
     const { language, setLanguage, t } = useLanguage();
 
     const githubUrl = site.github;
+    const organizationUrl = site.organization;
     const linkedinUrl = site.linkedin;
     const gmailUrl = site.gmail;
 
@@ -65,6 +66,16 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                                     alt=""
                                                 />
                                                 <span>GitHub</span>
+                                            </a>
+                                        )}
+                                        {organizationUrl && (
+                                            <a href={organizationUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label={`${site.organization_name || "Open-source"} organization`}>
+                                                <img
+                                                    className="site-nav-icon-github"
+                                                    src="/images/icons/github.png"
+                                                    alt=""
+                                                />
+                                                <span>{t("Open source")}</span>
                                             </a>
                                         )}
                                         {linkedinUrl && (
@@ -125,6 +136,7 @@ const DefaultLayout = ({ children, bodyClass }) => {
                             <div className="site-foot-nav-left">© 2026 Chongzhe Huang</div>
                             <div className="site-foot-nav-right">
                                 <a href={githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+                                {organizationUrl && <a href={organizationUrl} target="_blank" rel="noopener noreferrer">{t("Open source")}</a>}
                                 <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                                 <a href={gmailUrl}>{t("Email")}</a>
                             </div>

@@ -19,6 +19,7 @@ const Home = () => {
         .map((slug) => posts.find((post) => post.slug === slug && post.note_visible))
         .filter(Boolean);
     const site = siteData.layoutSettings.edges[0].node;
+    const organizationUrl = site.organization;
 
     return (
         <Layout bodyClass="home-page">
@@ -44,6 +45,11 @@ const Home = () => {
                             <a className="portfolio-button portfolio-button-secondary" href={site.github} target="_blank" rel="noopener noreferrer">
                                 GitHub <span aria-hidden="true">↗</span>
                             </a>
+                            {organizationUrl && (
+                                <a className="portfolio-button portfolio-button-secondary" href={organizationUrl} target="_blank" rel="noopener noreferrer">
+                                    {t("Open-source org")} <span aria-hidden="true">↗</span>
+                                </a>
+                            )}
                         </div>
                     </div>
                     <img className="portfolio-portrait" src="/images/profile-hero.jpg" alt="Chongzhe Huang" />
@@ -64,7 +70,10 @@ const Home = () => {
                             <p className="portfolio-eyebrow">{t("Portfolio")}</p>
                             <h2 id="portfolio-title">{t("Open-source projects & experiments")}</h2>
                         </div>
-                        <Link className="portfolio-text-link" to="/portfolio/">{t("View portfolio")} <span aria-hidden="true">↗</span></Link>
+                        <div className="portfolio-group-actions">
+                            <Link className="portfolio-text-link" to="/portfolio/">{t("View portfolio")} <span aria-hidden="true">↗</span></Link>
+                            {organizationUrl && <a className="portfolio-text-link" href={organizationUrl} target="_blank" rel="noopener noreferrer">{t("Visit organization")} <span aria-hidden="true">↗</span></a>}
+                        </div>
                     </div>
                     <div className="portfolio-project-list">
                         {portfolioItems.map((project) => (

@@ -34,9 +34,11 @@
       {
         "node": {
           "cover_image": "/images/cover-image.png",
-          "description": "",
+          "description": "SRE and platform engineering work across cloud infrastructure, Kubernetes, GitOps, automation, and container security.",
           "meta_title": "Chongzhe Huang | Platform Engineering & SRE",
           "github": "https://github.com/ChongZhe001025",
+          "organization": "https://github.com/FluxSeer",
+          "organization_name": "FluxSeer",
           "gmail": "mailto:czhuang001025@gmail.com",
           "icon": "https://gatsby.ghost.io/content/images/size/w256h256/2022/05/favicon.png",
           "lang": "en",

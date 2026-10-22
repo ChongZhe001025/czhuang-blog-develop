@@ -390,6 +390,33 @@ export const caseStudyTranslations = {
             "現有專案資料未提供大規模效能結果或正式環境部署驗證。"
         ],
         portfolioValue: "這篇碩士論文結合 Linux 安全、Docker 生命週期事件、SELinux 政策產生與容器控管，實作自動化政策流程。"
+    },
+    tickboard: {
+        challenge: "當一個小型應用程式同時記錄程式碼、交付流程、執行邊界與營運行為時，它也能成為完整的平台工程練習。TickBoard 提供一個具體的全端工作負載，用來實作容器化、API 設計、基礎設施佈建與 GitOps 交付。",
+        architecture: [
+            "使用 React 前端與 Go／Gin API，將服務拆分為可獨立部署的元件。",
+            "以 MongoDB 儲存應用程式資料，並提供 Swagger 文件化 API 供檢視與整合。",
+            "使用 Docker Compose 支援本機開發，並記錄 Terraform、Kubernetes 與 Argo CD 的叢集交付流程。",
+            "在邊界使用 Nginx 提供 HTTPS，並明確路由前端、API 與資料庫管理路徑。"
+        ],
+        diagramCaption: "應用程式交付流程",
+        diagram: ["React 前端", "Gin API", "MongoDB", "容器服務堆疊", "Kubernetes／GitOps 交付"],
+        implementation: [
+            "在 React 與 Gin 服務中實作任務、使用者、註冊與驗證流程。",
+            "加入 JWT 驗證、Swagger 文件、健康檢查與 Docker 本機開發環境。",
+            "記錄 Terraform 基礎設施、Kubernetes manifest、Kustomize overlay 與 Argo CD 應用程式同步流程。",
+            "說明營運邊界，並明確標示開發環境的儲存與密鑰處理取捨。"
+        ],
+        validation: [
+            "專案文件記錄本機啟動、API 健康檢查、Swagger 與正式環境反向代理檢查方式。",
+            "本專案定位為可展示的應用程式與交付練習，沒有宣稱正式環境可用性或服務等級成果。"
+        ],
+        limitations: [
+            "文件中的 MongoDB 使用 emptyDir，屬於開發環境設定；正式環境應改用持久化儲存。",
+            "密鑰、映像發布、Ingress 與叢集驗收仍需依實際環境設定與驗證。",
+            "專案規模較小，因此作品集價值主要來自端到端交付流程，而不是應用程式本身的複雜度。"
+        ],
+        portfolioValue: "這個專案展示應用程式程式碼、容器封裝、基礎設施即程式碼、Kubernetes 交付與營運文件如何組合成一個完整系統。"
     }
 };
 

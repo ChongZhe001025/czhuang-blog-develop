@@ -1,7 +1,8 @@
-I’m a DevOps/Cloud-Native/SRE engineer focused on IaC and platform reliability.  
-- Turn ideas into shipped products and share what I learn.  
+I’m an SRE / Platform Engineer focused on infrastructure as code, cloud-native delivery, and platform reliability.
+
+- Turn ideas into shipped products and share what I learn.
 - Transform complex, fragile workflows into reliable, automated systems so teams can ship with confidence without manual toil.
-- Specialize in automation and platform building.  .
+- Build and publish selected open-source projects through the [FluxSeer organization](https://github.com/FluxSeer).
 
 ---
 
@@ -32,5 +33,5 @@ I’m a DevOps/Cloud-Native/SRE engineer focused on IaC and platform reliability
 ## What’s Next
 
 I’m continuously improving GitOps workflows, strengthening software supply-chain security, and exploring better self-service platforms for developers.  
-If you’re interested in SRE, IaC, and platform engineering, I’d love to connect.  
-I’m also actively learning and building on AWS, including cloud architecture.  
+If you’re interested in SRE, IaC, and platform engineering, I’d love to connect.
+I’m also actively learning and building on AWS, including cloud architecture.

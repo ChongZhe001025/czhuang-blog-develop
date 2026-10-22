@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
+import siteData from "../data/site.json";
 import { useLanguage } from "../i18n/LanguageContext";
 
 const About = () => {
     const { t } = useLanguage();
+    const site = siteData.layoutSettings.edges[0].node;
 
     return <Layout>
         <Seo title={`${t("About")} | Chongzhe Huang`} description={t("About Chongzhe Huang, an SRE and platform engineering professional.")} />
@@ -29,6 +31,7 @@ const About = () => {
                 <div className="home-actions">
                     <Link className="btn btn-primary" to="/work/">{t("Explore my work")}</Link>
                     <Link className="btn btn-ghost" to="/portfolio/">{t("Browse projects")}</Link>
+                    <a className="btn btn-ghost" href={site.organization} target="_blank" rel="noopener noreferrer">{t("Open-source org")}</a>
                 </div>
             </div>
         </div>
