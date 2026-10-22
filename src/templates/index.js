@@ -39,14 +39,8 @@ const Home = () => {
                             {t("I design cloud infrastructure, build reliable delivery pipelines, and automate operational workflows across AWS, GCP, and Kubernetes.")}
                         </p>
                         <div className="portfolio-actions">
-                            <Link className="portfolio-button portfolio-button-primary" to="/work/">
-                                {t("Explore my work")} <span aria-hidden="true">↗</span>
-                            </Link>
-                            <a className="portfolio-button portfolio-button-secondary" href={site.github} target="_blank" rel="noopener noreferrer">
-                                GitHub <span aria-hidden="true">↗</span>
-                            </a>
                             {organizationUrl && (
-                                <a className="portfolio-button portfolio-button-secondary" href={organizationUrl} target="_blank" rel="noopener noreferrer">
+                                <a className="portfolio-button portfolio-button-primary" href={organizationUrl} target="_blank" rel="noopener noreferrer">
                                     {t("Open-source org")} <span aria-hidden="true">↗</span>
                                 </a>
                             )}

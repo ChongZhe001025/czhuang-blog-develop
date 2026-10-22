@@ -68,34 +68,6 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                                 <span>GitHub</span>
                                             </a>
                                         )}
-                                        {organizationUrl && (
-                                            <a href={organizationUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label={`${site.organization_name || "Open-source"} organization`}>
-                                                <img
-                                                    className="site-nav-icon-github"
-                                                    src="/images/icons/github.png"
-                                                    alt=""
-                                                />
-                                                <span>{t("Open source")}</span>
-                                            </a>
-                                        )}
-                                        {linkedinUrl && (
-                                            <a href={linkedinUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-                                                <img
-                                                    className="site-nav-icon-linkedin"
-                                                    src="/images/icons/linkedin.png"
-                                                    alt=""
-                                                />
-                                                <span>LinkedIn</span>
-                                            </a>
-                                        )}
-                                        <a className="site-social-link" href={gmailUrl} aria-label={`${t("Email")} Chongzhe Huang`}>
-                                            <img
-                                                className="site-nav-icon-gmail"
-                                                src="/images/icons/gmail.png"
-                                                alt=""
-                                            />
-                                            <span>{t("Email")}</span>
-                                        </a>
                                     </div>
                                     <div className="site-language-switch" role="group" aria-label={t("Switch language")}>
                                         <button
