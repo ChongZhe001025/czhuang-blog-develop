@@ -12,6 +12,7 @@ const WorkCaseStudy = ({ pageContext }) => {
     const content = localizeCaseStudy(work, language);
     const collectionPath = work.collectionPath || "/work/";
     const collectionLabel = t(work.collectionLabel || "All work");
+    const isPortfolioCase = collectionPath === "/portfolio/";
 
     return (
         <Layout>
@@ -26,6 +27,23 @@ const WorkCaseStudy = ({ pageContext }) => {
                     <h1>{t(work.title)}</h1>
                     {work.subtitle && <p className="work-case-deck">{t(work.subtitle)}</p>}
                     <p className="work-case-summary">{t(work.summary)}</p>
+                    {work.status && !isPortfolioCase && (
+                        <div className="work-case-status">
+                            {work.repositoryUrl ? (
+                                <a
+                                    className="work-status-link"
+                                    href={work.repositoryUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`${t(work.status)}${work.statusDetail ? ` · ${t(work.statusDetail)}` : ""} — ${t(work.title)}`}
+                                >
+                                    {t(work.status)}{work.statusDetail ? ` · ${t(work.statusDetail)}` : ""}
+                                </a>
+                            ) : (
+                                <span className="work-case-status-label">{t(work.status)}{work.statusDetail ? ` · ${t(work.statusDetail)}` : ""}</span>
+                            )}
+                        </div>
+                    )}
                     <div className="work-case-technologies">
                         {work.technologies.map((technology) => <span key={technology}>{technology}</span>)}
                     </div>
