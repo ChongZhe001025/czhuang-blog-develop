@@ -41,11 +41,20 @@ const Portfolio = () => {
                                 <div className="work-list-body">
                                     <div className="work-list-meta">
                                         <span>{t(item.discipline)}</span>
-                                        <span className="work-status">{t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}</span>
+                                        {item.repositoryUrl && (
+                                            <a
+                                                className="work-status-link"
+                                                href={item.repositoryUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={`${t(item.status)}${item.statusDetail ? ` · ${t(item.statusDetail)}` : ""} — ${t(item.title)}`}
+                                            >
+                                                {t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}
+                                            </a>
+                                        )}
                                     </div>
                                     <h3><Link to={detailUrl}>{t(item.title)}</Link></h3>
                                     <p>{t(item.summary)}</p>
-                                    <div className="work-tech-list">{item.technologies.join(" · ")}</div>
                                 </div>
                                 <Link className="work-list-arrow" to={detailUrl} aria-label={`${t("Read")} ${t(item.title)}`}>
                                     <span aria-hidden="true">↗</span>
