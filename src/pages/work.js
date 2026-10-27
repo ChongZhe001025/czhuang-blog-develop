@@ -6,6 +6,10 @@ import workItems from "../data/work";
 import { useLanguage } from "../i18n/LanguageContext";
 
 const categories = [...new Set(workItems.map((item) => item.category))];
+const orderedWorkItems = categories.flatMap((category) => workItems.filter((item) => item.category === category));
+const displayNumberBySlug = new Map(
+    orderedWorkItems.map((item, index) => [item.slug, String(index + 1).padStart(2, "0")])
+);
 
 const Work = () => {
     const { t } = useLanguage();
@@ -37,14 +41,13 @@ const Work = () => {
                                 const detailUrl = item.detailUrl || `/work/${item.slug}/`;
                                 return (
                                     <article className="work-list-item" key={item.slug}>
-                                        <div className="work-list-number">{item.id}</div>
+                                        <div className="work-list-number">{displayNumberBySlug.get(item.slug)}</div>
                                         <div className="work-list-body">
                                             <div className="work-list-meta">
                                                 <span>{t(item.discipline)}</span>
                                             </div>
                                             <h3><Link to={detailUrl}>{t(item.title)}</Link></h3>
                                             <p>{t(item.summary)}</p>
-                                            <div className="work-tech-list">{item.technologies.join(" · ")}</div>
                                         </div>
                                         <Link className="work-list-arrow" to={detailUrl} aria-label={`${t("Read")} ${t(item.title)}`}>
                                             <span aria-hidden="true">↗</span>
