@@ -107,9 +107,7 @@ const Post = ({ location, pageContext }) => {
                 <Link className="work-back-link" to="/note/">← {t("All writing")}</Link>
 
                 <header className="work-case-header">
-                    <p className="portfolio-eyebrow">
-                        {t("Technical article")}{topicTags.length > 0 && ` · ${topicTags.map(t).join(" · ")}`}
-                    </p>
+                    <p className="portfolio-eyebrow">{t("Technical article")}</p>
                     <h1>{t(post.title)}</h1>
                     {summary && <p className="work-case-summary">{t(summary)}</p>}
                     {topicTags.length > 0 && (
@@ -121,12 +119,23 @@ const Post = ({ location, pageContext }) => {
 
                 {headings.length > 0 && (
                     <nav className="article-toc" aria-label={t("On this page")}>
-                        <span className="portfolio-eyebrow">{t("On this page")}</span>
-                        <ul>
-                            {headings.map((heading) => (
-                                <li key={heading.id}><a href={`#${heading.id}`}>{heading.text}</a></li>
+                        <div className="article-toc-heading">
+                            <span className="portfolio-eyebrow">{t("On this page")}</span>
+                            <span className="article-toc-count" aria-label={`${headings.length} sections`}>
+                                {String(headings.length).padStart(2, "0")}
+                            </span>
+                        </div>
+                        <ol>
+                            {headings.map((heading, index) => (
+                                <li key={heading.id}>
+                                    <a href={`#${heading.id}`}>
+                                        <span className="article-toc-index">{String(index + 1).padStart(2, "0")}</span>
+                                        <span>{heading.text}</span>
+                                        <span className="article-toc-arrow" aria-hidden="true">↗</span>
+                                    </a>
+                                </li>
                             ))}
-                        </ul>
+                        </ol>
                     </nav>
                 )}
 
