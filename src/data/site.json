@@ -40,7 +40,7 @@
           "organization": "https://github.com/FluxSeer",
           "organization_name": "FluxSeer",
           "gmail": "mailto:czhuang001025@gmail.com",
-          "icon": "https://gatsby.ghost.io/content/images/size/w256h256/2022/05/favicon.png",
+          "icon": "/logo.png",
           "lang": "en",
           "linkedin": "https://www.linkedin.com/in/chongzhe-huang-717a05281/",
           "navigation": [

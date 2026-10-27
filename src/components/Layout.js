@@ -49,8 +49,15 @@ const DefaultLayout = ({ children, bodyClass }) => {
                         <div className="container">
                             <nav className="site-nav">
                                 <div className="site-nav-left">
-                                    <Link className="site-wordmark" to="/">
-                                        Chongzhe Huang
+                                    <Link className="site-wordmark" to="/" aria-label="Chongzhe Huang home">
+                                        <img
+                                            className="site-wordmark-image"
+                                            src="/logo.png"
+                                            alt="Chongzhe Huang"
+                                            width="64"
+                                            height="64"
+                                        />
+                                        <span>Chongzhe Huang</span>
                                     </Link>
                                     <div className="site-primary-links">
                                         <Navigation data={site.navigation} navClass="site-nav-item" />

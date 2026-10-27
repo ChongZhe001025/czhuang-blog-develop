@@ -1528,7 +1528,8 @@ body.home-page .site-main {
 
 .site-wordmark {
 	display: inline-flex;
-	align-items: baseline;
+	align-items: center;
+	gap: 0.65rem;
 	margin: 0 1.1rem 0 0;
 	color: #fafaf9;
 	font-size: 1.8rem;
@@ -1536,6 +1537,16 @@ body.home-page .site-main {
 	letter-spacing: 0.015em;
 	text-decoration: none;
 	white-space: nowrap;
+}
+
+.site-wordmark-image {
+	display: block;
+	width: 4.6rem;
+	height: 4.6rem;
+	border-radius: 0.8rem;
+	object-fit: cover;
+	background: transparent;
+	flex: 0 0 auto;
 }
 
 .site-wordmark:hover {
@@ -2965,6 +2976,11 @@ body.home-page .site-main {
 		font-size: 1.5rem;
 	}
 
+	.site-wordmark-image {
+		width: 3.7rem;
+		height: 3.7rem;
+	}
+
 	.site-social-links {
 		grid-area: socials;
 		justify-self: end;
@@ -3270,6 +3286,11 @@ body.home-page .site-main {
 
 	.site-wordmark {
 		font-size: 1.4rem;
+	}
+
+	.site-wordmark-image {
+		width: 3.4rem;
+		height: 3.4rem;
 	}
 
 	.site-nav-item {
