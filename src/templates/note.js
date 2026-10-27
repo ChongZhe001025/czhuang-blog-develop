@@ -93,7 +93,7 @@ const Note = () => {
                                     <div className="work-list-number">{String(articleNumber).padStart(2, "0")}</div>
                                     <div className="work-list-body">
                                         <div className="work-list-meta">
-                                            <span>{t(article.category === "reflection" ? "Software reflections" : "Technical practice")}</span>
+                                            <span>{getTechTags(article).map(t).join(" · ")}</span>
                                         </div>
                                         <h3>
                                             {articleUrl
@@ -101,7 +101,6 @@ const Note = () => {
                                                 : t(article.title)}
                                         </h3>
                                         <p>{t(article.summary)}</p>
-                                        <div className="work-tech-list">{getTechTags(article).map(t).join(" · ")}</div>
                                     </div>
                                     {articleUrl && (
                                         <Link
