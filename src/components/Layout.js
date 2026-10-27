@@ -60,31 +60,27 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                     <div className="site-social-links">
                                         {githubUrl && (
                                             <a href={githubUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
-                                                <img
-                                                    className="site-nav-icon-github"
-                                                    src="/images/icons/github.png"
-                                                    alt=""
-                                                />
-                                                <span>GitHub</span>
+                                                <span className="site-social-icon site-social-icon-github" aria-hidden="true">
+                                                    <img className="site-social-icon-image" src="/images/icons/github.png" alt="" />
+                                                </span>
+                                                <span className="site-social-label">GitHub</span>
                                             </a>
                                         )}
                                         {linkedinUrl && (
                                             <a href={linkedinUrl} className="site-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-                                                <img
-                                                    className="site-nav-icon-linkedin"
-                                                    src="/images/icons/linkedin.png"
-                                                    alt=""
-                                                />
-                                                <span>LinkedIn</span>
+                                                <span className="site-social-icon site-social-icon-linkedin" aria-hidden="true">
+                                                    <img className="site-social-icon-image" src="/images/icons/linkedin.png" alt="" />
+                                                </span>
+                                                <span className="site-social-label">LinkedIn</span>
                                             </a>
                                         )}
                                         <a className="site-social-link" href={gmailUrl} aria-label={`${t("Email")} Chongzhe Huang`}>
-                                            <img
-                                                className="site-nav-icon-gmail"
-                                                src="/images/icons/gmail.png"
-                                                alt=""
-                                            />
-                                            <span>{t("Email")}</span>
+                                            <span className="site-social-icon site-social-icon-gmail" aria-hidden="true">
+                                                <svg className="site-social-envelope" viewBox="0 0 16 16" focusable="false">
+                                                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697Zm6.761 4.133L.191 12.857A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144L9.239 8.83 8 9.586a1 1 0 0 1-1.239 0ZM16 4.697v7.104l-5.803-3.558L16 4.697Z" />
+                                                </svg>
+                                            </span>
+                                            <span className="site-social-label">{t("Email")}</span>
                                         </a>
                                     </div>
                                     <div className="site-language-switch" role="group" aria-label={t("Switch language")}>
