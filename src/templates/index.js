@@ -64,11 +64,12 @@ const Home = () => {
                 <section className="portfolio-section" aria-labelledby="portfolio-title">
                     <div className="portfolio-section-heading">
                         <div>
-                            <p className="portfolio-eyebrow">{t("Portfolio")}</p>
+                            <Link className="portfolio-eyebrow portfolio-eyebrow-link" to="/portfolio/">
+                                {t("Portfolio")} <span aria-hidden="true">↗</span>
+                            </Link>
                             <h2 id="portfolio-title">{t("Open-source projects & experiments")}</h2>
                         </div>
                         <div className="portfolio-group-actions">
-                            <Link className="portfolio-text-link" to="/portfolio/">{t("View portfolio")} <span aria-hidden="true">↗</span></Link>
                             {organizationUrl && <a className="portfolio-text-link" href={organizationUrl} target="_blank" rel="noopener noreferrer">{t("Visit organization")} <span aria-hidden="true">↗</span></a>}
                         </div>
                     </div>
