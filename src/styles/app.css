@@ -1448,12 +1448,12 @@ body.home-page .site-main {
 	transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
 }
 
-.site-language-button[aria-pressed="true"] {
+.site-language-button[aria-current="page"] {
 	color: #fafaf9;
 	font-weight: 600;
 }
 
-.site-language-button[aria-pressed="true"]::after {
+.site-language-button[aria-current="page"]::after {
 	position: absolute;
 	bottom: 0.25rem;
 	left: 50%;
@@ -1470,7 +1470,7 @@ body.home-page .site-main {
 	color: #fff;
 }
 
-.site-language-button:not([aria-pressed="true"]):hover {
+.site-language-button:not([aria-current="page"]):hover {
 	background: rgba(255, 255, 255, 0.06);
 }
 

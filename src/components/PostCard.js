@@ -1,15 +1,17 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 // import { Tags } from "@tryghost/helpers-gatsby";
 // import { readingTime as readingTimeHelper } from "@tryghost/helpers";
 
 const PostCard = ({ post }) => {
     const url = `/${post.slug}/`;
+    const { language } = useLanguage();
     // const readingTime = readingTimeHelper(post);
 
     return (
-        <Link to={url} className="post-card">
+        <Link to={localizedPath(url, language)} className="post-card">
             <div className="post-card-wrapper">
                 <header className="post-card-header">
                     {/* {post.feature_image && (

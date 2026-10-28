@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import workItems from "../data/work";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const categories = [...new Set(workItems.map((item) => item.category))];
 const orderedWorkItems = categories.flatMap((category) => workItems.filter((item) => item.category === category));
@@ -12,7 +12,7 @@ const displayNumberBySlug = new Map(
 );
 
 const Work = () => {
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
 
     return <Layout>
         <Seo
@@ -46,10 +46,10 @@ const Work = () => {
                                             <div className="work-list-meta">
                                                 <span>{t(item.discipline)}</span>
                                             </div>
-                                            <h3><Link to={detailUrl}>{t(item.title)}</Link></h3>
+                                            <h3><Link to={localizedPath(detailUrl, language)}>{t(item.title)}</Link></h3>
                                             <p>{t(item.summary)}</p>
                                         </div>
-                                        <Link className="work-list-arrow" to={detailUrl} aria-label={`${t("Read")} ${t(item.title)}`}>
+                                        <Link className="work-list-arrow" to={localizedPath(detailUrl, language)} aria-label={`${t("Read")} ${t(item.title)}`}>
                                             <span aria-hidden="true">↗</span>
                                         </Link>
                                     </article>

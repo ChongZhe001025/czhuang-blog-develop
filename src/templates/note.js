@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import articles from "../data/writingArticles.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const getTechTags = (article) =>
     article.topic
@@ -20,7 +20,7 @@ const articleCategories = [
 ];
 
 const Note = () => {
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const selectedArticles = [...articles].sort((a, b) =>
         (priorityOrder[a.priority] - priorityOrder[b.priority]) || a.rank - b.rank
     );
@@ -97,7 +97,7 @@ const Note = () => {
                                         </div>
                                         <h3>
                                             {articleUrl
-                                                ? <Link to={articleUrl}>{t(article.title)}</Link>
+                                                ? <Link to={localizedPath(articleUrl, language)}>{t(article.title)}</Link>
                                                 : t(article.title)}
                                         </h3>
                                         <p>{t(article.summary)}</p>
@@ -105,7 +105,7 @@ const Note = () => {
                                     {articleUrl && (
                                         <Link
                                             className="work-list-arrow"
-                                            to={articleUrl}
+                                            to={localizedPath(articleUrl, language)}
                                             aria-label={`${t("Read")} ${t(article.title)}`}
                                         >
                                             <span aria-hidden="true">↗</span>

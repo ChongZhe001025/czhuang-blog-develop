@@ -9,7 +9,7 @@ import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import postData from "../data/posts.json";
 import writingArticles from "../data/writingArticles.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 import { translateArticleMarkdown } from "../i18n/articleTranslations";
 
 const getPlainText = (children) => React.Children.toArray(children).map((child) => {
@@ -104,7 +104,7 @@ const Post = ({ location, pageContext }) => {
                 pathname={location && location.pathname}
             />
             <article className="container work-case-page article-page">
-                <Link className="work-back-link" to="/note/">← {t("All writing")}</Link>
+                <Link className="work-back-link" to={localizedPath("/note/", language)}>← {t("All writing")}</Link>
 
                 <header className="work-case-header">
                     <p className="portfolio-eyebrow">{t("Technical article")}</p>
@@ -156,7 +156,7 @@ const Post = ({ location, pageContext }) => {
                 </div>
 
                 <footer className="work-case-footer">
-                    <Link className="portfolio-text-link" to="/note/">← {t("Back to")} {t("All writing")}</Link>
+                    <Link className="portfolio-text-link" to={localizedPath("/note/", language)}>← {t("Back to")} {t("All writing")}</Link>
                 </footer>
             </article>
         </Layout>

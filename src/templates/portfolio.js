@@ -4,10 +4,10 @@ import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import portfolioItems from "../data/portfolio";
 import siteData from "../data/site.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const Portfolio = () => {
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const site = siteData.layoutSettings.edges[0].node;
 
     return <Layout>
@@ -53,10 +53,10 @@ const Portfolio = () => {
                                             </a>
                                         )}
                                     </div>
-                                    <h3><Link to={detailUrl}>{t(item.title)}</Link></h3>
+                                    <h3><Link to={localizedPath(detailUrl, language)}>{t(item.title)}</Link></h3>
                                     <p>{t(item.summary)}</p>
                                 </div>
-                                <Link className="work-list-arrow" to={detailUrl} aria-label={`${t("Read")} ${t(item.title)}`}>
+                                <Link className="work-list-arrow" to={localizedPath(detailUrl, language)} aria-label={`${t("Read")} ${t(item.title)}`}>
                                     <span aria-hidden="true">↗</span>
                                 </Link>
                             </article>

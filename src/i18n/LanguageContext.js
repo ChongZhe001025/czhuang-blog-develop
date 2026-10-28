@@ -2,6 +2,16 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 
 const STORAGE_KEY = "chongzhe-blog-language";
 
+export const localizedPath = (path, language = "en") => {
+    if (!path || /^(https?:|mailto:|tel:|#)/i.test(path)) return path;
+
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    const pathWithoutLocale = normalizedPath.replace(/^\/(?:en|zh-Hant)(?=\/|$)/, "") || "/";
+    const prefix = language === "zh" ? "/zh-Hant" : "/en";
+
+    return pathWithoutLocale === "/" ? `${prefix}/` : `${prefix}${pathWithoutLocale}`;
+};
+
 const zhHant = {
     "Work": "工作經歷",
     "Portfolio": "作品集",
@@ -248,15 +258,26 @@ const LanguageContext = createContext({
     t: (text) => text,
 });
 
-export const LanguageProvider = ({ children }) => {
-    const [language, setLanguageState] = useState("en");
+export const LanguageProvider = ({ children, initialLanguage }) => {
+    const routeLanguage = initialLanguage === "zh" || initialLanguage === "zh-Hant"
+        ? "zh"
+        : initialLanguage === "en"
+            ? "en"
+            : null;
+    const [language, setLanguageState] = useState(routeLanguage || "en");
 
     useEffect(() => {
+        if (routeLanguage) {
+            setLanguageState(routeLanguage);
+            window.localStorage.setItem(STORAGE_KEY, routeLanguage);
+            return;
+        }
+
         const storedLanguage = window.localStorage.getItem(STORAGE_KEY);
         if (storedLanguage === "en" || storedLanguage === "zh") {
             setLanguageState(storedLanguage);
         }
-    }, []);
+    }, [routeLanguage]);
 
     const setLanguage = useCallback((nextLanguage) => {
         if (nextLanguage !== "en" && nextLanguage !== "zh") return;

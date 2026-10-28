@@ -2,15 +2,17 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { Link } from "gatsby";
+import { useLocation } from "@reach/router";
 import { Navigation } from ".";
 import siteData from "../data/site.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 import "../styles/app.css";
 
 const DefaultLayout = ({ children, bodyClass }) => {
     const site = siteData.layoutSettings.edges[0].node;
     const { language, setLanguage, t } = useLanguage();
+    const location = useLocation();
 
     const githubUrl = site.github;
     const organizationUrl = site.organization;
@@ -49,7 +51,7 @@ const DefaultLayout = ({ children, bodyClass }) => {
                         <div className="container">
                             <nav className="site-nav">
                                 <div className="site-nav-left">
-                                    <Link className="site-wordmark" to="/" aria-label="Chongzhe Huang home">
+                                    <Link className="site-wordmark" to={localizedPath("/", language)} aria-label="Chongzhe Huang home">
                                         <img
                                             className="site-wordmark-image"
                                             src="/logo.png"
@@ -91,22 +93,22 @@ const DefaultLayout = ({ children, bodyClass }) => {
                                         </a>
                                     </div>
                                     <div className="site-language-switch" role="group" aria-label={t("Switch language")}>
-                                        <button
-                                            type="button"
+                                        <Link
                                             className="site-language-button"
-                                            aria-pressed={language === "en"}
+                                            aria-current={language === "en" ? "page" : undefined}
+                                            to={localizedPath(location.pathname, "en")}
                                             onClick={() => setLanguage("en")}
                                         >
                                             EN
-                                        </button>
-                                        <button
-                                            type="button"
+                                        </Link>
+                                        <Link
                                             className="site-language-button"
-                                            aria-pressed={language === "zh"}
+                                            aria-current={language === "zh" ? "page" : undefined}
+                                            to={localizedPath(location.pathname, "zh")}
                                             onClick={() => setLanguage("zh")}
                                         >
                                             繁中
-                                        </button>
+                                        </Link>
                                     </div>
                                     {/* <Link className="site-nav-button" to="/about">
                                         About

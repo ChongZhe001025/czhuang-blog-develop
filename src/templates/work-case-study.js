@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 import { localizeCaseStudy } from "../i18n/caseStudyTranslations";
 
 const WorkCaseStudy = ({ pageContext }) => {
@@ -21,7 +21,7 @@ const WorkCaseStudy = ({ pageContext }) => {
                 description={t(work.summary)}
             />
             <article className="container work-case-page">
-                <Link className="work-back-link" to={collectionPath}>← {collectionLabel}</Link>
+                <Link className="work-back-link" to={localizedPath(collectionPath, language)}>← {collectionLabel}</Link>
                 <header className="work-case-header">
                     <p className="portfolio-eyebrow">{t("CASE STUDY")} {work.id} · {t(work.category)}</p>
                     <h1>{t(work.title)}</h1>
@@ -158,7 +158,7 @@ const WorkCaseStudy = ({ pageContext }) => {
                 </div>
 
                 <footer className="work-case-footer">
-                    <Link className="portfolio-text-link" to={collectionPath}>← {t("Back to")} {collectionLabel}</Link>
+                    <Link className="portfolio-text-link" to={localizedPath(collectionPath, language)}>← {t("Back to")} {collectionLabel}</Link>
                 </footer>
             </article>
         </Layout>

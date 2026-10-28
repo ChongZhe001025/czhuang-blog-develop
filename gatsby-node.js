@@ -25,39 +25,80 @@ exports.createPages = async ({ actions }) => {
     const postTemplate = path.resolve(`./src/templates/post.js`);
     const indexTemplate = path.resolve(`./src/templates/index.js`);
     const workCaseTemplate = path.resolve(`./src/templates/work-case-study.js`);
+    const workPageTemplate = path.resolve(`./src/pages/work.js`);
+    const experiencePageTemplate = path.resolve(`./src/pages/experience.js`);
 
-    createPage({
-        path: "/",
+    const locales = [
+        { code: "en", prefix: "/en" },
+        { code: "zh", prefix: "/zh-Hant" },
+    ];
+
+    const createLocalizedPage = ({ pagePath, component, context = {} }) => {
+        const normalizedPath = pagePath === "/" ? "/" : pagePath.replace(/\/$/, "");
+
+        createPage({
+            path: pagePath,
+            component,
+            context: { ...context, language: "en" },
+        });
+
+        locales.forEach(({ code, prefix }) => {
+            createPage({
+                path: normalizedPath === "/" ? `${prefix}/` : `${prefix}${normalizedPath}/`,
+                component,
+                context: { ...context, language: code },
+            });
+        });
+    };
+
+    // Source pages are already created by Gatsby at their legacy paths.
+    // Add only localized aliases here to avoid creating duplicate legacy pages.
+    [
+        { pagePath: "/work/", component: workPageTemplate },
+        { pagePath: "/experience/", component: experiencePageTemplate },
+    ].forEach(({ pagePath, component }) => {
+        const normalizedPath = pagePath.replace(/\/$/, "");
+        locales.forEach(({ code, prefix }) => {
+            createPage({
+                path: `${prefix}${normalizedPath}/`,
+                component,
+                context: { language: code },
+            });
+        });
+    });
+
+    createLocalizedPage({
+        pagePath: "/",
         component: indexTemplate,
     });
 
     workItems.forEach((work) => {
         if (work.detailUrl) return;
 
-        createPage({
-            path: `/work/${work.slug}/`,
+        createLocalizedPage({
+            pagePath: `/work/${work.slug}/`,
             component: workCaseTemplate,
             context: { work },
         });
     });
 
     // Keep the portfolio independent from the Work experience case studies.
-    createPage({
-        path: "/portfolio/",
+    createLocalizedPage({
+        pagePath: "/portfolio/",
         component: portfolioTemplate,
     });
 
     portfolioCases.forEach((project) => {
-        createPage({
-            path: `/portfolio/${project.slug}/`,
+        createLocalizedPage({
+            pagePath: `/portfolio/${project.slug}/`,
             component: workCaseTemplate,
             context: { work: project },
         });
     });
 
     // Writing is curated from the selected P0/P1 article list.
-    createPage({
-        path: "/note/",
+    createLocalizedPage({
+        pagePath: "/note/",
         component: noteTemplate,
     });
 
@@ -71,8 +112,8 @@ exports.createPages = async ({ actions }) => {
             : null;
         writingSlugsWithContent.add(article.slug);
 
-        createPage({
-            path: `/${article.slug}/`,
+        createLocalizedPage({
+            pagePath: `/${article.slug}/`,
             component: postTemplate,
             context: {
                 slug: article.slug,
@@ -88,8 +129,8 @@ exports.createPages = async ({ actions }) => {
 
     // About is a single author page, not a paginated article category.
     if (about.length > 0) {
-        createPage({
-            path: "/about/",
+        createLocalizedPage({
+            pagePath: "/about/",
             component: aboutTemplate,
             context: { slug: about[0].node.slug },
         });
@@ -122,8 +163,8 @@ exports.createPages = async ({ actions }) => {
             }
         }
 
-        createPage({
-            path: node.url,
+        createLocalizedPage({
+            pagePath: node.url,
             component: postTemplate,
             context: {
                 // Data passed to context is available

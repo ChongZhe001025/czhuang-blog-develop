@@ -4,10 +4,10 @@ import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import siteData from "../data/site.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const About = () => {
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const site = siteData.layoutSettings.edges[0].node;
 
     return <Layout>
@@ -30,10 +30,10 @@ const About = () => {
                 <h2>{t("What I value")}</h2>
                 <p>{t("Clear ownership, changes that can be reviewed in version control, least-privilege access, and systems that are observable and recoverable.")}</p>
                 <div className="portfolio-actions about-actions">
-                    <Link className="portfolio-button portfolio-button-primary" to="/work/">
+                    <Link className="portfolio-button portfolio-button-primary" to={localizedPath("/work/", language)}>
                         {t("Explore my work")} <span aria-hidden="true">↗</span>
                     </Link>
-                    <Link className="portfolio-button portfolio-button-secondary" to="/portfolio/">
+                    <Link className="portfolio-button portfolio-button-secondary" to={localizedPath("/portfolio/", language)}>
                         {t("Browse projects")} <span aria-hidden="true">↗</span>
                     </Link>
                     <a className="portfolio-button portfolio-button-secondary" href={site.organization} target="_blank" rel="noopener noreferrer">

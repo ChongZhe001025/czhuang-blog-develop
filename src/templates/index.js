@@ -6,12 +6,12 @@ import siteData from "../data/site.json";
 import postData from "../data/posts.json";
 import workItems from "../data/work";
 import portfolioItems from "../data/portfolio";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
-const postUrl = (post) => `/${post.slug}/`;
+const postUrl = (post, language) => localizedPath(`/${post.slug}/`, language);
 
 const Home = () => {
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const posts = postData.allPosts.edges.map(({ node }) => node);
     const featuredWork = workItems.filter((work) => work.featured);
     const noteOrder = ["destroy-eks-security-group", "jenkins-trivy-guide"];
@@ -39,7 +39,7 @@ const Home = () => {
                             {t("I design cloud infrastructure, build reliable delivery pipelines, and automate operational workflows across AWS, GCP, and Kubernetes.")}
                         </p>
                         <div className="portfolio-actions">
-                            <Link className="portfolio-button portfolio-button-primary" to="/work/">
+                            <Link className="portfolio-button portfolio-button-primary" to={localizedPath("/work/", language)}>
                                 {t("Explore my work")} <span aria-hidden="true">↗</span>
                             </Link>
                             {organizationUrl && (
@@ -64,7 +64,7 @@ const Home = () => {
                 <section className="portfolio-section" aria-labelledby="portfolio-title">
                     <div className="portfolio-section-heading">
                         <div>
-                            <Link className="portfolio-eyebrow portfolio-eyebrow-link" to="/portfolio/">
+                            <Link className="portfolio-eyebrow portfolio-eyebrow-link" to={localizedPath("/portfolio/", language)}>
                                 {t("Portfolio")} <span aria-hidden="true">↗</span>
                             </Link>
                             <h2 id="portfolio-title">{t("Open-source projects & experiments")}</h2>
@@ -77,10 +77,10 @@ const Home = () => {
                         {portfolioItems.map((project) => (
                             <article className="portfolio-project" key={project.slug}>
                                 <div>
-                                    <h3><Link to={`/portfolio/${project.slug}/`}>{t(project.title)}</Link></h3>
+                                    <h3><Link to={localizedPath(`/portfolio/${project.slug}/`, language)}>{t(project.title)}</Link></h3>
                                     <p>{t(project.summary)}</p>
                                 </div>
-                                <Link className="portfolio-arrow-link" to={`/portfolio/${project.slug}/`} aria-label={`View ${project.title}`}>
+                                <Link className="portfolio-arrow-link" to={localizedPath(`/portfolio/${project.slug}/`, language)} aria-label={`View ${project.title}`}>
                                     <span aria-hidden="true">↗</span>
                                 </Link>
                             </article>
@@ -94,15 +94,15 @@ const Home = () => {
                             <p className="portfolio-eyebrow">{t("Selected work")}</p>
                             <h2 id="work-title">{t("Work experience")}</h2>
                         </div>
-                        <Link className="portfolio-text-link" to="/work/">{t("All work")} <span aria-hidden="true">↗</span></Link>
+                        <Link className="portfolio-text-link" to={localizedPath("/work/", language)}>{t("All work")} <span aria-hidden="true">↗</span></Link>
                     </div>
                     <div className="portfolio-work-grid">
                         {featuredWork.map((work) => (
                             <article className="portfolio-work-card" key={work.id}>
                                 <p className="portfolio-case-meta">{t("CASE STUDY")} {work.id} <span>·</span> {t(work.category).toUpperCase()}</p>
-                                <h3><Link to={`/work/${work.slug}/`}>{t(work.title)}</Link></h3>
+                                <h3><Link to={localizedPath(`/work/${work.slug}/`, language)}>{t(work.title)}</Link></h3>
                                 <p className="portfolio-work-summary">{t(work.summary)}</p>
-                                <Link className="portfolio-text-link" to={`/work/${work.slug}/`}>{t("Read case study")} <span aria-hidden="true">↗</span></Link>
+                                <Link className="portfolio-text-link" to={localizedPath(`/work/${work.slug}/`, language)}>{t("Read case study")} <span aria-hidden="true">↗</span></Link>
                             </article>
                         ))}
                     </div>
@@ -128,12 +128,12 @@ const Home = () => {
                             <p className="portfolio-eyebrow">{t("Engineering notes")}</p>
                             <h2 id="notes-title">{t("Writing from the work.")}</h2>
                         </div>
-                        <Link className="portfolio-text-link" to="/note/">{t("All writing")} <span aria-hidden="true">↗</span></Link>
+                        <Link className="portfolio-text-link" to={localizedPath("/note/", language)}>{t("All writing")} <span aria-hidden="true">↗</span></Link>
                     </div>
                     <div className="portfolio-note-list">
                         {notes.map((note) => (
                             <article className="portfolio-note" key={note.slug}>
-                                <Link to={postUrl(note)}>{t(note.title)}</Link>
+                                <Link to={postUrl(note, language)}>{t(note.title)}</Link>
                                 <span>{note.note_tech_type.name.split("#").filter(Boolean).map((tag) => tag.trim()).join(" · ")}</span>
                             </article>
                         ))}

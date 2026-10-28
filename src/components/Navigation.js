@@ -2,11 +2,11 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import siteData from "../data/site.json";
-import { useLanguage } from "../i18n/LanguageContext";
+import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const Navigation = ({ navClass }) => {
     const navItems = siteData.layoutSettings.edges[0].node.navigation;
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
 
     return (
         <>
@@ -25,7 +25,7 @@ const Navigation = ({ navClass }) => {
                     );
                 } else {
                     return (
-                        <Link className={navClass} to={navItem.url} key={i}>
+                        <Link className={navClass} to={localizedPath(navItem.url, language)} key={i}>
                             {t(navItem.label)}
                         </Link>
                     );
