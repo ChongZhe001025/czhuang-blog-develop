@@ -25,7 +25,13 @@ const Navigation = ({ navClass }) => {
                     );
                 } else {
                     return (
-                        <Link className={navClass} to={localizedPath(navItem.url, language)} key={i}>
+                        <Link
+                            className={navClass}
+                            activeClassName="site-nav-item-active"
+                            partiallyActive
+                            to={localizedPath(navItem.url, language)}
+                            key={i}
+                        >
                             {t(navItem.label)}
                         </Link>
                     );
