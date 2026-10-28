@@ -40,19 +40,19 @@ const Portfolio = () => {
                                 <div className="work-list-body">
                                     <div className="work-list-meta">
                                         <span>{t(item.discipline)}</span>
+                                        {item.repositoryUrl && (
+                                            <a
+                                                className="work-status-link work-list-status"
+                                                href={item.repositoryUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={`${t(item.status)}${item.statusDetail ? ` · ${t(item.statusDetail)}` : ""} — ${t(item.title)}`}
+                                            >
+                                                {t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}
+                                            </a>
+                                        )}
                                     </div>
                                     <h3><Link to={localizedPath(detailUrl, language)}>{t(item.title)}</Link></h3>
-                                    {item.repositoryUrl && (
-                                        <a
-                                            className="work-status-link work-list-status"
-                                            href={item.repositoryUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            aria-label={`${t(item.status)}${item.statusDetail ? ` · ${t(item.statusDetail)}` : ""} — ${t(item.title)}`}
-                                        >
-                                            {t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}
-                                        </a>
-                                    )}
                                     <p>{t(item.summary)}</p>
                                 </div>
                                 <Link className="work-list-arrow" to={localizedPath(detailUrl, language)} aria-label={`${t("Read")} ${t(item.title)}`}>

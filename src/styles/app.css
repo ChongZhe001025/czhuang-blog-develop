@@ -2221,6 +2221,15 @@ body.home-page .site-main {
 	line-height: 1.5;
 }
 
+.portfolio-group .work-list-meta {
+	align-items: baseline;
+	justify-content: space-between;
+}
+
+.portfolio-group .work-list-meta > span {
+	min-width: 0;
+}
+
 .work-status {
 	color: #2563eb;
 	font-weight: 550;
@@ -2270,11 +2279,13 @@ body.home-page .site-main {
 
 .work-list-status {
 	display: inline-block;
-	margin-top: 0.55rem;
-	color: #6b7280;
+	flex: 0 0 auto;
+	margin-top: 0;
+	color: #2563eb;
 	font-size: 1.2rem;
 	font-weight: 500;
 	line-height: 1.5;
+	white-space: nowrap;
 }
 
 .work-list-status:hover,
@@ -3094,8 +3105,14 @@ body.home-page .site-main {
 		gap: 0.25rem;
 	}
 
+	.portfolio-group .work-list-meta {
+		align-items: flex-start;
+		flex-direction: row;
+		gap: 0.25rem 0.8rem;
+	}
+
 	.work-list-status {
-		margin-top: 0.5rem;
+		white-space: normal;
 	}
 
 	.work-list-body > p {
