@@ -121,9 +121,6 @@ const Post = ({ location, pageContext }) => {
                     <nav className="article-toc" aria-label={t("On this page")}>
                         <div className="article-toc-heading">
                             <span className="portfolio-eyebrow">{t("On this page")}</span>
-                            <span className="article-toc-count" aria-label={`${headings.length} sections`}>
-                                {String(headings.length).padStart(2, "0")}
-                            </span>
                         </div>
                         <ol>
                             {headings.map((heading, index) => (
@@ -148,6 +145,11 @@ const Post = ({ location, pageContext }) => {
                                     const id = getHeadingId(getPlainText(children));
                                     return <h2 id={id}>{children}</h2>;
                                 },
+                                table: ({ children }) => (
+                                    <div className="article-table-wrap">
+                                        <table>{children}</table>
+                                    </div>
+                                ),
                             }}
                         >
                             {content}

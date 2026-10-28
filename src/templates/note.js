@@ -79,7 +79,6 @@ const Note = () => {
                                     <option key={tech} value={tech}>{tech}</option>
                                 ))}
                             </select>
-                            <span>{String(filteredArticles.length).padStart(2, "0")}</span>
                         </div>
                     </div>
 

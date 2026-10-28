@@ -26,7 +26,6 @@ const Portfolio = () => {
                 <div className="work-group-heading">
                     <h2 id="portfolio-projects-heading">{t("Open-source projects & experiments")}</h2>
                     <div className="portfolio-group-actions">
-                        <span>{String(portfolioItems.length).padStart(2, "0")}</span>
                         <a className="portfolio-text-link" href={site.organization} target="_blank" rel="noopener noreferrer">
                             {t("Visit the FluxSeer organization")} <span aria-hidden="true">↗</span>
                         </a>

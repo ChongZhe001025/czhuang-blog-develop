@@ -34,7 +34,6 @@ const Work = () => {
                     <section className="work-group" key={category} aria-labelledby={`work-${category.toLowerCase().replaceAll(/[^a-z]+/g, "-")}`}>
                         <div className="work-group-heading">
                             <h2 id={`work-${category.toLowerCase().replaceAll(/[^a-z]+/g, "-")}`}>{t(category)}</h2>
-                            <span>{String(items.length).padStart(2, "0")}</span>
                         </div>
                         <div className="work-list">
                             {items.map((item) => {
