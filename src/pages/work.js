@@ -16,13 +16,12 @@ const Work = () => {
 
     return <Layout>
         <Seo
-            title={`${t("Work")} | Chongzhe Huang`}
+            title={`${t("Engineering work")} | Chongzhe Huang`}
             description={t("Selected engineering projects from my SRE and platform engineering work.")}
         />
         <div className="container work-page">
             <header className="work-page-header">
-                <p className="portfolio-eyebrow">{t("Selected engineering work")}</p>
-                <h1>{t("Work")}</h1>
+                <h1>{t("Engineering work")}</h1>
                 <p>{t("Selected engineering projects from my SRE and platform engineering work.")}</p>
             </header>
 

@@ -37,13 +37,12 @@ const Note = () => {
     return (
         <Layout>
             <Seo
-                title={`${t("Writing")} | Chongzhe Huang`}
+                title={`${t("Engineering notes")} | Chongzhe Huang`}
                 description={t("Engineering notes from hands-on work across cloud infrastructure, Kubernetes, CI/CD, reliability, and application systems.")}
             />
             <div className="container work-page writing-page">
                 <header className="work-page-header">
-                    <p className="portfolio-eyebrow">{t("Engineering notes")}</p>
-                    <h1>{t("Writing")}</h1>
+                    <h1>{t("Engineering notes")}</h1>
                     <p>{t("Notes on cloud infrastructure, Kubernetes, CI/CD, reliability, and application systems.")}</p>
                 </header>
 

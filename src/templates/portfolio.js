@@ -3,33 +3,33 @@ import { Link } from "gatsby";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import portfolioItems from "../data/portfolio";
-import siteData from "../data/site.json";
 import { localizedPath, useLanguage } from "../i18n/LanguageContext";
 
 const Portfolio = () => {
     const { language, t } = useLanguage();
-    const site = siteData.layoutSettings.edges[0].node;
 
     return <Layout>
         <Seo
-            title={`${t("Portfolio")} | Chongzhe Huang`}
-            description={t("I use FluxSeer to publish open-source projects and personal software experiments across platform reliability, cloud-native systems, automation, and web development.")}
+            title={`${t("Independent projects")} | Chongzhe Huang`}
+            description={t("Open-source projects and experiments across platform reliability, cloud-native systems, automation, and web development.")}
         />
         <div className="container work-page">
             <header className="work-page-header">
-                <p className="portfolio-eyebrow">{t("FluxSeer · Independent projects")}</p>
-                <h1>{t("Portfolio")}</h1>
-                <p>{t("I use FluxSeer to publish open-source projects and personal software experiments across platform reliability, cloud-native systems, automation, and web development.")}</p>
+                <a
+                    className="portfolio-eyebrow portfolio-eyebrow-link"
+                    href="https://github.com/FluxSeer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    FluxSeer
+                </a>
+                <h1>{t("Independent projects")}</h1>
+                <p>{t("Open-source projects and experiments across platform reliability, cloud-native systems, automation, and web development.")}</p>
             </header>
 
             <section className="work-group portfolio-group" aria-labelledby="portfolio-projects-heading">
                 <div className="work-group-heading">
-                    <h2 id="portfolio-projects-heading">{t("Open-source projects & experiments")}</h2>
-                    <div className="portfolio-group-actions">
-                        <a className="portfolio-text-link" href={site.organization} target="_blank" rel="noopener noreferrer">
-                            {t("Visit the FluxSeer organization")} <span aria-hidden="true">↗</span>
-                        </a>
-                    </div>
+                    <h2 id="portfolio-projects-heading">{t("Project index")}</h2>
                 </div>
                 <div className="work-list">
                     {portfolioItems.map((item) => {
@@ -40,19 +40,19 @@ const Portfolio = () => {
                                 <div className="work-list-body">
                                     <div className="work-list-meta">
                                         <span>{t(item.discipline)}</span>
-                                        {item.repositoryUrl && (
-                                            <a
-                                                className="work-status-link"
-                                                href={item.repositoryUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                aria-label={`${t(item.status)}${item.statusDetail ? ` · ${t(item.statusDetail)}` : ""} — ${t(item.title)}`}
-                                            >
-                                                {t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}
-                                            </a>
-                                        )}
                                     </div>
                                     <h3><Link to={localizedPath(detailUrl, language)}>{t(item.title)}</Link></h3>
+                                    {item.repositoryUrl && (
+                                        <a
+                                            className="work-status-link work-list-status"
+                                            href={item.repositoryUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={`${t(item.status)}${item.statusDetail ? ` · ${t(item.statusDetail)}` : ""} — ${t(item.title)}`}
+                                        >
+                                            {t(item.status)}{item.statusDetail ? ` · ${t(item.statusDetail)}` : ""}
+                                        </a>
+                                    )}
                                     <p>{t(item.summary)}</p>
                                 </div>
                                 <Link className="work-list-arrow" to={localizedPath(detailUrl, language)} aria-label={`${t("Read")} ${t(item.title)}`}>
