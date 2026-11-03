@@ -7,6 +7,15 @@ const writingArticles = require("./src/data/writingArticles.json");
 const workItems = require("./src/data/work.js");
 const portfolioCases = require("./src/data/portfolio.js");
 
+const readContentMarkdown = (contentFile) => {
+    if (!contentFile) return null;
+
+    const markdownPath = path.join(__dirname, contentFile);
+    if (!fs.existsSync(markdownPath)) return null;
+
+    return fs.readFileSync(markdownPath, "utf8").replace(/^# .+\r?\n+/, "");
+};
+
 /**
  * Here is the place where Gatsby creates the URLs for all the
  * posts, portfolio, pages and note that we fetched from the Ghost site.
@@ -78,7 +87,13 @@ exports.createPages = async ({ actions }) => {
         createLocalizedPage({
             pagePath: `/work/${work.slug}/`,
             component: workCaseTemplate,
-            context: { work },
+            context: {
+                work: {
+                    ...work,
+                    contentMarkdown: readContentMarkdown(work.contentFile),
+                    contentMarkdownZh: readContentMarkdown(work.contentFileZh),
+                },
+            },
         });
     });
 
@@ -92,7 +107,13 @@ exports.createPages = async ({ actions }) => {
         createLocalizedPage({
             pagePath: `/portfolio/${project.slug}/`,
             component: workCaseTemplate,
-            context: { work: project },
+            context: {
+                work: {
+                    ...project,
+                    contentMarkdown: readContentMarkdown(project.contentFile),
+                    contentMarkdownZh: readContentMarkdown(project.contentFileZh),
+                },
+            },
         });
     });
 

@@ -1,15 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Seo } from "../components/SEO";
 import { Layout } from "../components";
 import { localizedPath, useLanguage } from "../i18n/LanguageContext";
-import { localizeCaseStudy } from "../i18n/caseStudyTranslations";
 
 const WorkCaseStudy = ({ pageContext }) => {
     const { language, t } = useLanguage();
     const { work } = pageContext;
-    const content = localizeCaseStudy(work, language);
+    const contentMarkdown = language === "zh"
+        ? work.contentMarkdownZh || work.contentMarkdown
+        : work.contentMarkdown;
+    const content = contentMarkdown ? null : work;
     const collectionPath = work.collectionPath || "/work/";
     const collectionLabel = t(work.collectionLabel || "All work");
     const isPortfolioCase = collectionPath === "/portfolio/";
@@ -56,6 +60,13 @@ const WorkCaseStudy = ({ pageContext }) => {
                     )}
                 </header>
 
+                {contentMarkdown ? (
+                    <div className="work-case-content article-content">
+                        <div className="article-markdown">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{contentMarkdown}</ReactMarkdown>
+                        </div>
+                    </div>
+                ) : (
                 <div className="work-case-content">
                     <section className="work-case-section">
                         <h2>{t("Engineering challenge")}</h2>
@@ -156,6 +167,7 @@ const WorkCaseStudy = ({ pageContext }) => {
                         <p>{content.portfolioValue}</p>
                     </aside>
                 </div>
+                )}
 
                 <footer className="work-case-footer">
                     <Link className="portfolio-text-link" to={localizedPath(collectionPath, language)}>← {t("Back to")} {collectionLabel}</Link>
