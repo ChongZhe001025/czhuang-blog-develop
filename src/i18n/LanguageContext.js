@@ -118,6 +118,8 @@ const zhHant = {
     "Plan and verify a legacy FinTrack data migration from schema inventory and JSON import through post-migration checks.": "從 Schema 盤點、JSON 匯入到移轉後檢查，整理 FinTrack 舊資料移轉與驗證流程。",
     "Building FluentGO's Question-Bank and Scoring Workflow": "建置 FluentGO 題庫與評分流程",
     "Trace FluentGO’s question-bank workflow from data import and parsing through backend scoring and learning-flow integration.": "從題庫資料匯入與解析，到後端評分和學習流程整合，整理 FluentGO 的實作脈絡。",
+    "Recovering a Cross-Region WAF Deployment Without Downtime": "修復跨 Region WAF 部署並維持服務不中斷",
+    "How to recover a failed CloudFormation rollback, preserve Cross-Region Export dependencies, and switch CloudFront to a new WAF safely.": "整理如何恢復失敗的 CloudFormation rollback、保留跨 Region Export 相依性，並安全地將 CloudFront 切換至新的 WAF。",
     "How I approach infrastructure": "我如何設計與維運基礎設施",
     "I’m Chongzhe Huang, an SRE and platform engineering professional focused on making infrastructure safer, more reliable, and easier for engineering teams to use.": "我是 Chongzhe Huang，專注於 SRE 與平台工程，致力讓基礎設施更安全、可靠，也更容易供工程團隊使用。",
     "My work brings together cloud infrastructure, developer enablement, delivery automation, and security controls. I enjoy turning a collection of manual setup steps into a repeatable workflow that teams can understand and operate.": "我的工作結合雲端基礎設施、開發者體驗、交付自動化與安全控管。我喜歡把零散的手動設定整理成可重複執行、容易理解與維運的流程。",

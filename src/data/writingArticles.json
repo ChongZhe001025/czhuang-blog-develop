@@ -141,5 +141,16 @@
     "contentFile": "content/writing/articles/fluentgo-question-bank-and-scoring-workflow.md",
     "contentFileZh": "content/writing/articles/zh-Hant/fluentgo-question-bank-and-scoring-workflow.zh-Hant.md",
     "category": "technical"
+  },
+  {
+    "rank": 14,
+    "priority": "P1",
+    "topic": "Cloud / IaC",
+    "title": "Recovering a Cross-Region WAF Deployment Without Downtime",
+    "summary": "How to recover a failed CloudFormation rollback, preserve Cross-Region Export dependencies, and switch CloudFront to a new WAF safely.",
+    "slug": "recovering-cross-region-waf-deployment-without-downtime",
+    "contentFile": "content/writing/articles/recovering-cross-region-waf-deployment-without-downtime.md",
+    "contentFileZh": "content/writing/articles/zh-Hant/recovering-cross-region-waf-deployment-without-downtime.zh-Hant.md",
+    "category": "technical"
   }
 ]
