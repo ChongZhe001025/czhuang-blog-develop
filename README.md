@@ -38,21 +38,44 @@ The repository's Pages source should be set to **GitHub Actions**. The workflow 
 
 ## Directory Structure
 
-- `content/writing/articles/` - Markdown source for the 13 articles in Writing
-- `content/writing/archive/` - Older unpublished notes, kept out of the site
-- `content/portfolio/drafts/` - Draft copy and material for the portfolio organization profile
-- `static/posts/` - Legacy Markdown pages still served by their existing routes
-- `static/images/` - Profile, case-study, and site images
-- `src/data/site.json` - Site metadata, navigation, and social links
-- `src/data/posts.json` - Legacy post metadata used by existing pages
-- `src/data/writingArticles.json` - Writing titles, summaries, topics, ordering, and Markdown paths
-- `src/data/work.js` / `src/data/portfolio.js` - Work case studies and personal projects
-- `src/data/archive/backup.json` - Unused historical data snapshot
-- `src/i18n/` - Traditional Chinese UI, article, and case-study translations
-- `src/components/` - Shared React components
-- `src/templates/` - Writing, Work, Portfolio, and About page templates
-- `src/pages/` - Standalone pages
-- `src/styles/` - Global styles
+```text
+content/
+├── writing/
+│   ├── articles/          Published Writing Markdown and zh-Hant companions
+│   └── archive/            Older notes kept out of the public site
+├── work/                  Published Work case studies and zh-Hant companions
+└── portfolio/
+    ├── *.md                Published Portfolio case studies
+    ├── zh-Hant/            Traditional Chinese Portfolio content
+    └── drafts/              Unpublished editorial drafts
+
+src/
+├── data/                  Metadata catalogs and legacy source data
+│   ├── work.js             Work listing metadata and content paths
+│   ├── portfolio.js        Portfolio listing metadata and content paths
+│   ├── writingArticles.json Writing listing metadata and content paths
+│   ├── site.json           Site metadata, navigation, and social links
+│   ├── posts.json          Legacy post metadata
+│   └── archive/             Unused historical snapshots
+├── components/             Shared React components
+├── pages/                  Standalone pages and Work listing page
+├── templates/              Gatsby page templates
+├── i18n/                   UI and legacy article fallback translations
+├── styles/                 Global styles
+└── utils/                  Shared helpers
+
+static/
+├── images/                 Profile, case-study, and site images
+└── posts/                  Legacy Markdown pages still served by existing routes
+```
+
+Content ownership is intentionally split:
+
+- Writing metadata lives in `src/data/writingArticles.json`; full content lives in `content/writing/articles/`.
+- Work metadata lives in `src/data/work.js`; full content lives in `content/work/`.
+- Portfolio metadata lives in `src/data/portfolio.js`; full content lives in `content/portfolio/`.
+- `content/**/drafts/`, `content/writing/archive/`, `static/posts/`, and `src/data/archive/` are not part of the new published-content workflow.
+- `public/` and `.cache/` are Gatsby-generated directories and should not be edited manually.
 
 ### Add a Writing article
 
@@ -64,3 +87,10 @@ The repository's Pages source should be set to **GitHub Actions**. The workflow 
 Legacy Markdown pages under `static/posts/` use a same-named translation under `static/posts/zh-Hant/`. Keep fenced executable examples identical; translate prose and human-readable diagram labels. `src/i18n/articleTranslations.js` is a fallback for older pages without a companion file.
 
 The Gatsby page routes are generated from `writingArticles.json`; no route needs to be added by hand.
+
+### Add a Work or Portfolio case study
+
+1. Add the English Markdown file under `content/work/` or `content/portfolio/`.
+2. Add the Traditional Chinese companion under the matching `zh-Hant/` directory.
+3. Add or update the listing metadata and the `contentFile` / `contentFileZh` paths in `src/data/work.js` or `src/data/portfolio.js`.
+4. Keep company-specific identifiers, private infrastructure details, account IDs, and internal URLs out of public content.
